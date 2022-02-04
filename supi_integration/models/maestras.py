@@ -29,3 +29,10 @@ class Salas(models.Model):
     address = fields.Char(string="Address")
     lat = fields.Char(string="Latitude")
     long = fields.Char(string="Longitude")
+
+
+class Variables(models.Model):
+    _name = 'variables'
+
+    name = fields.Char(string="Name")
+    
