@@ -27,11 +27,11 @@
                   id="supi"
                   sequence="1"
                   web_icon="supi_integration,static/description/icon.png"/>
-
-        <menuitem name="Supi Application"
-                  id="supi_application"
+        <menuitem name="Main data"
+                  id="main_data_supi"
                   sequence="1"
                   parent="supi"/>
+
     </data>
 
 

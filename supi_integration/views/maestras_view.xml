@@ -1,0 +1,180 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <!--        SECTION-->
+        <record model="ir.ui.view" id="view_section_form">
+            <field name="name">section</field>
+            <field name="model">section</field>
+            <field name="arch" type="xml">
+                <form string="Section">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_section_tree">
+            <field name="name">section.tree</field>
+            <field name="model">section</field>
+            <field name="arch" type="xml">
+                <tree string="Sections">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_section_search" model="ir.ui.view">
+            <field name="name">section.search</field>
+            <field name="model">section</field>
+            <field name="arch" type="xml">
+                <search string="Section">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_section" model="ir.actions.act_window">
+            <field name="name">Sections</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">section</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_section_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new section in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_section_supi"
+                  name="Sections"
+                  action="action_section"
+                  parent="supi_integration.main_data_supi"
+                  sequence="2"/>
+
+        <!--        AREA-->
+        <record model="ir.ui.view" id="view_area_form">
+            <field name="name">area.form</field>
+            <field name="model">area</field>
+            <field name="arch" type="xml">
+                <form string="Areas">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_area_tree">
+            <field name="name">area.tree</field>
+            <field name="model">area</field>
+            <field name="arch" type="xml">
+                <tree string="Areas">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_area_search" model="ir.ui.view">
+            <field name="name">area.search</field>
+            <field name="model">area</field>
+            <field name="arch" type="xml">
+                <search string="Areas">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_area" model="ir.actions.act_window">
+            <field name="name">Areas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">area</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_area_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new area in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_area_supi"
+                  name="Area"
+                  action="action_area"
+                  parent="supi_integration.main_data_supi"
+                  sequence="3"/>
+
+
+        <!--        PARAMETROS-->
+        <record model="ir.ui.view" id="view_parameters_form">
+            <field name="name">parameters.form</field>
+            <field name="model">parameters</field>
+            <field name="arch" type="xml">
+                <form string="Parameters">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <field name="detail" required="1" placeholder="Details of parameters..."/>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_parameters_tree">
+            <field name="name">parameters.tree</field>
+            <field name="model">parameters</field>
+            <field name="arch" type="xml">
+                <tree string="Parameters">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_parameters_search" model="ir.ui.view">
+            <field name="name">parameters.search</field>
+            <field name="model">parameters</field>
+            <field name="arch" type="xml">
+                <search string="Parameters">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_parameters" model="ir.actions.act_window">
+            <field name="name">Parameters</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">parameters</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_parameters_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new parameters in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_parameters_supi"
+                  name="Parameters"
+                  action="action_parameters"
+                  parent="supi_integration.main_data_supi"
+                  sequence="4"/>
+    </data>
+</odoo>

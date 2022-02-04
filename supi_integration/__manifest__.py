@@ -18,7 +18,8 @@
 
     # always loaded
     'data': [
-        # 'security/ir.model.access.csv',
+        'security/ir.model.access.csv',
         'views/res_users_view.xml',
+        'views/maestras_view.xml',
     ],
 }
