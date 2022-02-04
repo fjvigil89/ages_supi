@@ -2,3 +2,4 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_supi_integration_section,supi_integration.section,model_section,,1,1,1,1
 access_supi_integration_area,supi_integration.area,model_area,,1,1,1,1
 access_supi_integration_parameters,supi_integration.parameters,model_parameters,,1,1,1,1
+access_supi_integration_salas,supi_integration.salas,model_salas,,1,1,1,1

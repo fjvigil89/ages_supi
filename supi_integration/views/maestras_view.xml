@@ -176,5 +176,74 @@
                   action="action_parameters"
                   parent="supi_integration.main_data_supi"
                   sequence="4"/>
+
+
+        <!--        SALAS-->
+        <record model="ir.ui.view" id="view_salas_form">
+            <field name="name">salas.form</field>
+            <field name="model">salas</field>
+            <field name="arch" type="xml">
+                <form string="Salas">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="address" required="1" placeholder="Address..."/>
+                            </group>
+                            <group>
+                                <field name="lat" required="1"/>
+                                <field name="long" required="1"/>
+                            </group>
+
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_salas_tree">
+            <field name="name">salas.tree</field>
+            <field name="model">salas</field>
+            <field name="arch" type="xml">
+                <tree string="Salas">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_salas_search" model="ir.ui.view">
+            <field name="name">salas.search</field>
+            <field name="model">salas</field>
+            <field name="arch" type="xml">
+                <search string="Salas">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_salas" model="ir.actions.act_window">
+            <field name="name">Salas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">salas</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_salas_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new salas in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_salas_supi"
+                  name="Salas"
+                  action="action_salas"
+                  parent="supi_integration.main_data_supi"
+                  sequence="5"/>
     </data>
 </odoo>
