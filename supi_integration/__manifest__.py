@@ -20,6 +20,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/res_users_view.xml',
+        'views/res_partner_views.xml',
         'views/maestras_view.xml',
     ],
 }
