@@ -245,5 +245,77 @@
                   action="action_salas"
                   parent="supi_integration.main_data_supi"
                   sequence="5"/>
+
+
+        <!--        SALAS-->
+        <record model="ir.ui.view" id="view_photo_supi_form">
+            <field name="name">photo.supi.form</field>
+            <field name="model">photos.supi</field>
+            <field name="arch" type="xml">
+                <form string="Photos Supi">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="category" required="1" placeholder="Category..."/>
+                            </group>
+                            <group>
+                                <field name="image" widget="image" required="1"/>
+                            </group>
+
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_photos_supi_tree">
+            <field name="name">photos.supi.tree</field>
+            <field name="model">photos.supi</field>
+            <field name="arch" type="xml">
+                <tree string="Photos Supi">
+                    <field name="name"/>
+                    <field name="category"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_photos_supi_search" model="ir.ui.view">
+            <field name="name">photos.supi.search</field>
+            <field name="model">photos.supi</field>
+            <field name="arch" type="xml">
+                <search string="Photos Supi">
+                    <field name="name"/>
+                    <field name="category"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_photos_supi" model="ir.actions.act_window">
+            <field name="name">Photos Supi</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">photos.supi</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_photos_supi_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new photos in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_photos_supi_supi"
+                  name="Photos Supi"
+                  action="action_photos_supi"
+                  parent="supi_integration.main_data_supi"
+                  sequence="6"/>
     </data>
 </odoo>

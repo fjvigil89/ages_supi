@@ -31,8 +31,9 @@ class Salas(models.Model):
     long = fields.Char(string="Longitude")
 
 
-class Variables(models.Model):
-    _name = 'variables'
+class PhotoSupi(models.Model):
+    _name = 'photos.supi'
 
     name = fields.Char(string="Name")
-    
+    image = fields.Binary(string="Image")
+    category = fields.Char(string="Category")
