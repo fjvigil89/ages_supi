@@ -9,7 +9,7 @@
        
     """,
 
-    'author': "Ronny Montano",
+    'author': "Ronny Montano <<rmontano1992@gmail.com>>",
     'category': 'Others',
     'version': '0.1',
 

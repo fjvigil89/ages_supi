@@ -6,3 +6,4 @@ access_supi_integration_salas,supi_integration.salas,model_salas,,1,1,1,1
 access_supi_integration_photos_supi,supi_integration.photos_supi,model_photos_supi,,1,1,1,1
 access_supi_integration_variables,supi_integration.variables,model_variables,,1,1,1,1
 access_supi_integration_study,supi_integration.study,model_study,,1,1,1,1
+access_supi_integration_quiz,supi_integration.quiz,model_quiz,,1,1,1,1

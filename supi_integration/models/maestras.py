@@ -58,3 +58,16 @@ class Study(models.Model):
 
     name = fields.Char(string="Name")
     variable_id = fields.Many2one('variables', string="Variable")
+
+
+class Quiz(models.Model):
+    _name = "quiz"
+
+    name = fields.Char(string="Name")
+    study_id = fields.Many2one('study', string="Study")
+    question = fields.Char(string="Question")
+    correct_answer = fields.Char(string="Correct answer")
+    answer1 = fields.Char(string="Answer 1")
+    answer2 = fields.Char(string="Answer 2")
+    partner_id = fields.Many2one('res.partner', string="Partner")
+

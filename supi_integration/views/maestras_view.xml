@@ -387,7 +387,7 @@
                   sequence="7"/>
 
 
-        <!--        VARIABLES-->
+        <!--        Study-->
         <record model="ir.ui.view" id="view_study_form">
             <field name="name">study.form</field>
             <field name="model">study</field>
@@ -450,6 +450,98 @@
                   action="action_study"
                   parent="supi_integration.main_data_supi"
                   sequence="8"/>
+
+
+        <!--        Study-->
+        <record model="ir.ui.view" id="view_quiz_form">
+            <field name="name">quiz.form</field>
+            <field name="model">quiz</field>
+            <field name="arch" type="xml">
+                <form string="Quiz">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+
+                        <div class="oe_title">
+                            <label for="question" class="oe_edit_only"/>
+                            <h1>
+                                <field name="question" required="1"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="study_id" help="Select a study"/>
+                            </group>
+                            <group>
+                                <field name="partner_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Answers">
+                                <group>
+                                    <field name="correct_answer" help="Write here the value for correct answer"
+                                           placeholder="Correct answer" required="1"/>
+                                    <field name="answer1" help="Write here a wrong answer" placeholder="Second answer"
+                                           required="1"/>
+                                    <field name="answer2" help="Write here a optional wrong answer"
+                                           placeholder="Third answer"/>
+                                </group>
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_quiz_tree">
+            <field name="name">quiz.tree</field>
+            <field name="model">quiz</field>
+            <field name="arch" type="xml">
+                <tree string="Quiz">
+                    <field name="name"/>
+                    <field name="study_id"/>
+                    <field name="partner_id"/>
+                    <field name="question"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_quiz_search" model="ir.ui.view">
+            <field name="name">quiz.search</field>
+            <field name="model">quiz</field>
+            <field name="arch" type="xml">
+                <search string="Quiz">
+                    <field name="name"/>
+                    <field name="study_id"/>
+                    <field name="partner_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_quiz" model="ir.actions.act_window">
+            <field name="name">Quiz</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">quiz</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_quiz_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new quiz in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_quiz_supi"
+                  name="Quiz"
+                  action="action_quiz"
+                  parent="supi_integration.main_data_supi"
+                  sequence="9"/>
 
 
     </data>
