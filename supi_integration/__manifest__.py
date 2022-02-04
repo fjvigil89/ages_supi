@@ -22,6 +22,7 @@
         'views/res_users_view.xml',
         'views/res_partner_views.xml',
         'views/product_product_view.xml',
+        'views/training_consult_view.xml',
         'views/maestras_view.xml',
     ],
 }

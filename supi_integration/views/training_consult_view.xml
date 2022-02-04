@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+
+        <!--       PHOTO PARAM UPLOAD-->
+        <record model="ir.ui.view" id="view_photo_param_upload_form">
+            <field name="name">photo.param.upload.form</field>
+            <field name="model">photo.param.upload</field>
+            <field name="arch" type="xml">
+                <form string="Photo Param Upload">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="image_id" required="1"/>
+                                <field name="param_id" required="1"/>
+                                <field name="date_send" required="1"/>
+                            </group>
+                            <group>
+                                <field name="user_id" required="1"/>
+                                <field name="result" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_photo_param_upload_tree">
+            <field name="name">photo.param.upload.tree</field>
+            <field name="model">photo.param.upload</field>
+            <field name="arch" type="xml">
+                <tree string="Photo Param Upload">
+                    <field name="image_id"/>
+                    <field name="param_id"/>
+                    <field name="date_send"/>
+                    <field name="user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_photo_param_upload_search" model="ir.ui.view">
+            <field name="name">photo.param.upload.search</field>
+            <field name="model">photo.param.upload</field>
+            <field name="arch" type="xml">
+                <search string="Photo Param Upload">
+                    <field name="image_id"/>
+                    <field name="param_id"/>
+                    <field name="date_send"/>
+                    <field name="user_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_photo_param_upload" model="ir.actions.act_window">
+            <field name="name">Photo Param Upload</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">photo.param.upload</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_photo_param_upload_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new photo upload in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_photo_param_upload_supi"
+                  name="Photo upload"
+                  action="action_photo_param_upload"
+                  parent="supi_integration.secondary_data_supi"
+                  sequence="4"/>
+    </data>
+</odoo>
