@@ -37,3 +37,17 @@ class PhotoSupi(models.Model):
     name = fields.Char(string="Name")
     image = fields.Binary(string="Image")
     category = fields.Char(string="Category")
+
+
+class Variables(models.Model):
+    _name = 'variables'
+
+    name = fields.Char(string="Name")
+    type = fields.Selection([
+        ('osa', 'OSA (Presence)'),
+        ('price', 'Price'),
+        ('facing_sovi', 'Facing Sovi'),
+        ('posters', 'Posters'),
+        ('display', 'Display'),
+    ], string='User type', help='Variables of study in system')
+    image = fields.Binary(string="Image")

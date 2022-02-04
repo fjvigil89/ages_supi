@@ -25,7 +25,7 @@
         </record>
         <menuitem name="Supi"
                   id="supi"
-                  sequence="1"
+                  sequence="4"
                   web_icon="supi_integration,static/description/icon.png"/>
         <menuitem name="Main data"
                   id="main_data_supi"
