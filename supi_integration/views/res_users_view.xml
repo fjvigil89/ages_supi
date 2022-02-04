@@ -32,6 +32,11 @@
                   sequence="1"
                   parent="supi"/>
 
+         <menuitem name="Secondary data"
+                  id="secondary_data_supi"
+                  sequence="2"
+                  parent="supi"/>
+
     </data>
 
 

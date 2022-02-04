@@ -315,7 +315,7 @@
         <menuitem id="menu_photos_supi_supi"
                   name="Photos Supi"
                   action="action_photos_supi"
-                  parent="supi_integration.main_data_supi"
+                  parent="supi_integration.secondary_data_supi"
                   sequence="6"/>
 
 
@@ -383,7 +383,7 @@
         <menuitem id="menu_variables_supi"
                   name="Variables"
                   action="action_variables"
-                  parent="supi_integration.main_data_supi"
+                  parent="supi_integration.secondary_data_supi"
                   sequence="7"/>
 
 
@@ -448,7 +448,7 @@
         <menuitem id="menu_study_supi"
                   name="Studies"
                   action="action_study"
-                  parent="supi_integration.main_data_supi"
+                  parent="supi_integration.secondary_data_supi"
                   sequence="8"/>
 
 
@@ -540,8 +540,87 @@
         <menuitem id="menu_quiz_supi"
                   name="Quiz"
                   action="action_quiz"
-                  parent="supi_integration.main_data_supi"
+                  parent="supi_integration.secondary_data_supi"
                   sequence="9"/>
+
+
+        <!--        Study-->
+        <record model="ir.ui.view" id="view_planning_form">
+            <field name="name">planning.form</field>
+            <field name="model">planning</field>
+            <field name="arch" type="xml">
+                <form string="Planning">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+
+                        <group>
+                            <group>
+                                <field name="place_id"/>
+                                <field name="state_id"/>
+                                <field name="channel"/>
+                                <field name="lat"/>
+
+                            </group>
+                            <group>
+                                <field name="coordinator_id"/>
+                                <field name="region"/>
+                                <field name="address"/>
+                                <field name="long"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_planning_tree">
+            <field name="name">planning.tree</field>
+            <field name="model">planning</field>
+            <field name="arch" type="xml">
+                <tree string="Planning">
+                    <field name="name"/>
+                    <field name="place_id"/>
+                    <field name="state_id"/>
+                    <field name="coordinator_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_planning_search" model="ir.ui.view">
+            <field name="name">planning.search</field>
+            <field name="model">planning</field>
+            <field name="arch" type="xml">
+                <search string="Planning">
+                    <field name="name"/>
+                    <field name="place_id"/>
+                    <field name="state_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_planning" model="ir.actions.act_window">
+            <field name="name">Planning</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">planning</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_planning_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new plannings in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_planning_supi"
+                  name="Planning"
+                  action="action_planning"
+                  parent="supi_integration.secondary_data_supi"
+                  sequence="1"/>
 
 
     </data>

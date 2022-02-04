@@ -71,3 +71,25 @@ class Quiz(models.Model):
     answer2 = fields.Char(string="Answer 2")
     partner_id = fields.Many2one('res.partner', string="Partner")
 
+
+class Planning(models.Model):
+    _name = "planning"
+
+    place_id = fields.Many2one('salas', string="Place")
+    coordinator_id = fields.Many2one('res.users', string="Coordinator")
+    state_id = fields.Many2one('res.country.state', string="Commune")
+    region = fields.Char(string="Region")
+    address = fields.Char(string="Address")
+    channel = fields.Char(string="Channel")
+    name = fields.Char(string="Chain")
+    lat = fields.Char(string="Latitude")
+    long = fields.Char(string="Longitude")
+
+
+class PlanningStudies(models.Model):
+    _name = "planning_studies"
+
+    study_id = fields.Many2one('study', string="Study")
+    planning_id = fields.Many2one('planning', string="Planning")
+    product_id = fields.Many2one('product.product', string="Product")
+    auditor_id = fields.Char(string="Auditor")
