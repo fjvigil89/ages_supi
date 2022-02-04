@@ -93,3 +93,21 @@ class PlanningStudies(models.Model):
     planning_id = fields.Many2one('planning', string="Planning")
     product_id = fields.Many2one('product.product', string="Product")
     auditor_id = fields.Char(string="Auditor")
+
+
+class Planograma(models.Model):
+    _name = "planograma"
+
+    date_start = fields.Datetime('Date start')
+    date_end = fields.Datetime('Date end')
+    place_id = fields.Many2one('salas', string="Place")
+    study_id = fields.Many2one('study', string="Study")
+    product_id = fields.Many2one('product.product', string="Product")
+    section_id = fields.Many2one('section', string="Section")
+    area_id = fields.Many2one('area', string="Area")
+    target = fields.Char(size=100, string="Target")
+    base = fields.Char(size=100, string="Base")
+    comment = fields.Char(size=100, string="Base")
+    perc_validation = fields.Float(string="Validation %")
+    historic_value = fields.Float(string="Historic value")
+

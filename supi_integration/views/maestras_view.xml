@@ -693,5 +693,92 @@
                   sequence="2"/>
 
 
+        <!--       PLANOGRAMA-->
+        <record model="ir.ui.view" id="view_planograma_form">
+            <field name="name">planograma.form</field>
+            <field name="model">planograma</field>
+            <field name="arch" type="xml">
+                <form string="Planograma">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date_start" required="1"/>
+                                <field name="place_id" required="1"/>
+                                <field name="product_id" required="1"/>
+                                <field name="area_id" required="1"/>
+                                <field name="base"/>
+                                <field name="perc_validation"/>
+
+                            </group>
+                            <group>
+                                <field name="date_end" required="1"/>
+                                <field name="study_id" required="1"/>
+                                <field name="section_id" required="1"/>
+                                <field name="target"/>
+                                <field name="comment"/>
+                                <field name="historic_value"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_planograma_tree">
+            <field name="name">planograma.tree</field>
+            <field name="model">planograma</field>
+            <field name="arch" type="xml">
+                <tree string="Planograma">
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="place_id"/>
+                    <field name="study_id"/>
+                    <field name="product_id"/>
+                    <field name="section_id"/>
+                    <field name="area_id"/>
+                    <field name="perc_validation"/>
+                    <field name="historic_value"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_planograma_search" model="ir.ui.view">
+            <field name="name">planograma.search</field>
+            <field name="model">planograma</field>
+            <field name="arch" type="xml">
+                <search string="Planograma">
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="place_id"/>
+                    <field name="study_id"/>
+                    <field name="product_id"/>
+                    <field name="section_id"/>
+                    <field name="area_id"/>
+                    <field name="perc_validation"/>
+                    <field name="historic_value"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_planograma" model="ir.actions.act_window">
+            <field name="name">Planogramas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">planograma</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_planograma_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new planogramas in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_planograma_supi"
+                  name="Planogramas"
+                  action="action_planograma"
+                  parent="supi_integration.secondary_data_supi"
+                  sequence="3"/>
+
+
     </data>
 </odoo>
