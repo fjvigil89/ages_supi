@@ -87,7 +87,7 @@ class Planning(models.Model):
 
 
 class PlanningStudies(models.Model):
-    _name = "planning_studies"
+    _name = "planning.studies"
 
     study_id = fields.Many2one('study', string="Study")
     planning_id = fields.Many2one('planning', string="Planning")
