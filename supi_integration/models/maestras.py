@@ -49,5 +49,12 @@ class Variables(models.Model):
         ('facing_sovi', 'Facing Sovi'),
         ('posters', 'Posters'),
         ('display', 'Display'),
-    ], string='User type', help='Variables of study in system')
+    ], string='Type', help='Variables of study in system')
     image = fields.Binary(string="Image")
+
+
+class Study(models.Model):
+    _name = "study"
+
+    name = fields.Char(string="Name")
+    variable_id = fields.Many2one('variables', string="Variable")

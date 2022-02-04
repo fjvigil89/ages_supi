@@ -387,5 +387,70 @@
                   sequence="7"/>
 
 
+        <!--        VARIABLES-->
+        <record model="ir.ui.view" id="view_study_form">
+            <field name="name">study.form</field>
+            <field name="model">study</field>
+            <field name="arch" type="xml">
+                <form string="Study">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="variable_id" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_study_tree">
+            <field name="name">study.tree</field>
+            <field name="model">study</field>
+            <field name="arch" type="xml">
+                <tree string="Studies">
+                    <field name="name"/>
+                    <field name="variable_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_study_search" model="ir.ui.view">
+            <field name="name">study.search</field>
+            <field name="model">study</field>
+            <field name="arch" type="xml">
+                <search string="Studies">
+                    <field name="name"/>
+                    <field name="variable_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_study" model="ir.actions.act_window">
+            <field name="name">Studies</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">study</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_study_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new studies in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_study_supi"
+                  name="Studies"
+                  action="action_study"
+                  parent="supi_integration.main_data_supi"
+                  sequence="8"/>
+
+
     </data>
 </odoo>
