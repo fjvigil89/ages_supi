@@ -23,5 +23,16 @@
                 </xpath>
             </field>
         </record>
+        <menuitem name="Supi"
+                  id="supi"
+                  sequence="1"
+                  web_icon="supi_integration,static/description/icon.png"/>
+
+        <menuitem name="Supi Application"
+                  id="supi_application"
+                  sequence="1"
+                  parent="supi"/>
     </data>
+
+
 </odoo>
