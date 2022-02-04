@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <menuitem id="menu_products_supi"
+                  name="Products"
+                  action="product.product_normal_action"
+                  parent="supi_integration.main_data_supi"
+                  sequence="5"/>
+    </data>
+
+
+</odoo>
