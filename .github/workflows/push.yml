@@ -24,8 +24,8 @@ jobs:
         scp_source: ./*
         scp_target: /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/
         before_script: |
-          docker-compose --project-directory /home/fjvigil/web/docker/odoo/odoo-14-docker-compose stop
+          docker-compose --project-directory /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/ stop
           rm -rf /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/*
 
         after_script: |
-          docker-compose --project-directory /home/fjvigil/web/docker/odoo/odoo-14-docker-compose up -d
+          docker-compose --project-directory /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/ up -d
