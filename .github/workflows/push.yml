@@ -10,6 +10,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
+      
     - name: SSH Server Deploy
       uses: kostya-ten/ssh-server-deploy@v4
       with:
@@ -18,7 +19,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         scp_source: README.md
-        scp_target: ~/
+        scp_target: /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/
         before_script: |
           df -h
         after_script: |
