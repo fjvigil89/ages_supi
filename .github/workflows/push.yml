@@ -2,12 +2,21 @@ on:
   push:
     branches:
     - master
-name: deploy
+name: deploy repo SUPI
 jobs:
   deploy:
     name: deploy odoo14 addons
     runs-on: ubuntu-latest
     steps:
-    - name: Examples acction
-      run: |
-        echo "Example"
+    - name: Checkout
+      uses: actions/checkout@v2
+  
+    - name: Publish
+      uses: nogsantos/scp-deploy@master
+      with:
+        src: ./dist/*
+        host: ${{ secrets.SSH_HOST }}
+        remote: ${{ secrets.SSH_DIR }}
+        port: ${{ secrets.SSH_PORT }}
+        user: ${{ secrets.SSH_USER }}
+        key: ${{ secrets.SSH_KEY }}
