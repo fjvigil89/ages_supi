@@ -28,4 +28,6 @@ jobs:
           docker-compose kill
           rm -rf /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/*
         after_script: |
+          sudo -S su | echo ${{ secrets.SERVER_PASSWORD }}
+          cd /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/
           docker-compose up -d
