@@ -14,7 +14,7 @@ jobs:
     - name: SSH Server Deploy
       uses: kostya-ten/ssh-server-deploy@v4
       env:
-        DOCKER_HOST: "localhost"
+        WOELCOME: "localhost"
       with:
         host: ${{ secrets.SERVER_HOST }}
         port: ${{ secrets.SERVER_PORT }}
