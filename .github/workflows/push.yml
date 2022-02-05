@@ -1,0 +1,13 @@
+on: 
+  push:
+    branches:
+    - master
+name: deploy
+jobs:
+  deploy:
+    name: deploy odoo14 addons
+    runs-on: ubuntu-latest
+    steps:
+    - name: Examples acction
+    - run: |
+        echo "Example"
