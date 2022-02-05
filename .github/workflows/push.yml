@@ -24,7 +24,4 @@ jobs:
         scp_source: ./*
         scp_target: /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/
         before_script: |
-         echo ${{ secrets.SERVER_PASSWORD }} | sudo -S su | ls
-
-        after_script: |
-          ls
+          sudo su | echo ${{ secrets.SERVER_PASSWORD }} | ls $TARGET_PATH
