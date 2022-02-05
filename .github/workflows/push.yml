@@ -15,7 +15,6 @@ jobs:
       uses: kostya-ten/ssh-server-deploy@v4
       env:
         WELCOME: "ssh scp ssh pipelines"
-        TARGET_PATH: "/home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/"
       with:
         host: ${{ secrets.SERVER_HOST }}
         port: ${{ secrets.SERVER_PORT }}
@@ -24,4 +23,9 @@ jobs:
         scp_source: ./*
         scp_target: /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/
         before_script: |
-          echo ${{ secrets.SERVER_PASSWORD }} | sudo -S su | ls $TARGET_PATH
+          echo ${{ secrets.SERVER_PASSWORD }} | sudo -S su | 
+          cd /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/
+          docker-compose kill
+          rm -rf /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/*
+        after_script: |
+          docker-compose up -d
