@@ -22,7 +22,7 @@ jobs:
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
         scp_source: ./*
-        scp_target: $TARGET_PATH
+        scp_target: /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/
         before_script: |
           rm -rf /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/*
         after_script: |
