@@ -21,8 +21,8 @@ jobs:
         port: ${{ secrets.SERVER_PORT }}
         username: ${{ secrets.SERVER_USERNAME }}
         password: ${{ secrets.SERVER_PASSWORD }}
-        scp_source: ages_supi/*
-        scp_target: /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/
+        scp_source: ./*
+        scp_target: $TARGET_PATH
         before_script: |
           rm -rf /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/*
         after_script: |
