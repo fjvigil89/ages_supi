@@ -14,7 +14,7 @@ jobs:
     - name: deploy pipelines
       uses: cross-the-world/ssh-scp-ssh-pipelines@latest
       env:
-        WELCOME: "ssh scp ssh pipelines"
+        WELCOME: "Proyect SUPI"
         LASTSSH: "Doing something after copying"
         ADDONS_PATH: "/home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons"
       with:
@@ -24,10 +24,10 @@ jobs:
         port: ${{ secrets.DC_PORT }}
         connect_timeout: 10s
         first_ssh: |
-          rm -rf $ADDONS_PATH/*
-          ls -la  \necho $WELCOME 
+          rm -rf /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/*
+          ls -l  $WELCOME 
         scp: |
-          './test/*' => $ADDONS_PATH/
+          './ages_supi/*' => /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/
           
         last_ssh: |
           echo $LASTSSH 
