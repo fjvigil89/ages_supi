@@ -9,5 +9,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Examples acction
-    - run: |
+      run: |
         echo "Example"
