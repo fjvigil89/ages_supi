@@ -24,6 +24,6 @@ jobs:
         scp_source: ages_supi/*
         scp_target: /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/
         before_script: |
-          rm -rf $TARGET_PATH/*
+          rm -rf /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/*
         after_script: |
           ls -l $TARGET_PATH
