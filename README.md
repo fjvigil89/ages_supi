@@ -1,3 +1,4 @@
+# Odoo 14
 # supi
 
 Set of applications developed in Odoo for integration with the SUPI mobile application
