@@ -3,6 +3,7 @@
 from odoo import models, fields, api
 
 
+# https://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&key=YOUR_API_KEY
 class Geo(models.Model):
     _name = 'geo'
 
