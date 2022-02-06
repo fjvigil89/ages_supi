@@ -9,7 +9,7 @@ class TrainingConsult(models.Model):
     image_id = fields.Many2one('photos.supi', string="Photo")
     user_id = fields.Many2one('res.users', string="User")
     param_id = fields.Many2one('parameters', string="Parameters")
-    result = fields.Char(string="Result")
+    result = fields.Text(string="Result")
     date_send = fields.Datetime('Date send')
 
 

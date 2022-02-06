@@ -17,9 +17,10 @@
                             </group>
                             <group>
                                 <field name="user_id" required="1"/>
-                                <field name="result" required="1"/>
+
                             </group>
                         </group>
+                        <field name="result" placeholder="This field return the artificial intelligence response"/>
                     </sheet>
                 </form>
             </field>

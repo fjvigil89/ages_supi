@@ -15,8 +15,7 @@
                                 <field name="user_type"/>
                             </group>
                             <group>
-                                <field name="lat"/>
-                                <field name="long"/>
+                                <field name="geo"/>
                             </group>
                         </group>
                     </page>
@@ -32,7 +31,7 @@
                   sequence="1"
                   parent="supi"/>
 
-         <menuitem name="Secondary data"
+        <menuitem name="Secondary data"
                   id="secondary_data_supi"
                   sequence="2"
                   parent="supi"/>

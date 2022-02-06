@@ -3,6 +3,14 @@
 from odoo import models, fields, api
 
 
+class Geo(models.Model):
+    _name = 'geo'
+
+    name = fields.Char(string="Name")
+    lat = fields.Char(string="Latitude")
+    long = fields.Char(string="Longitude")
+
+
 class Section(models.Model):
     _name = 'section'
 
@@ -27,8 +35,7 @@ class Salas(models.Model):
 
     name = fields.Char(string="Name")
     address = fields.Char(string="Address")
-    lat = fields.Char(string="Latitude")
-    long = fields.Char(string="Longitude")
+    geo = fields.Many2one('geo', string="Geolocalization ")
 
 
 class PhotoSupi(models.Model):
@@ -82,8 +89,7 @@ class Planning(models.Model):
     address = fields.Char(string="Address")
     channel = fields.Char(string="Channel")
     name = fields.Char(string="Chain")
-    lat = fields.Char(string="Latitude")
-    long = fields.Char(string="Longitude")
+    geo = fields.Many2one('geo', string="Geolocalization ")
 
 
 class PlanningStudies(models.Model):
@@ -107,7 +113,6 @@ class Planograma(models.Model):
     area_id = fields.Many2one('area', string="Area")
     target = fields.Char(size=100, string="Target")
     base = fields.Char(size=100, string="Base")
-    comment = fields.Char(size=100, string="Base")
+    comment = fields.Char(size=100, string="Comment")
     perc_validation = fields.Float(string="Validation %")
     historic_value = fields.Float(string="Historic value")
-
