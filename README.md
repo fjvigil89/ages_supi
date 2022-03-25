@@ -30,3 +30,8 @@ Añadir al fichero de configuración la ruta de los módulos previamente clonado
 ```bash
 addons_path = .../odoo-14.0/addons,/Users/YourUser/supi
 ```
+
+# Diagrama de clases del módulo supi_integration
+
+
+![Image text](https://github.com/fjvigil89/ages_supi/tree/master/supi_docs/DER/diagrama1.png)
