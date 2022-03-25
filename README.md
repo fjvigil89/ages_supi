@@ -35,3 +35,6 @@ addons_path = .../odoo-14.0/addons,/Users/YourUser/supi
 
 
 ![Image text](https://github.com/fjvigil89/ages_supi/tree/master/supi_docs/DER/diagrama1.png)
+![Image text](https://github.com/fjvigil89/ages_supi/tree/master/supi_docs/DER/diagrama2.png)
+![Image text](https://github.com/fjvigil89/ages_supi/tree/master/supi_docs/DER/diagrama3.png)
+![Image text](https://github.com/fjvigil89/ages_supi/tree/master/supi_docs/DER/diagrama4.png)
