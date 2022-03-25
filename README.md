@@ -1,9 +1,24 @@
 # Odoo 14
-# supi
+# Backend SUPI mobile app
 
-Set of applications developed in Odoo for integration with the SUPI mobile application
+Conjunto de módulos para la gestión de las solicitudes desde la aplicación móvil SUPI
 
-#Install
+#Instalación
 
-Base Module: supi_integration
-![](https://github.com/fjvigil89/ages_supi/tree/master/supi_docs/doc/clone.png)
+Descargar adddons desde el github, clonándolo en el servidor:
+
+```bash
+https://github.com/fjvigil89/ages_supi.git
+```
+Localizar el fichero de configuración del Odoo en el servidor, normalmente en:
+
+```bash
+/Users/YourUser/.odoorc
+```
+
+Abrir fichero de configuración ejecutando:
+
+```bash
+nano /Users/YourUser/.odoo14rc
+```
+
