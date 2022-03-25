@@ -1,0 +1,748 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* supi_integration
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-08 13:18+0000\n"
+"PO-Revision-Date: 2022-03-08 08:45-0500\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: es\n"
+"X-Generator: Poedit 2.0.6\n"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planning__address
+#: model:ir.model.fields,field_description:supi_integration.field_salas__address
+msgid "Address"
+msgstr "Dirección"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_salas_form
+msgid "Address..."
+msgstr "Dirección"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__answer1
+msgid "Answer 1"
+msgstr "Respuesta 1"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__answer2
+msgid "Answer 2"
+msgstr "Respuesta 2"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_form
+msgid "Answers"
+msgstr "Respuestas"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_area__name
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__area_id
+#: model:ir.ui.menu,name:supi_integration.menu_area_supi
+msgid "Area"
+msgstr "Área"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_area
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_area_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_area_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_area_tree
+msgid "Areas"
+msgstr "Áreas"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planning_studies__auditor_id
+#: model:ir.model.fields.selection,name:supi_integration.selection__res_users__user_type__auditor
+msgid "Auditor"
+msgstr "Auditor"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__base
+msgid "Base"
+msgstr "Base"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_photos_supi__category
+msgid "Category"
+msgstr "Categoría"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_photo_supi_form
+msgid "Category..."
+msgstr "Categoría"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planning__name
+msgid "Chain"
+msgstr "Cadena"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planning__channel
+msgid "Channel"
+msgstr "Canal"
+
+#. module: supi_integration
+#: model:ir.model.fields.selection,name:supi_integration.selection__res_users__user_type__client
+msgid "Client"
+msgstr "Cliente"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__comment
+msgid "Comment"
+msgstr "Comentario"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planning__state_id
+msgid "Commune"
+msgstr "Comuna"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planning__coordinator_id
+msgid "Coordinator"
+msgstr "Coordinador"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__correct_answer
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_form
+msgid "Correct answer"
+msgstr "Respuesta correcta"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_area
+msgid "Create a new area in your system"
+msgstr "Crear nueva área en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_geo
+msgid "Create a new geolocalization in your system"
+msgstr "Crear nueva localización en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_parameters
+msgid "Create a new parameters in your system"
+msgstr "Crear nuevos parámetros en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_photo_param_upload
+msgid "Create a new photo upload in your system"
+msgstr "Crear una nueva foto subida en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_photos_supi
+msgid "Create a new photos in your system"
+msgstr "Crear nueva foto en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_planning
+msgid "Create a new plannings in your system"
+msgstr "Crear nuevas planificaciones en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_planning_studies
+msgid "Create a new plannings studies in your system"
+msgstr "Crear nuevos estudios de planificaciones en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_planograma
+msgid "Create a new planogramas in your system"
+msgstr "Crear nuevos planogramas en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_quiz
+msgid "Create a new quiz in your system"
+msgstr "Crear un nuevo quiz en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_salas
+msgid "Create a new salas in your system"
+msgstr "Crear nueva sala en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_section
+msgid "Create a new section in your system"
+msgstr "Crear una nueva sección en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_study
+msgid "Create a new studies in your system"
+msgstr "Crear nuevo estudio en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.actions.act_window,help:supi_integration.action_variables
+msgid "Create a new variables in your system"
+msgstr "Crear nuevas variables en el sistema"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_area__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_geo__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_parameters__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_photos_supi__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_planning__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_planning_studies__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_salas__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_section__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_study__create_uid
+#: model:ir.model.fields,field_description:supi_integration.field_variables__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_area__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_geo__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_parameters__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_photos_supi__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_planning__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_planning_studies__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_salas__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_section__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_study__create_date
+#: model:ir.model.fields,field_description:supi_integration.field_variables__create_date
+msgid "Created on"
+msgstr "Creado "
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__date_end
+msgid "Date end"
+msgstr "Fecha fin"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__date_send
+msgid "Date send"
+msgstr "Fecha de envío"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__date_start
+msgid "Date start"
+msgstr "Fecha de inicio"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_parameters__detail
+msgid "Details"
+msgstr "Detalles"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_parameters_form
+msgid "Details of parameters..."
+msgstr "Detalles de parámetros"
+
+#. module: supi_integration
+#: model:ir.model.fields.selection,name:supi_integration.selection__variables__type__display
+msgid "Display"
+msgstr "Mostrar"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_area__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_geo__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_parameters__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_photos_supi__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_planning__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_planning_studies__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_res_users__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_salas__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_section__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_study__display_name
+#: model:ir.model.fields,field_description:supi_integration.field_variables__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: supi_integration
+#: model:ir.model.fields.selection,name:supi_integration.selection__variables__type__facing_sovi
+msgid "Facing Sovi"
+msgstr "Facing Sovi"
+
+#. module: supi_integration
+#: model:ir.model.fields.selection,name:supi_integration.selection__res_users__user_type__auditor_field
+msgid "Field auditor"
+msgstr "Auditor de campo"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_res_users__geo
+msgid "Geolocalization"
+msgstr "Geolocalización"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planning__geo
+#: model:ir.model.fields,field_description:supi_integration.field_salas__geo
+msgid "Geolocalization "
+msgstr "Geolocalización"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_geo
+#: model:ir.ui.menu,name:supi_integration.menu_geo_supi
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_geo_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_geo_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_geo_tree
+msgid "Geolocalizations"
+msgstr "Geolocalizaciones"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__historic_value
+msgid "Historic value"
+msgstr "Valor histórico"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_area__id
+#: model:ir.model.fields,field_description:supi_integration.field_geo__id
+#: model:ir.model.fields,field_description:supi_integration.field_parameters__id
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__id
+#: model:ir.model.fields,field_description:supi_integration.field_photos_supi__id
+#: model:ir.model.fields,field_description:supi_integration.field_planning__id
+#: model:ir.model.fields,field_description:supi_integration.field_planning_studies__id
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__id
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__id
+#: model:ir.model.fields,field_description:supi_integration.field_res_users__id
+#: model:ir.model.fields,field_description:supi_integration.field_salas__id
+#: model:ir.model.fields,field_description:supi_integration.field_section__id
+#: model:ir.model.fields,field_description:supi_integration.field_study__id
+#: model:ir.model.fields,field_description:supi_integration.field_variables__id
+msgid "ID"
+msgstr "ID"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_photos_supi__image
+#: model:ir.model.fields,field_description:supi_integration.field_variables__image
+msgid "Image"
+msgstr "Imagen"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_area____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_geo____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_parameters____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_photos_supi____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_planning____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_planning_studies____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_planograma____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_quiz____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_res_users____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_salas____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_section____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_study____last_update
+#: model:ir.model.fields,field_description:supi_integration.field_variables____last_update
+msgid "Last Modified on"
+msgstr "Última modificación el"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_area__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_geo__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_parameters__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_photos_supi__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_planning__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_planning_studies__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_salas__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_section__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_study__write_uid
+#: model:ir.model.fields,field_description:supi_integration.field_variables__write_uid
+msgid "Last Updated by"
+msgstr "Última modificación por"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_area__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_geo__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_parameters__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_photos_supi__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_planning__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_planning_studies__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_salas__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_section__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_study__write_date
+#: model:ir.model.fields,field_description:supi_integration.field_variables__write_date
+msgid "Last Updated on"
+msgstr "Última actualización"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_geo__lat
+msgid "Latitude"
+msgstr "Latitud"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_geo__long
+msgid "Longitude"
+msgstr "Longitud"
+
+#. module: supi_integration
+#: model:ir.ui.menu,name:supi_integration.main_data_supi
+msgid "Main data"
+msgstr "Datos principales"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_geo__name
+#: model:ir.model.fields,field_description:supi_integration.field_photos_supi__name
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__name
+#: model:ir.model.fields,field_description:supi_integration.field_salas__name
+#: model:ir.model.fields,field_description:supi_integration.field_study__name
+#: model:ir.model.fields,field_description:supi_integration.field_variables__name
+msgid "Name"
+msgstr "Nombre"
+
+#. module: supi_integration
+#: model:ir.model.fields.selection,name:supi_integration.selection__variables__type__osa
+msgid "OSA (Presence)"
+msgstr "OSA (Presencia)"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_parameters
+#: model:ir.model.fields,field_description:supi_integration.field_parameters__name
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__param_id
+#: model:ir.ui.menu,name:supi_integration.menu_parameters_supi
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_parameters_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_parameters_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_parameters_tree
+msgid "Parameters"
+msgstr "Parámetros"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__partner_id
+msgid "Partner"
+msgstr "Cliente"
+
+#. module: supi_integration
+#: model:ir.ui.menu,name:supi_integration.menu_partners_supi
+msgid "Partners"
+msgstr "Clientes"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__image_id
+msgid "Photo"
+msgstr "Foto"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_photo_param_upload
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_photo_param_upload_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_photo_param_upload_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_photo_param_upload_tree
+msgid "Photo Param Upload"
+msgstr "Parámetros de fotos subidas"
+
+#. module: supi_integration
+#: model:ir.ui.menu,name:supi_integration.menu_photo_param_upload_supi
+msgid "Photo upload"
+msgstr "Foto subida"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_photos_supi
+#: model:ir.ui.menu,name:supi_integration.menu_photos_supi_supi
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_photo_supi_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_photos_supi_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_photos_supi_tree
+msgid "Photos Supi"
+msgstr "Fotos SUPI"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planning__place_id
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__place_id
+msgid "Place"
+msgstr "Lugar"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_planning
+#: model:ir.model.fields,field_description:supi_integration.field_planning_studies__planning_id
+#: model:ir.ui.menu,name:supi_integration.menu_planning_supi
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_planning_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_planning_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_planning_tree
+msgid "Planning"
+msgstr "Planificación"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_planning_studies_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_planning_studies_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_planning_studies_tree
+msgid "Planning Studies"
+msgstr "Estudios de planificación"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_planning_studies
+#: model:ir.ui.menu,name:supi_integration.menu_planning_studies_supi
+msgid "Planning studies"
+msgstr "Estudios de planificación"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_planograma_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_planograma_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_planograma_tree
+msgid "Planograma"
+msgstr "Planograma"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_planograma
+#: model:ir.ui.menu,name:supi_integration.menu_planograma_supi
+msgid "Planogramas"
+msgstr "Planogramas"
+
+#. module: supi_integration
+#: model:ir.model.fields.selection,name:supi_integration.selection__variables__type__posters
+msgid "Posters"
+msgstr "Exhibición"
+
+#. module: supi_integration
+#: model:ir.model.fields.selection,name:supi_integration.selection__variables__type__price
+msgid "Price"
+msgstr "Precio"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planning_studies__product_id
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: supi_integration
+#: model:ir.ui.menu,name:supi_integration.menu_products_supi
+msgid "Products"
+msgstr "Productos"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__question
+msgid "Question"
+msgstr "Pregunta"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_quiz
+#: model:ir.ui.menu,name:supi_integration.menu_quiz_supi
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_tree
+msgid "Quiz"
+msgstr "Test"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planning__region
+msgid "Region"
+msgstr "Región"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__result
+msgid "Result"
+msgstr "Resultado"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_salas
+#: model:ir.ui.menu,name:supi_integration.menu_salas_supi
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_salas_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_salas_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_salas_tree
+msgid "Salas"
+msgstr "Salas"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_form
+msgid "Second answer"
+msgstr "2da Respuesta"
+
+#. module: supi_integration
+#: model:ir.ui.menu,name:supi_integration.secondary_data_supi
+msgid "Secondary data"
+msgstr "Datos secundarios"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__section_id
+#: model:ir.model.fields,field_description:supi_integration.field_section__name
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_section_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_section_search
+msgid "Section"
+msgstr "Sección"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_section
+#: model:ir.ui.menu,name:supi_integration.menu_section_supi
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_section_tree
+msgid "Sections"
+msgstr "Secciones"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_form
+msgid "Select a study"
+msgstr "Seleccionar estudio"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_study
+#: model:ir.ui.menu,name:supi_integration.menu_study_supi
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_study_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_study_tree
+msgid "Studies"
+msgstr "Estudios"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planning_studies__study_id
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__study_id
+#: model:ir.model.fields,field_description:supi_integration.field_quiz__study_id
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_study_form
+msgid "Study"
+msgstr "Estudio"
+
+#. module: supi_integration
+#: model:ir.ui.menu,name:supi_integration.supi
+msgid "Supi"
+msgstr "SUPI"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.res_users_view
+msgid "Supi Integration"
+msgstr "Integración SUPI"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__target
+msgid "Target"
+msgstr "Objetivo"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_form
+msgid "Third answer"
+msgstr "3ra Respuesta"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_photo_param_upload_form
+msgid "This field return the artificial intelligence response"
+msgstr "Este campo, es el resultado de la respuesta dada por la inteligencia artificial"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_variables__type
+msgid "Type"
+msgstr "Tipo"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__user_id
+msgid "User"
+msgstr "Usuario"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_res_users__user_type
+msgid "User type"
+msgstr "Tipo de usuario"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: supi_integration
+#: model:ir.model.fields,help:supi_integration.field_res_users__user_type
+msgid "Users type in system"
+msgstr "Tipos de usuarios en el sistema"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_planograma__perc_validation
+msgid "Validation %"
+msgstr "% Validación"
+
+#. module: supi_integration
+#: model:ir.model.fields,field_description:supi_integration.field_study__variable_id
+msgid "Variable"
+msgstr "Variable"
+
+#. module: supi_integration
+#: model:ir.actions.act_window,name:supi_integration.action_variables
+#: model:ir.ui.menu,name:supi_integration.menu_variables_supi
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_variables_form
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_variables_search
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_variables_tree
+msgid "Variables"
+msgstr "Variable"
+
+#. module: supi_integration
+#: model:ir.model.fields,help:supi_integration.field_variables__type
+msgid "Variables of study in system"
+msgstr "Variables de estudio en el sistema"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_form
+msgid "Write here a optional wrong answer"
+msgstr "Escriba aquí una respuesta incorrecta (opcional)"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_form
+msgid "Write here a wrong answer"
+msgstr "Escriba aquí la respuesta correcta"
+
+#. module: supi_integration
+#: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_form
+msgid "Write here the value for correct answer"
+msgstr "Escriba aquí el valor de respuesta correcta"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_area
+msgid "area"
+msgstr "Área"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_geo
+msgid "geo"
+msgstr "GEO"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_parameters
+msgid "parameters"
+msgstr "Parámetros"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_photo_param_upload
+msgid "photo.param.upload"
+msgstr "Foto Subida"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_photos_supi
+msgid "photos.supi"
+msgstr "Fotos Supi"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_planning
+msgid "planning"
+msgstr "Planificación"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_planning_studies
+msgid "planning.studies"
+msgstr "Estudios de planificación"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_planograma
+msgid "planograma"
+msgstr "Planograma"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_quiz
+msgid "quiz"
+msgstr "Test"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_salas
+msgid "salas"
+msgstr "Salas"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_section
+msgid "section"
+msgstr "Sección"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_study
+msgid "study"
+msgstr "Estudio"
+
+#. module: supi_integration
+#: model:ir.model,name:supi_integration.model_variables
+msgid "variables"
+msgstr "Variables"
