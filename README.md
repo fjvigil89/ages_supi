@@ -7,13 +7,16 @@ Conjunto de módulos para la gestión de las solicitudes desde la aplicación m�
 
 Descargar adddons desde el github, clonándolo en el servidor:
 
+
 ```bash
-https://github.com/fjvigil89/ages_supi.git
+cd /Users/YourUser/supi
+git clone https://github.com/fjvigil89/ages_supi.git
 ```
+
 Localizar el fichero de configuración del Odoo en el servidor, normalmente en:
 
 ```bash
-/Users/YourUser/.odoorc
+/Users/YourUser/.odoo14rc
 ```
 
 Abrir fichero de configuración ejecutando:
@@ -22,3 +25,8 @@ Abrir fichero de configuración ejecutando:
 nano /Users/YourUser/.odoo14rc
 ```
 
+Añadir al fichero de configuración la ruta de los módulos previamente clonados, modificando el parámetro 
+
+```bash
+addons_path = .../odoo-14.0/addons,/Users/YourUser/supi
+```
