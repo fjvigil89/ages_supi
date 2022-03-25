@@ -34,7 +34,7 @@ addons_path = .../odoo-14.0/addons,/Users/YourUser/supi
 # Diagrama de clases del módulo supi_integration
 
 
-![Image text](https://github.com/fjvigil89/ages_supi/blob/master/supi_docs/DER/diagrama1.png)
+![Relacion de los modelos Users,Photos,PhotoUpload,Clientes,Quiz, Variables y parametros](https://github.com/fjvigil89/ages_supi/blob/master/supi_docs/DER/diagrama1.png)
 ![Image text](https://github.com/fjvigil89/ages_supi/blob/master/supi_docs/DER/diagrama2.png)
 ![Image text](https://github.com/fjvigil89/ages_supi/blob/master/supi_docs/DER/diagrama3.png)
 ![Image text](https://github.com/fjvigil89/ages_supi/blob/master/supi_docs/DER/diagrama4.png)
