@@ -10,10 +10,13 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Server Deploy
-      uses: sudosubin/git-clone-action@v1
+    - name: Clone GuillaumeFalourd/poc-github-actions PUBLIC repository
+      uses: GuillaumeFalourd/clone-github-repo-action@v2
+      run: |
+        cd /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/
+        ls -la
       with:
-        repository: 'fjvigil89/ages_supi'
-        platform: 'github'
-        path: /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/
+        owner: 'fjvigil89'
+        repository: 'ages_supi'
+
     
