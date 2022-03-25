@@ -23,7 +23,6 @@ jobs:
         scp_source: ./*
         scp_target: /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/
         before_script: |
-          chmod -R 775 /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/ 
           rm -rf /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/addons/*
         after_script: |
           cd /home/fjvigil/web/docker/odoo/odoo-14-docker-compose/
