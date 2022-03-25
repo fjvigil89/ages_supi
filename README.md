@@ -3,7 +3,7 @@
 
 Conjunto de módulos para la gestión de las solicitudes desde la aplicación móvil SUPI
 
-#Instalación
+# Instalación
 
 Descargar adddons desde el github, clonándolo en el servidor:
 
