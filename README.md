@@ -10,7 +10,9 @@ odoo-rest-api: Módulo que habilita las llamadas REST-API en el Odoo para el man
 supi_integration: Módulo que contiene la lógica inicial de declaración de modelos en la base de datos.
 ```
 
-# Instalación
+
+
+# Instalación del código en el servidor
 
 Descargar adddons desde el github, clonándolo en el servidor:
 
@@ -37,6 +39,24 @@ Añadir al fichero de configuración la ruta de los módulos previamente clonado
 ```bash
 addons_path = .../odoo-14.0/addons,/Users/YourUser/supi
 ```
+
+```bash
+Reiniciar la instancia del Odoo
+```
+
+# Instalación de las apps en la web
+
+Pasos para instalación:
+
+```bash
+1- Activar modo desarrollador: Ajustes/Herramientas de desarrollador/ Activar modo desarrollador
+2- Menú Aplicaciones/Actualizar lista de aplicaciones/ Actualizar
+3- Refrescar la vista del navegador
+4- Instalar los 2 módulos que a continuación se muestra
+```
+![Image text](https://github.com/fjvigil89/ages_supi/blob/master/supi_docs/install_apps.png)
+
+
 
 # Diagrama de clases del módulo supi_integration
 
