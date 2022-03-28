@@ -1,7 +1,14 @@
 # Odoo 14
 # Backend SUPI mobile app
 
-Conjunto de módulos para la gestión de las solicitudes desde la aplicación móvil SUPI
+Conjunto de módulos para la gestión de las solicitudes desde la aplicación móvil SUPI, que se describen a continuación:
+
+```bash
+muk_web_theme: Tema del backend
+supi_docs: Conjunto de datos entregados por el cliente para modelación de la arquitectura del sistema
+odoo-rest-api: Módulo que habilita las llamadas REST-API en el Odoo para el manejo de funcionalidades en la app móvil
+supi_integration: Módulo que contiene la lógica inicial de declaración de modelos en la base de datos.
+```
 
 # Instalación
 
