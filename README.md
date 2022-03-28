@@ -65,3 +65,12 @@ Pasos para instalación:
 ![Image text](https://github.com/fjvigil89/ages_supi/blob/master/supi_docs/DER/diagrama2.png)
 ![Image text](https://github.com/fjvigil89/ages_supi/blob/master/supi_docs/DER/diagrama3.png)
 ![Image text](https://github.com/fjvigil89/ages_supi/blob/master/supi_docs/DER/diagrama4.png)
+
+## Tecnologías empleadas
+
+* [Odoo](https://www.odoo.com): Version 14
+
+
+### Autor
+Ronny Montano
+- [Email: rmontano1992@gmail.com](mailto:rmontano1992@gmail.com?subject=Hi% "Hi!")
