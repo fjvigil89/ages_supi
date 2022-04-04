@@ -637,7 +637,7 @@
                             </group>
                             <group>
                                 <field name="planning_id" required="1"/>
-                                <field name="auditor_id" required="1"/>
+                                <field name="auditor" required="1"/>
                             </group>
                         </group>
                     </sheet>
@@ -653,7 +653,7 @@
                     <field name="study_id"/>
                     <field name="product_id"/>
                     <field name="planning_id"/>
-                    <field name="auditor_id"/>
+                    <field name="auditor"/>
                 </tree>
             </field>
         </record>
@@ -666,7 +666,7 @@
                     <field name="study_id"/>
                     <field name="product_id"/>
                     <field name="planning_id"/>
-                    <field name="auditor_id"/>
+                    <field name="auditor"/>
                 </search>
             </field>
         </record>
