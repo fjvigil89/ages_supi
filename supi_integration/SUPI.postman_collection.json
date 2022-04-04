@@ -1,0 +1,756 @@
+{
+	"info": {
+		"_postman_id": "12506d36-ed42-4bb3-b5eb-904452b294c5",
+		"name": "SUPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Login",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{   \n    \"jsonrpc\":\"2.0\",\n    \"params\": {\n         \"login\": \"admin\",\n        \"password\": \"admin\",\n         \"db\": \"supi\"\n    }\n}\n"
+				},
+				"url": {
+					"raw": "http://155.210.153.12:10014/auth/",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"auth",
+						""
+					]
+				},
+				"description": "Login"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Sections",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"cookies\":\"1ba03ff37653dbff7f23459b84c0359db8d3afd7\",\n    \n     \"params\": {\n         \"query\": \"id\",\n         \"limit\":\"1\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/section/?page_size=10&page=1&query={name,id}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"section",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{name,id}"
+						}
+					]
+				},
+				"description": "Get invoices Data"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Areas",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"cookies\":\"1ba03ff37653dbff7f23459b84c0359db8d3afd7\",\n    \n     \"params\": {\n         \"query\": \"id\",\n         \"limit\":\"1\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/area/?page_size=10&page=1&query={name,id}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"area",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{name,id}"
+						}
+					]
+				},
+				"description": "Get invoices Data"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Geolocalizations",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"cookies\":\"1ba03ff37653dbff7f23459b84c0359db8d3afd7\",\n    \n     \"params\": {\n         \"query\": \"id\",\n         \"limit\":\"1\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/geo/?page_size=10&page=1&query={name,lat,long,id}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"geo",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{name,lat,long,id}"
+						}
+					]
+				},
+				"description": "Get invoices Data"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Parameters",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "\n{\n    \"cookies\":\"1ba03ff37653dbff7f23459b84c0359db8d3afd7\",\n    \n     \"params\": {\n         \"query\": \"id\",\n         \"limit\":\"1\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "text"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/parameters/?page_size=10&page=1&query={name,detail,id}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"parameters",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{name,detail,id}"
+						}
+					]
+				},
+				"description": "Get invoices Data"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Clientes",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/res.partner/?page_size=10&page=1&query={name, id,phone,email,country_id{name}}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"res.partner",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{name, id,phone,email,country_id{name}}"
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "GET Products",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/product.product/?page_size=10&page=1&query={name, id,default_code,barcode,lst_price}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"product.product",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{name, id,default_code,barcode,lst_price}"
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Salas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/salas/?page_size=10&page=1&query={name, id,address,geo{name,lat,long}}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"salas",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{name, id,address,geo{name,lat,long}}"
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Variables",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/variables/?page_size=10&page=1&query={name, id,type,image}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"variables",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{name, id,type,image}"
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Studies",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/study/?page_size=10&page=1&query={name, id,variable_id{name,id,image,type}}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"study",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{name, id,variable_id{name,id,image,type}}"
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "Get  Photos SUPI",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/photos.supi/?page_size=10&page=1&query={name, id,category,image}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"photos.supi",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{name, id,category,image}"
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Photo Param Upload",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/photo.param.upload/?page_size=10&page=1&query={user_id{name,id,user_type}, id,date_send,result,image_id{id,category,image},param_id{name,id,detail},id}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"photo.param.upload",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{user_id{name,id,user_type}, id,date_send,result,image_id{id,category,image},param_id{name,id,detail},id}"
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Planifications",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/planning/?page_size=10&page=1&query={id,name,channel,address,region,coordinator_id{id,name,user_type},geo{name,id,lat,long},state_id{id,name,country_id{id,name}},place_id{name,id,address,geo{name,id,lat,long}}}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"planning",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{id,name,channel,address,region,coordinator_id{id,name,user_type},geo{name,id,lat,long},state_id{id,name,country_id{id,name}},place_id{name,id,address,geo{name,id,lat,long}}}"
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Estudios de planificacion",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/planning.studies/?page_size=10&page=1&query={id,study_id{id,name},product_id{id,name,barcode,default_code},planning_id{name,id,region,address,coordinator_id{name,id,user_type},place_id{id,name,geo{id,name,lat,long}}},auditor{id,name,user_type}}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"planning.studies",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{id,study_id{id,name},product_id{id,name,barcode,default_code},planning_id{name,id,region,address,coordinator_id{name,id,user_type},place_id{id,name,geo{id,name,lat,long}}},auditor{id,name,user_type}}"
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Planogramas",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/planograma/?page_size=10&page=1&query={id,date_start,date_end,study_id{id,name,variable_id{name,id,image,type}},section_id{id,name},area_id{id,name},target,base,comment,perc_validation,historic_value,product_id{id,name,lst_price,barcode,default_code},place_id{id,name,geo{id,name,lat,long}}}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"planograma",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{id,date_start,date_end,study_id{id,name,variable_id{name,id,image,type}},section_id{id,name},area_id{id,name},target,base,comment,perc_validation,historic_value,product_id{id,name,lst_price,barcode,default_code},place_id{id,name,geo{id,name,lat,long}}}"
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Quiz",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/quiz/?page_size=10&page=1&query={question, id,correct_answer,answer1,answer2,study_id{name,id,variable_id{name,id,type}}}",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"quiz",
+						""
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "page_size",
+							"value": "10"
+						},
+						{
+							"key": "page",
+							"value": "1"
+						},
+						{
+							"key": "query",
+							"value": "{question, id,correct_answer,answer1,answer2,study_id{name,id,variable_id{name,id,type}}}"
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		}
+	]
+}
