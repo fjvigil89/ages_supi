@@ -99,7 +99,7 @@ class PlanningStudies(models.Model):
     study_id = fields.Many2one('study', string="Study")
     planning_id = fields.Many2one('planning', string="Planning")
     product_id = fields.Many2one('product.product', string="Product")
-    auditor_id = fields.Many2one('res.users', string="Auditor")
+    auditor = fields.Many2one('res.users', string="Auditor")
 
 
 class Planograma(models.Model):
