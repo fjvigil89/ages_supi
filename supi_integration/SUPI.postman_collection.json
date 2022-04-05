@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "12506d36-ed42-4bb3-b5eb-904452b294c5",
+		"_postman_id": "16c556aa-fba3-4ab3-a524-a78a48e86d1d",
 		"name": "SUPI",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -686,11 +686,6 @@
 					],
 					"query": [
 						{
-							"key": "limit",
-							"value": "1",
-							"disabled": true
-						},
-						{
 							"key": "page_size",
 							"value": "10"
 						},
@@ -701,6 +696,16 @@
 						{
 							"key": "query",
 							"value": "{id,date_start,date_end,study_id{id,name,variable_id{name,id,image,type}},section_id{id,name},area_id{id,name},target,base,comment,perc_validation,historic_value,product_id{id,name,lst_price,barcode,default_code},place_id{id,name,geo{id,name,lat,long}}}"
+						},
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						},
+						{
+							"key": "order",
+							"value": "",
+							"disabled": true
 						}
 					]
 				},
@@ -749,6 +754,80 @@
 					]
 				},
 				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "Reset password",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"params\": {\n\t\"args\": [\"admin\"]\n\t }\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://155.210.153.12:10014/object/res.users/reset_password",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"object",
+						"res.users",
+						"reset_password"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				},
+				"description": "GET PRODUCTOS CON EXISTENCIA ACTUAL"
+			},
+			"response": []
+		},
+		{
+			"name": "Registrar usuario",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"params\": {\n        \"data\": {\n            \"login\": \"admin@example.com3\",\n            \"name\": \"Juan perez\",\n            \"password\": \"admin\",\n             \"user_type\": \"client\" \n\n        }\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://155.210.153.12:10014/api/res.users/",
+					"protocol": "http",
+					"host": [
+						"155",
+						"210",
+						"153",
+						"12"
+					],
+					"port": "10014",
+					"path": [
+						"api",
+						"res.users",
+						""
+					]
+				}
 			},
 			"response": []
 		}
