@@ -42,7 +42,15 @@ class AuthRegisterHome(Home):
                     }
                 }
             except UserError as e:
-                qcontext['error'] = e.args[0]
+                return {
+                    "jsonrpc": "2.0",
+                    # "id": login,
+                    "data": {
+                        "code": 200,
+                        "message": e,
+
+                    }
+                }
             except SignupError:
                 qcontext['error'] = _("Could not reset your password")
                 _logger.exception('error when resetting password')
