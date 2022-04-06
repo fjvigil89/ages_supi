@@ -19,6 +19,37 @@ from odoo.http import request
 
 class AuthRegisterHome(Home):
 
+    @http.route('/web/restart_password', type='json', auth='public', website=True, sitemap=False)
+    def web_reset_password(self, *args, **kw):
+        qcontext = self.get_auth_signup_qcontext()
+
+        if 'error' not in qcontext and request.httprequest.method == 'POST':
+            try:
+                login = qcontext['data'].get('login')
+                assert login, _("No login provided.")
+                _logger.info(
+                    "Password reset attempt for <%s> by user <%s> from %s",
+                    login, request.env.user.login, request.httprequest.remote_addr)
+                request.env['res.users'].sudo().reset_password(login)
+                qcontext['message'] = _("An email has been sent with credentials to reset your password")
+            except UserError as e:
+                qcontext['error'] = e.args[0]
+            except SignupError:
+                qcontext['error'] = _("Could not reset your password")
+                _logger.exception('error when resetting password')
+            except Exception as e:
+                qcontext['error'] = str(e)
+
+        return {
+            "jsonrpc": "2.0",
+            "id": login,
+            "data": {
+                "code": 200,
+                "message": "An email has been sent with credentials to reset your password",
+
+            }
+        }
+
     @http.route('/web/register', type='json', auth='public', website=True, sitemap=False)
     def web_auth_register(self, *args, **kw):
 
