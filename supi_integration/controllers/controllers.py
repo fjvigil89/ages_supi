@@ -12,11 +12,15 @@ from odoo.http import request
 
 _logger = logging.getLogger(__name__)
 
+from odoo import http
 
-class AuthSignupHome(Home):
+from odoo.http import request
 
-    @http.route('/web/signup', type='json', auth='public', website=True, sitemap=False)
-    def web_auth_signup(self, *args, **kw):
+
+class AuthRegisterHome(Home):
+
+    @http.route('/web/register', type='json', auth='public', website=True, sitemap=False)
+    def web_auth_register(self, *args, **kw):
 
         qcontext = self.get_auth_signup_qcontext()
 
