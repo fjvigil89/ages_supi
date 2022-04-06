@@ -69,10 +69,10 @@ class AuthRegisterHome(Home):
     @http.route('/web/register', type='json', auth='public', website=True, sitemap=False)
     def web_auth_register(self, *args, **kw):
 
-        qcontext = self.get_auth_signup_qcontext()
+        # qcontext = self.get_auth_signup_qcontext()
 
         if kw.get('data'):
-            if 'error' not in qcontext and request.httprequest.method == 'POST':
+            if request.httprequest.method == 'POST':
                 try:
 
                     user = request.env['res.users'].sudo().create(kw.get('data'))
@@ -88,8 +88,26 @@ class AuthRegisterHome(Home):
                         }
                     }
                 except UserError as e:
-                    if request.env["res.users"].sudo().search([("login", "=", qcontext['data'].get('login'))]):
-                        qcontext["error"] = _("Este correo electrónico está en uso")
+                    if request.env["res.users"].sudo().search([("login", "=", kw['data'].get('login'))]):
+                        return {
+                            "jsonrpc": "2.0",
+                            # "id": user.id,
+                            # "name": user.name,
+                            "data": {
+                                "code": 403,
+                                "message": "Este correo electrónico está en uso",
+
+                            }
+                        }
+                        # qcontext["error"] = _("Este correo electrónico está en uso")
                     else:
-                        _logger.error("%s", e)
-                        qcontext['error'] = _("No se puede crear la cuenta")
+                        return {
+                            "jsonrpc": "2.0",
+                            # "id": user.id,
+                            # "name": user.name,
+                            "data": {
+                                "code": 403,
+                                "message": "No se puede crear la cuenta",
+
+                            }
+                        }
