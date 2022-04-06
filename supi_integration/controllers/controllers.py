@@ -48,6 +48,15 @@ class AuthRegisterHome(Home):
                 _logger.exception('error when resetting password')
             except Exception as e:
                 qcontext['error'] = str(e)
+                return {
+                    "jsonrpc": "2.0",
+                    # "id": login,
+                    "data": {
+                        "code": 403,
+                        "message": e,
+
+                    }
+                }
 
     @http.route('/web/register', type='json', auth='public', website=True, sitemap=False)
     def web_auth_register(self, *args, **kw):
