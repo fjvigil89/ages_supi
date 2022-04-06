@@ -6,7 +6,7 @@ from odoo import models, fields, api
 class ResUsers(models.Model):
     _inherit = 'res.users'
 
-    geo = fields.Many2one('geo', string="Geolocalization")
+    geo = fields.Many2one('geo', string="Geolocalizacion")
     user_type = fields.Selection([
         ('client', 'Client'),
         ('auditor', 'Auditor'),
