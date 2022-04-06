@@ -32,6 +32,15 @@ class AuthRegisterHome(Home):
                     login, request.env.user.login, request.httprequest.remote_addr)
                 request.env['res.users'].sudo().reset_password(login)
                 qcontext['message'] = _("An email has been sent with credentials to reset your password")
+                return {
+                    "jsonrpc": "2.0",
+                    "id": login,
+                    "data": {
+                        "code": 200,
+                        "message": "An email has been sent with credentials to reset your password",
+
+                    }
+                }
             except UserError as e:
                 qcontext['error'] = e.args[0]
             except SignupError:
@@ -39,16 +48,6 @@ class AuthRegisterHome(Home):
                 _logger.exception('error when resetting password')
             except Exception as e:
                 qcontext['error'] = str(e)
-
-        return {
-            "jsonrpc": "2.0",
-            "id": login,
-            "data": {
-                "code": 200,
-                "message": "An email has been sent with credentials to reset your password",
-
-            }
-        }
 
     @http.route('/web/register', type='json', auth='public', website=True, sitemap=False)
     def web_auth_register(self, *args, **kw):
