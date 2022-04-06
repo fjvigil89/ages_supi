@@ -12,9 +12,12 @@
 
                         <group>
                             <group>
+
+                                <field name="phone"/>
                                 <field name="user_type"/>
                             </group>
                             <group>
+                                <field name="rut"/>
                                 <field name="geo"/>
                             </group>
                         </group>
