@@ -12,5 +12,6 @@ class ResUsers(models.Model):
         ('auditor', 'Auditor'),
         ('auditor_field', 'Field auditor'),
     ], string='User type', help='Users type in system', default='auditor')
-    phone = fields.Char(string="Telefono")
     rut = fields.Char(string="RUT")
+    phone = fields.Char(string="Telefono")
+
