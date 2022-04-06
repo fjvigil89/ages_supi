@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Supi Integration",
+    'name': "Supi Integration AGES",
 
     'summary': """
         All needed models and functions to integrate Odoo with Supi Application""",
@@ -14,7 +14,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product', 'muk_web_theme'],
+    'depends': ['base', 'product', 'web', 'muk_web_theme'],
 
     # always loaded
     'data': [

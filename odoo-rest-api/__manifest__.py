@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-
 {
-    'name': "Odoo REST API",
+    'name': "Odoo REST API AGES",
 
     'summary': """
-        Odoo REST API""",
+        Odoo REST API AGES""",
 
     'description': """
-        Odoo REST API
+       Odoo REST API AGES
     """,
 
-    'author': "Yezileli Ilomo",
+    'author': "RONNY MONTANO",
     'website': "https://github.com/yezyilomo/odoo-rest-api",
 
     # Categories can be used to filter modules in modules listing
@@ -19,7 +19,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base', 'auth_signup'],
 
     # always loaded
     'data': [

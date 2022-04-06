@@ -3,6 +3,8 @@ import json
 import math
 import logging
 import requests
+import werkzeug
+
 
 from odoo import http, _, exceptions
 from odoo.http import request
@@ -10,6 +12,7 @@ from odoo.http import request
 from .serializers import Serializer
 from .exceptions import QueryFormatError
 
+from odoo.addons.auth_signup.models.res_users import SignupError
 _logger = logging.getLogger(__name__)
 
 
@@ -70,6 +73,43 @@ class OdooAPI(http.Controller):
         user = request.env[model].sudo().search([["login", "=", email]])
         call = request.env[model].reset_password(email)
         return call
+
+    @http.route('/web/signup', type='json', auth='public', website=True, sitemap=False)
+    def web_auth_signup(self, *args, **kw):
+        qcontext = self.get_auth_signup_qcontext()
+
+        if qcontext.get('register'):
+            print("INSIDE")
+
+        if not qcontext.get('token') and not qcontext.get('signup_enabled'):
+            raise werkzeug.exceptions.NotFound()
+
+        if 'error' not in qcontext and request.httprequest.method == 'POST':
+            try:
+                self.do_signup(qcontext)
+                # Send an account creation confirmation email
+                if qcontext.get('token'):
+                    User = request.env['res.users']
+                    user_sudo = User.sudo().search(
+                        User._get_login_domain(qcontext.get('login')), order=User._get_login_order(), limit=1
+                    )
+                    template = request.env.ref('auth_signup.mail_template_user_signup_account_created',
+                                               raise_if_not_found=False)
+                    if user_sudo and template:
+                        template.sudo().send_mail(user_sudo.id, force_send=True)
+                return self.web_login(*args, **kw)
+            except UserError as e:
+                qcontext['error'] = e.args[0]
+            except (SignupError, AssertionError) as e:
+                if request.env["res.users"].sudo().search([("login", "=", qcontext.get("login"))]):
+                    qcontext["error"] = _("Another user is already registered using this email address.")
+                else:
+                    _logger.error("%s", e)
+                    qcontext['error'] = _("Could not create a new account.")
+
+        response = request.render('auth_signup.signup', qcontext)
+        response.headers['X-Frame-Options'] = 'DENY'
+        return response
 
     @http.route(
         '/object/<string:model>/<int:rec_id>/<string:function>',
@@ -207,9 +247,10 @@ class OdooAPI(http.Controller):
             mimetype='application/json'
         )
 
+
     @http.route(
         '/api/<string:model>/',
-        type='json', auth="user", methods=['POST'], csrf=False)
+        type='json', auth="none", methods=['POST'], csrf=False, cors='*')
     def post_model_data(self, model, **post):
         try:
             data = post['data']
