@@ -477,6 +477,7 @@
                                 <field name="study_id" help="Select a study"/>
                             </group>
                             <group>
+                                <field name="study_type"/>
                                 <field name="partner_id"/>
                             </group>
                         </group>

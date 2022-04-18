@@ -77,6 +77,11 @@ class Quiz(models.Model):
     correct_answer = fields.Char(string="Correct answer")
     answer1 = fields.Char(string="Answer 1")
     answer2 = fields.Char(string="Answer 2")
+    study_type = fields.Selection(
+        [('price', 'Price'), ('pop', 'Pop'), ('cold_equipment', 'Cold Equipment'), ('facing', 'Facing'),
+         ('sovi', 'Sovi'), ('osa', 'OSA'),
+         ('exhibitions', 'Exhibitions')],
+        string='Tipo de estudio', default='price')
     partner_id = fields.Many2one('res.partner', string="Partner")
 
 
