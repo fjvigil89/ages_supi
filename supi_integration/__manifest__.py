@@ -24,5 +24,6 @@
         'views/product_product_view.xml',
         'views/training_consult_view.xml',
         'views/maestras_view.xml',
+        'wizard/import_planograma.xml'
     ],
 }
