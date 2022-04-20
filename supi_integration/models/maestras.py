@@ -122,3 +122,4 @@ class Planograma(models.Model):
     comment = fields.Char(size=100, string="Comment")
     perc_validation = fields.Float(string="Validation %")
     historic_value = fields.Float(string="Historic value")
+    user_id = fields.Many2one('res.users', string='Auditor', default=lambda self: self.env.user)

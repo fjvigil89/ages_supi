@@ -710,7 +710,9 @@
 
                             </group>
                             <group>
+
                                 <field name="date_end" required="1"/>
+                                <field name="user_id" required="1"/>
                                 <field name="study_id" required="1"/>
                                 <field name="section_id" required="1"/>
                                 <field name="target"/>
