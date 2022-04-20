@@ -455,7 +455,7 @@ msgstr "Fotos SUPI"
 #: model:ir.model.fields,field_description:supi_integration.field_planning__place_id
 #: model:ir.model.fields,field_description:supi_integration.field_planograma__place_id
 msgid "Place"
-msgstr "Lugar"
+msgstr "Sala"
 
 #. module: supi_integration
 #: model:ir.actions.act_window,name:supi_integration.action_planning
