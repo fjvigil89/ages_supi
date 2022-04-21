@@ -132,7 +132,7 @@ class ImportPlanograma(models.TransientModel):
 
             # RECORRER LOS ROW PARA CREAR PLANOGRAMA!
             for row_index in range(ws.nrows):
-
+                print(row_index)
                 if row_index > 0:
                     variable_id = self.env['variables'].search(
                         [('name', '=', str(int(ws.cell(row_index, index_id_variable).value)))])
