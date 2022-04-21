@@ -51,6 +51,7 @@ class Variables(models.Model):
     _name = 'variables'
 
     name = fields.Char(string="Name")
+    id_variable = fields.Char(string="ID VARIABLE")
     type = fields.Selection([
         ('osa', 'OSA (Presence)'),
         ('price', 'Price'),

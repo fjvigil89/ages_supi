@@ -140,12 +140,12 @@ class ImportPlanograma(models.TransientModel):
                 print(row_index)
                 if row_index > 0:
                     variable_id = self.env['variables'].search(
-                        [('name', '=', str(int(ws.cell(row_index, index_id_variable).value)))])
+                        [('id_variable', '=', str(int(ws.cell(row_index, index_id_variable).value)))])
                     product_id = self.env['product.product'].search(
                         [('default_code', '=', str(int(ws.cell(row_index, index_id_producto).value)))])
                     study_id = self.env['study'].search(
                         [('name', '=', str(int(ws.cell(row_index, index_id_estudiosala).value))),
-                         ('variable_id.name', '=', variable_id.name)])
+                         ('variable_id.id_variable', '=', variable_id.id_variable)])
                     date_start = self.convert_excel_date_to_datetime(int(ws.cell(row_index, index_fecha_inicio).value))
                     date_end = self.convert_excel_date_to_datetime(int(ws.cell(row_index, index_fecha_fin).value))
                     valor_historico = ws.cell(row_index, index_valor_historico).value
