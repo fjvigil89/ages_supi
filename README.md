@@ -7,7 +7,7 @@ Conjunto de módulos para la gestión de las solicitudes desde la aplicación m�
 muk_web_theme: Tema del backend
 supi_docs: Conjunto de datos entregados por el cliente para modelación de la arquitectura del sistema
 odoo-rest-api: Módulo que habilita las llamadas REST-API en el Odoo para el manejo de funcionalidades en la app móvil
-supi_integration: Módulo que contiene la lógica inicial de declaración de modelos en la base de datos.
+supi_integration: Módulo que contiene la lógica inicial de declaración de modelos en la base de datos y endpoints para manejo de las peticiones especificas de la app.
 ```
 
 
