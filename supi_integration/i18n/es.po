@@ -102,7 +102,7 @@ msgstr "Comentario"
 #. module: supi_integration
 #: model:ir.model.fields,field_description:supi_integration.field_planning__state_id
 msgid "Commune"
-msgstr "Comuna"
+msgstr "Region"
 
 #. module: supi_integration
 #: model:ir.model.fields,field_description:supi_integration.field_planning__coordinator_id
@@ -530,8 +530,8 @@ msgstr "Test"
 
 #. module: supi_integration
 #: model:ir.model.fields,field_description:supi_integration.field_planning__region
-msgid "Region"
-msgstr "Región"
+msgid "Comuna"
+msgstr "Comuna"
 
 #. module: supi_integration
 #: model:ir.model.fields,field_description:supi_integration.field_photo_param_upload__result

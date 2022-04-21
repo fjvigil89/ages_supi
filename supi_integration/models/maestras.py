@@ -36,6 +36,7 @@ class Salas(models.Model):
 
     name = fields.Char(string="Name")
     address = fields.Char(string="Address")
+    folio = fields.Char(string="Folio")
     geo = fields.Many2one('geo', string="Geolocalization ")
 
 

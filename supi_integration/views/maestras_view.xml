@@ -194,6 +194,7 @@
                         <group>
                             <group>
                                 <field name="address" required="1" placeholder="Address..."/>
+                                <fields name="folio"/>
                             </group>
                             <group>
                                 <field name="geo"/>
