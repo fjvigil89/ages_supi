@@ -59,8 +59,6 @@ class ImportPlanograma(models.TransientModel):
                 self.write({'state': 'checked'})
             if wb:
                 pass
-
-
         except XLRDError:
             self.observations = u"Oops!  Existen problemas de incompatibilidad o de formato de estructura de la plantilla..."
         ctx = dict(self._context)
@@ -100,6 +98,63 @@ class ImportPlanograma(models.TransientModel):
     def import_data(self):
         try:
             wb = xlrd.open_workbook(file_contents=base64.decodebytes(self.data_file))
+            index_id_variable = ''
+            index_id_estudiosala = ''
+            index_id_producto = ''
+            index_fecha_inicio = ''
+            index_fecha_fin = ''
+            index_valor_historico = ''
+            index_porcentaje_validacion = ''
+            index_comentario = ''
+            index_audirtor = ''
+            ws = wb.sheet_by_index(0)
+
+            for col_index in range(ws.ncols):
+                # Obtenniendo los id columna de los encabezados
+                if ws.cell(0, col_index).value == 'ID_VARIABLE':
+                    index_id_variable = col_index
+                if ws.cell(0, col_index).value == 'ID_ESTUDIOSALA':
+                    index_id_estudiosala = col_index
+                if ws.cell(0, col_index).value == 'ID_PRODUCTO':
+                    index_id_producto = col_index
+                if ws.cell(0, col_index).value == 'FECHA_INICIO':
+                    index_fecha_inicio = col_index
+                if ws.cell(0, col_index).value == 'FECHA_FIN':
+                    index_fecha_fin = col_index
+                if ws.cell(0, col_index).value == 'VALOR_HISTORICO':
+                    index_valor_historico = col_index
+                if ws.cell(0, col_index).value == 'PORCENTAJE_VALIDACION':
+                    index_porcentaje_validacion = col_index
+                if ws.cell(0, col_index).value == 'COMENTARIO':
+                    index_comentario = col_index
+                if ws.cell(0, col_index).value == 'AUDIRTOR':
+                    index_audirtor = col_index
+
+            # RECORRER LOS ROW PARA CREAR PLANOGRAMA!
+            for row_index in range(ws.nrows):
+
+                if row_index > 0:
+                    variable_id = self.env['variables'].search(
+                        [('name', '=', str(int(ws.cell(row_index, index_id_variable).value)))])
+                    product_id = self.env['product.product'].search(
+                        [('default_code', '=', str(int(ws.cell(row_index, index_id_producto).value)))])
+                    date_start = ws.cell(row_index, index_fecha_inicio).value
+                    date_end = ws.cell(row_index, index_fecha_fin).value
+                    valor_historico = ws.cell(row_index, index_valor_historico).value
+                    porcentaje_validacion = ws.cell(row_index, index_porcentaje_validacion).value
+                    comment = ws.cell(row_index, index_comentario).value
+                    user_id = self.env['res.users'].search(
+                        [('login', '=', ws.cell(row_index, index_audirtor).value)])
+
+                    self.env['planograma'].create({
+                        # 'date_start': date_start,
+                        # 'date_end': date_end,
+                        'product_id': product_id.id,
+                        'historic_value': valor_historico,
+                        'perc_validation': porcentaje_validacion,
+                        'user_id': user_id.id,
+                        'comment': comment
+                    })
 
 
         except XLRDError:
