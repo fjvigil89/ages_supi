@@ -50,6 +50,9 @@ class ImportPlanograma(models.TransientModel):
             # valor_historico, porcentaje_historico, comentario, auditor = ''
             if message != '':
                 self.observations = message
+            else:
+                self.observations = 'Todo parece correcto.'
+                self.write({'state': 'checked'})
             if wb:
                 pass
 
@@ -71,3 +74,28 @@ class ImportPlanograma(models.TransientModel):
                 'type': 'ir.actions.act_window',
                 'target': 'new',
                 }
+
+    def go_back(self):
+        self.write({'state': 'draft'})
+        ctx = dict(self._context)
+        mod_obj = self.env['ir.model.data']
+        model_data_ids = mod_obj.search([('model', '=', 'ir.ui.view'),
+                                         ('name', '=', 'form_to_import_planograma')])
+        resource_id = model_data_ids.read(fields=['res_id'])[0]['res_id']
+
+        return {'name': ('Planograma'),
+                'context': ctx,
+                'view_mode': 'form',
+                'res_model': 'import.planograma',
+                'views': [(resource_id, 'form')],
+                'res_id': self.id,
+                'type': 'ir.actions.act_window',
+                'target': 'new',
+                }
+
+    def import_data(self):
+        try:
+            wb = xlrd.open_workbook(file_contents=base64.decodebytes(self.data_file))
+
+        except XLRDError:
+            self.observations = u"Oops!  Existen problemas de incompatibilidad en los datos del documento"

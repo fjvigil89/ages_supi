@@ -27,10 +27,10 @@
                         <button string="Validar" name="check" type="object"
                                 class="oe_highlight" states="draft"/>
 
-                        <!--                        <button string="Atrás" name="go_back" type="object" states="checked"/>-->
+                        <button string="Atrás" name="go_back" type="object" states="checked"/>
 
-                        <!--                        <button string="Importar" name="import_data" type="object"-->
-                        <!--                                class="oe_highlight" states="checked"/>-->
+                        <button string="Importar" name="import_data" type="object"
+                                class="oe_highlight" states="checked"/>
 
                         <!--                        <button string="Cerrar" name="close" type="object" states="imported"/>-->
                     </footer>
