@@ -38,6 +38,10 @@ class ImportPlanograma(models.TransientModel):
         try:
             wb = xlrd.open_workbook(file_contents=base64.decodebytes(self.data_file))
             ws = wb.sheet_by_index(0)
+
+            if ws.ncols != 9:
+                message += 'Por favor, revise el documento, se detectó un error en la cantidad de columnas del documento'
+
             for col_index in range(ws.ncols):
 
                 if ws.cell(0, col_index).value not in IDs_COLUMNS:
@@ -96,6 +100,7 @@ class ImportPlanograma(models.TransientModel):
     def import_data(self):
         try:
             wb = xlrd.open_workbook(file_contents=base64.decodebytes(self.data_file))
+
 
         except XLRDError:
             self.observations = u"Oops!  Existen problemas de incompatibilidad en los datos del documento"
