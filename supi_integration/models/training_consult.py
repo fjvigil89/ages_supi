@@ -11,4 +11,4 @@ class TrainingConsult(models.Model):
     user_id = fields.Many2one('res.users', string="User")
     param_id = fields.Many2one('parameters', string="Parameters")
     result = fields.Text(string="Result")
-    date_send = fields.Datetime('Date send')
+    date_send = fields.Date('Date send')

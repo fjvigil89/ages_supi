@@ -111,8 +111,8 @@ class PlanningStudies(models.Model):
 class Planograma(models.Model):
     _name = "planograma"
 
-    date_start = fields.Datetime('Date start')
-    date_end = fields.Datetime('Date end')
+    date_start = fields.Date('Date start')
+    date_end = fields.Date('Date end')
     place_id = fields.Many2one('salas', string="Place")
     study_id = fields.Many2one('study', string="Study")
     product_id = fields.Many2one('product.product', string="Product")

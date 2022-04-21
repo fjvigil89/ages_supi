@@ -1,20 +1,40 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
-import werkzeug
-
+import json
 from odoo import http, _
 from odoo.addons.auth_signup.models.res_users import SignupError
 from odoo.addons.web.controllers.main import ensure_db, Home
-from odoo.addons.base_setup.controllers.main import BaseSetup
 from odoo.exceptions import UserError
 from odoo.http import request
+from datetime import datetime, date
+
+from .serializers import Serializer
+from .exceptions import QueryFormatError
 
 _logger = logging.getLogger(__name__)
 
 from odoo import http
 
 from odoo.http import request
+
+
+def error_response(error, msg):
+    return {
+        "jsonrpc": "2.0",
+        "id": None,
+        "error": {
+            "code": 200,
+            "message": msg,
+            "data": {
+                "name": str(error),
+                "debug": "",
+                "message": msg,
+                "arguments": list(error.args),
+                "exception_type": type(error).__name__
+            }
+        }
+    }
 
 
 class AuthRegisterHome(Home):
@@ -111,3 +131,43 @@ class AuthRegisterHome(Home):
 
                             }
                         }
+
+    @http.route(
+        '/api/studies_today_and_later',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def get_studies_today_and_later(self, **params):
+        try:
+            today = datetime.now().date()
+            records = request.env['planograma'].search([('date_start', '=', today)]).mapped('study_id')
+            records_later = request.env['planograma'].search([('date_start', '>', today)]).mapped('study_id')
+            try:
+                serializer = Serializer(records, many=True)
+                serializer_later = Serializer(records_later, many=True)
+                data = serializer.data
+                data_later = serializer_later.data
+                res = {
+                    "count_today": len(records),
+                    "count_later": len(records_later),
+                    "studies_today": data,
+                    "studies_later": data_later
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
