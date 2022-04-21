@@ -32,7 +32,7 @@
                         <button string="Importar" name="import_data" type="object"
                                 class="oe_highlight" states="checked"/>
 
-                        <!--                        <button string="Cerrar" name="close" type="object" states="imported"/>-->
+                        <button string="Cerrar" name="close" type="object" states="imported"/>
                     </footer>
                 </form>
             </field>
