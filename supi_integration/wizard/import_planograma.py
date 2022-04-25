@@ -10,7 +10,7 @@ import xlrd
 from datetime import datetime
 
 IDs_COLUMNS = ['ID_VARIABLE', 'ID_ESTUDIOSALA', 'ID_PRODUCTO', 'FECHA_INICIO', 'FECHA_FIN', 'VALOR_HISTORICO',
-               'PORCENTAJE_VALIDACION', 'COMENTARIO', 'AUDITOR']
+               'PORCENTAJE_VALIDACION', 'COMENTARIO', 'AUDITOR', 'FOLIO_SALA']
 
 
 class ImportPlanograma(models.TransientModel):
@@ -44,7 +44,7 @@ class ImportPlanograma(models.TransientModel):
             wb = xlrd.open_workbook(file_contents=base64.decodebytes(self.data_file))
             ws = wb.sheet_by_index(0)
 
-            if ws.ncols != 9:
+            if ws.ncols != 10:
                 message += 'Por favor, revise el documento, se detectó un error en la cantidad de columnas del documento'
 
             for col_index in range(ws.ncols):
@@ -112,10 +112,13 @@ class ImportPlanograma(models.TransientModel):
             index_porcentaje_validacion = ''
             index_comentario = ''
             index_audirtor = ''
+            index_sala_folio = ''
             ws = wb.sheet_by_index(0)
 
             for col_index in range(ws.ncols):
                 # Obtenniendo los id columna de los encabezados
+                if ws.cell(0, col_index).value == 'FOLIO_SALA':
+                    index_sala_folio = col_index
                 if ws.cell(0, col_index).value == 'ID_VARIABLE':
                     index_id_variable = col_index
                 if ws.cell(0, col_index).value == 'ID_ESTUDIOSALA':
@@ -143,6 +146,10 @@ class ImportPlanograma(models.TransientModel):
                         [('id_variable', '=', str(int(ws.cell(row_index, index_id_variable).value)))])
                     product_id = self.env['product.product'].search(
                         [('barcode', '=', str(int(ws.cell(row_index, index_id_producto).value)))])
+                    print(str(int(ws.cell(row_index, index_sala_folio).value)))
+                    place_id = self.env['salas'].search(
+                        [('folio', '=', str(int(ws.cell(row_index, index_sala_folio).value)))])
+
                     study_id = self.env['study'].search(
                         [('name', '=', str(int(ws.cell(row_index, index_id_estudiosala).value))),
                          ('variable_id.id_variable', '=', variable_id.id_variable)])
@@ -160,6 +167,7 @@ class ImportPlanograma(models.TransientModel):
                     self.env['planograma'].create({
                         'date_start': date_start,
                         'date_end': date_end,
+                        'place_id': place_id.id,
                         'product_id': product_id.id,
                         'study_id': study_id.id,
                         'historic_value': valor_historico,

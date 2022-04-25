@@ -185,18 +185,13 @@
             <field name="arch" type="xml">
                 <form string="Salas">
                     <sheet>
-                        <div class="oe_title">
-                            <label for="name" class="oe_edit_only"/>
-                            <h1>
-                                <field name="name" required="1"/>
-                            </h1>
-                        </div>
                         <group>
                             <group>
+                                <field name="name" required="1"/>
                                 <field name="address" required="1" placeholder="Address..."/>
-                                <fields name="folio"/>
                             </group>
                             <group>
+                                <field name="folio" required="1"/>
                                 <field name="geo"/>
                             </group>
 
@@ -213,6 +208,7 @@
             <field name="arch" type="xml">
                 <tree string="Salas">
                     <field name="name"/>
+                    <field name="folio"/>
                 </tree>
             </field>
         </record>
