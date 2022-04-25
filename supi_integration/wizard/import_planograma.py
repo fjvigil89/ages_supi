@@ -142,7 +142,7 @@ class ImportPlanograma(models.TransientModel):
                     variable_id = self.env['variables'].search(
                         [('id_variable', '=', str(int(ws.cell(row_index, index_id_variable).value)))])
                     product_id = self.env['product.product'].search(
-                        [('default_code', '=', str(int(ws.cell(row_index, index_id_producto).value)))])
+                        [('barcode', '=', str(int(ws.cell(row_index, index_id_producto).value)))])
                     study_id = self.env['study'].search(
                         [('name', '=', str(int(ws.cell(row_index, index_id_estudiosala).value))),
                          ('variable_id.id_variable', '=', variable_id.id_variable)])

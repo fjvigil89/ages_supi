@@ -1,12 +1,34 @@
 <?xml version="1.0"?>
 <odoo>
     <data>
+        <!-- Res users extension !-->
+        <record id="product_normal_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.normal.form.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <field name="default_code" position="attributes">
+                   <attribute name="string">EAN</attribute>
+                </field>
+            </field>
+        </record>
+
+         <!-- Res users extension !-->
+        <record id="product_normal_tree_view_inherit" model="ir.ui.view">
+            <field name="name">product.normal.tree.view</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_product_tree_view"/>
+            <field name="arch" type="xml">
+                <field name="default_code" position="attributes">
+                   <attribute name="string">EAN</attribute>
+                </field>
+            </field>
+        </record>
         <menuitem id="menu_products_supi"
                   name="Products"
                   action="product.product_normal_action"
                   parent="supi_integration.main_data_supi"
                   sequence="5"/>
     </data>
-
 
 </odoo>
