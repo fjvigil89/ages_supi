@@ -22,7 +22,7 @@ jobs:
         host: ${{ secrets.SERVER_HOST_AMAZON }}
         port: ${{ secrets.SERVER_PORT }}
         username: ${{ secrets.SERVER_USERNAME }}
-        private_key: "~/.ssh/id_rsa"
+        private_key: ${{ secrets.PRIVATE_KEY }}
         scp_source: ./*
         scp_target: ~/odoo14/addons/
         before_script: | 
