@@ -10,7 +10,10 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v2
-
+    - name: SSH_ Agent
+      uses: webfactory/ssh-agent@v0.5.4
+      with:
+          ssh-private-key: ${{ secrets.PRIVATE_KEY }}
     - name: SSH Server Deploy
       uses: kostya-ten/ssh-server-deploy@v4
       env:
@@ -19,7 +22,7 @@ jobs:
         host: ${{ secrets.SERVER_HOST_AMAZON }}
         port: ${{ secrets.SERVER_PORT }}
         username: ${{ secrets.SERVER_USERNAME }}
-        private_key: ${{ secrets.PRIVATE_KEY }}
+        private_key: "~/.ssh/id_rsa"
         scp_source: ./*
         scp_target: ~/odoo14/addons/
         before_script: | 
