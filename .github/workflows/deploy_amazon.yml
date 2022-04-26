@@ -16,6 +16,8 @@ jobs:
       with:
         key: ${{ secrets.PRIVATE_KEY }}
         known_hosts: 'frank@frank-HP-ProBook-450-G8-Notebook-PC'
+    
+    - name: Adding Known Hosts
       run: |
         ssh-keyscan -H ${{ secrets.SERVER_HOST_AMAZON }} >> ~/.ssh/known_hosts
     
