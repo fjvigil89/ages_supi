@@ -1,11 +1,11 @@
 on: 
   push:
     branches:
-    - devops
+    - master
 name: deploy Amazon
 jobs:
   deploy:
-    name: deploy odoo14 addons
+    name: Amazon deploy odoo14 addons
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
