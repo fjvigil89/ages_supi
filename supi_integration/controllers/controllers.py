@@ -137,19 +137,35 @@ class AuthRegisterHome(Home):
         type='http', auth='user', methods=['GET'], csrf=False)
     def get_studies_today_and_later(self, **params):
         try:
-            today = datetime.now().date()
+            today = datetime.utcnow().date()
+            print(today)
             records = request.env['planograma'].search([('date_start', '=', today)]).mapped('study_id')
+            planos_today = request.env['planograma'].search([('date_start', '=', today)])
+            planos_later = request.env['planograma'].search([('date_start', '>', today)])
             records_later = request.env['planograma'].search([('date_start', '>', today)]).mapped('study_id')
             try:
                 serializer = Serializer(records, many=True)
                 serializer_later = Serializer(records_later, many=True)
-                data = serializer.data
-                data_later = serializer_later.data
+                salas_hoy = []
+                salas_manana = []
+
+                for item in planos_today:
+                    if item.place_id.id not in salas_hoy:
+                        salas_hoy.append(item.place_id.id)
+                for item in planos_later:
+                    if item.place_id.id not in salas_hoy:
+                        salas_manana.append(item.place_id.id)
+                # serializer_salas_today = Serializer(salas_hoy, many=True)
+                # serializer_salas_later = Serializer(salas_manana, many=True)
                 res = {
+                    "count_salas_today": len(salas_hoy),
+                    "count_salas_later": len(salas_manana),
+                    # "salas_hoy": serializer_salas_today.data,
+                    # "salas_later": serializer_salas_later.data,
                     "count_today": len(records),
                     "count_later": len(records_later),
-                    "studies_today": data,
-                    "studies_later": data_later
+                    "studies_today": serializer.data,
+                    "studies_later": serializer_later.data
                 }
                 return http.Response(
                     json.dumps(res),
