@@ -7,6 +7,20 @@
                   parent="supi_integration.main_data_supi"
                   sequence="4"/>
 
+        <record id="action_country_state_supi" model="ir.actions.act_window">
+            <field name="name">Regiones</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.country.state</field>
+            <field name="domain">[('country_id', '=',46) ]</field>
+            <field name="view_id" ref="base.view_country_state_tree"/>
+            <field name="help">Puede administrar los distintos estados federales en los que está trabajando</field>
+        </record>
+        <menuitem id="menu_states_supi"
+                  name="Regiones"
+                  action="action_country_state_supi"
+                  parent="supi_integration.main_data_supi"
+                  sequence="5"/>
+
 
     </data>
 

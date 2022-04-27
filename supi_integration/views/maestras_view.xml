@@ -188,6 +188,7 @@
                         <group>
                             <group>
                                 <field name="name" required="1"/>
+                                <field name="state_id" required="1"/>
                                 <field name="address" required="1" placeholder="Address..."/>
                             </group>
                             <group>
@@ -239,6 +240,67 @@
         <menuitem id="menu_salas_supi"
                   name="Salas"
                   action="action_salas"
+                  parent="supi_integration.main_data_supi"
+                  sequence="5"/>
+
+        <!--        COMUNAS-->
+        <record model="ir.ui.view" id="view_comuna_form">
+            <field name="name">comuna.form</field>
+            <field name="model">comunas</field>
+            <field name="arch" type="xml">
+                <form string="Comunas">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="1"/>
+                            </group>
+                            <group>
+                                <field name="state_id" required="1"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_comunas_tree">
+            <field name="name">comunas.tree</field>
+            <field name="model">comunas</field>
+            <field name="arch" type="xml">
+                <tree string="Comunas">
+                    <field name="name"/>
+                    <field name="state_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_comunas_search" model="ir.ui.view">
+            <field name="name">comunas.search</field>
+            <field name="model">comunas</field>
+            <field name="arch" type="xml">
+                <search string="Comunas">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_comunas" model="ir.actions.act_window">
+            <field name="name">Comunas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">comunas</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_comunas_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new comunas in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_comunas_supi"
+                  name="Comunas"
+                  action="action_comunas"
                   parent="supi_integration.main_data_supi"
                   sequence="5"/>
 

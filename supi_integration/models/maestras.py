@@ -31,12 +31,20 @@ class Parameters(models.Model):
     detail = fields.Char(string="Details")
 
 
+class Comunas(models.Model):
+    _name = 'comunas'
+    name = fields.Char(string="Name")
+    state_id = fields.Many2one('res.country.state', string="Region", domain=[('country_id', '=', 46)])
+
+
 class Salas(models.Model):
     _name = 'salas'
 
     name = fields.Char(string="Name")
     address = fields.Char(string="Address")
     folio = fields.Char(string="Folio")
+    comuna_id = fields.Many2one('comunas', string="Comuna")
+    state_id = fields.Many2one('res.country.state', string="Region", domain=[('country_id', '=', 46)])
     geo = fields.Many2one('geo', string="Geolocalization ")
 
 
