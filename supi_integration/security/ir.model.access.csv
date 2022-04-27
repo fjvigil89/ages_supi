@@ -12,5 +12,5 @@ access_supi_integration_planning,supi_integration.planning,model_planning,,1,1,1
 access_supi_integration_planning_studies,supi_integration.planning.studies,model_planning_studies,,1,1,1,1
 access_supi_integration_planograma,supi_integration.planograma,model_planograma,,1,1,1,1
 access_supi_integration_photo_param_upload,supi_integration.photo.param.upload,model_photo_param_upload,,1,1,1,1
-access_supi_integration_import_planograma,supi_integration.import.planograma,model_import_planograma,,1,1,1,1
 access_supi_integration_comunas,supi_integration.comunas,model_comunas,,1,1,1,1
+access_supi_integration_import_planograma,supi_integration.import.planograma,model_import_planograma,,1,1,1,1
