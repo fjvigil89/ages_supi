@@ -139,10 +139,10 @@ class AuthRegisterHome(Home):
         try:
             today = datetime.utcnow().date()
             print(today)
-            records = request.env['planograma'].search([('date_start', '=', today)]).mapped('study_id')
+            records = request.env['planograma'].search([('date_start', '=', today)])
             planos_today = request.env['planograma'].search([('date_start', '=', today)])
             planos_later = request.env['planograma'].search([('date_start', '>', today)])
-            records_later = request.env['planograma'].search([('date_start', '>', today)]).mapped('study_id')
+            records_later = request.env['planograma'].search([('date_start', '>', today)])
             try:
                 serializer = Serializer(records, many=True)
                 serializer_later = Serializer(records_later, many=True)
@@ -155,17 +155,19 @@ class AuthRegisterHome(Home):
                 for item in planos_later:
                     if item.place_id.id not in salas_hoy:
                         salas_manana.append(item.place_id.id)
-                # serializer_salas_today = Serializer(salas_hoy, many=True)
-                # serializer_salas_later = Serializer(salas_manana, many=True)
+
+                serializer_salas_today = Serializer(planos_today.mapped('place_id'), many=True)
+                serializer_salas_later = Serializer(planos_later.mapped('place_id'), many=True)
                 res = {
-                    "count_salas_today": len(salas_hoy),
-                    "count_salas_later": len(salas_manana),
-                    # "salas_hoy": serializer_salas_today.data,
-                    # "salas_later": serializer_salas_later.data,
+
+                    "count_salas_today": len(salas_hoy),  # Cantidad de salas para hoy
+                    "count_salas_later": len(salas_manana),  # Cantidad de salas proximas
+                    "salas_hoy": serializer_salas_today.data,  # Datos salas hoy
+                    "salas_later": serializer_salas_later.data,  # Datos salas proximas
                     "count_today": len(records),
                     "count_later": len(records_later),
-                    "studies_today": serializer.data,
-                    "studies_later": serializer_later.data
+                    "studies_today": serializer.data, #Planogramas hoy
+                    "studies_later": serializer_later.data  #Planogramas proximos
                 }
                 return http.Response(
                     json.dumps(res),
