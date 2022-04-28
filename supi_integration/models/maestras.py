@@ -61,13 +61,11 @@ class Variables(models.Model):
 
     name = fields.Char(string="Name")
     id_variable = fields.Char(string="ID VARIABLE")
-    type = fields.Selection([
-        ('osa', 'OSA (Presence)'),
-        ('price', 'Price'),
-        ('facing_sovi', 'Facing Sovi'),
-        ('posters', 'Posters'),
-        ('display', 'Display'),
-    ], string='Type', help='Variables of study in system')
+    type = fields.Selection(
+        [('price', 'Price'), ('pop', 'Pop'), ('cold_equipment', 'Cold Equipment'), ('facing', 'Facing'),
+         ('sovi', 'Sovi'), ('osa', 'OSA'),
+         ('exhibitions', 'Exhibitions')],
+        string='Tipo de estudio', default='price')
     image = fields.Binary(string="Image")
 
 

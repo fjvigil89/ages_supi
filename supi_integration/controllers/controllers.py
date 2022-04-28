@@ -166,8 +166,105 @@ class AuthRegisterHome(Home):
                     "salas_later": serializer_salas_later.data,  # Datos salas proximas
                     "count_today": len(records),
                     "count_later": len(records_later),
-                    "studies_today": serializer.data, #Planogramas hoy
-                    "studies_later": serializer_later.data  #Planogramas proximos
+                    "studies_today": serializer.data,  # Planogramas hoy
+                    "studies_later": serializer_later.data  # Planogramas proximos
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+    @http.route(
+        '/api/studies_data_by_sala',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def get_studies_by_sala_today_and_later(self, **params):
+        try:
+            place_id = params["place_id"]
+            print(place_id)
+            today = datetime.utcnow().date()
+            print(today)
+            records = request.env['planograma'].search([('date_start', '=', today), ('place_id', '=', int(place_id))])
+            planos_today = request.env['planograma'].search(
+                [('date_start', '=', today), ('place_id', '=', int(place_id))])
+            planos_later = request.env['planograma'].search(
+                [('date_start', '>', today), ('place_id', '=', int(place_id))])
+            records_later = request.env['planograma'].search(
+                [('date_start', '>', today), ('place_id', '=', int(place_id))])
+            try:
+                serializer = Serializer(records.mapped('study_id'), many=True)
+                serializer_later = Serializer(records_later.mapped('study_id'), many=True)
+                salas_hoy = []
+                salas_manana = []
+
+                for item in planos_today:
+                    if item.place_id.id not in salas_hoy:
+                        salas_hoy.append(item.place_id.id)
+                for item in planos_later:
+                    if item.place_id.id not in salas_hoy:
+                        salas_manana.append(item.place_id.id)
+
+                serializer_salas_today = Serializer(planos_today.mapped('place_id'), many=True)
+                serializer_salas_later = Serializer(planos_later.mapped('place_id'), many=True)
+                res = {
+
+                    # "count_salas_today": len(salas_hoy),  # Cantidad de salas para hoy
+                    # "count_salas_later": len(salas_manana),  # Cantidad de salas proximas
+                    # "salas_hoy": serializer_salas_today.data,  # Datos salas hoy
+                    # "salas_later": serializer_salas_later.data,  # Datos salas proximas
+                    # "count_today": len(records),
+                    # "count_later": len(records_later),
+                    "studies_today": serializer.data,  # Planogramas hoy
+                    "studies_later": serializer_later.data  # Planogramas proximos
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+    @http.route(
+        '/api/study_variable_id',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def get_studies_by_variable_id(self, **params):
+        try:
+            variable_id = params["variable_id"]
+            records = request.env['study'].search([('variable_id', '=', int(variable_id))])
+            try:
+                serializer = Serializer(records.mapped('variable_id'), many=True)
+
+                res = {
+                    "data": serializer.data,  # Planogramas hoy
                 }
                 return http.Response(
                     json.dumps(res),
