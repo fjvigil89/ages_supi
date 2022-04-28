@@ -189,6 +189,8 @@
                             <group>
                                 <field name="name" required="1"/>
                                 <field name="state_id" required="1"/>
+                                <field name="comuna_id" required="1"/>
+
                                 <field name="address" required="1" placeholder="Address..."/>
                             </group>
                             <group>
