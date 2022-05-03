@@ -286,3 +286,46 @@ class AuthRegisterHome(Home):
                 status=200,
                 mimetype='application/json'
             )
+
+    @http.route(
+        '/api/get_comunas',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def get_comunas(self, **params):
+        try:
+            user_id = params["user_id"]
+            today = datetime.utcnow().date()
+            records = request.env['planograma'].search(
+                [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
+                'place_id').mapped('comuna_id')
+
+            records_later = request.env['planograma'].search(
+                [('date_start', '>', today), ('state', '=', 'ready'),  ('user_id', '=', int(user_id))]).mapped('place_id').mapped('comuna_id')
+
+            try:
+                serializer = Serializer(records, query='{name,id,state_id{id,name}}', many=True)
+                serializer_later = Serializer(records_later, query='{name,id,state_id{id,name}}', many=True)
+
+                res = {
+                    "comunas_studies_today": serializer.data,  # Cantidad de salas para hoy
+                    "comunas_studies_later": serializer_later.data,  # Cantidad de salas para hoy
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )

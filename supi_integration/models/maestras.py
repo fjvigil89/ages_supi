@@ -119,6 +119,11 @@ class Planograma(models.Model):
     _name = "planograma"
 
     name = fields.Char(related='product_id.name')
+    state = fields.Selection([
+        ('ready', 'Listo'),
+        ('in_process', 'En proceso'),
+        ('done', 'Hecho'),
+    ], string='Estado', default='ready')
     date_start = fields.Date('Date start')
     date_end = fields.Date('Date end')
     place_id = fields.Many2one('salas', string="Place")
