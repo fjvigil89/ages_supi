@@ -38,10 +38,14 @@
                   id="secondary_data_supi"
                   sequence="2"
                   parent="supi"/>
+        <menuitem name="Operaciones"
+                  id="operations_supi"
+                  sequence="3"
+                  parent="supi"/>
 
         <menuitem name="Ajustes"
                   id="ajustes_data_supi"
-                  sequence="2"
+                  sequence="4"
                   parent="supi"/>
 
     </data>

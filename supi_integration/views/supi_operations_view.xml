@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <!--        SECTION-->
+        <record model="ir.ui.view" id="view_quiz_result_form">
+            <field name="name">quiz.result</field>
+            <field name="model">quiz.result</field>
+            <field name="arch" type="xml">
+                <form string="Resultados de quiz">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="user_id" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="quiz_id" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Respuestas">
+                                <group>
+                                    <field name="respuesta_seleccionada" readonly="1"/>
+                                    <field name="respuesta1" readonly="1"/>
+                                    <field name="respuesta2" readonly="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_quiz_result_tree">
+            <field name="name">quiz.result.tree</field>
+            <field name="model">quiz.result</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false" edit="false" string="Resultados de tests">
+                    <field name="name"/>
+                    <field name="quiz_id"/>
+                    <field name="user_id"/>
+                    <field name="respuesta_seleccionada"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_quiz_result_search" model="ir.ui.view">
+            <field name="name">quiz.result.search</field>
+            <field name="model">quiz.result</field>
+            <field name="arch" type="xml">
+                <search string="Resultados de Quiz">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="quiz_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_quiz_result" model="ir.actions.act_window">
+            <field name="name">Resultados de quiz</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">quiz.result</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_quiz_result_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new quiz results in your system
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_quiz_result_supi"
+                  name="Resultados de quiz"
+                  action="action_quiz_result"
+                  parent="supi_integration.operations_supi"
+                  sequence="2"/>
+    </data>
+</odoo>
