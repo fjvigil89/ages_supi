@@ -12,3 +12,9 @@ class QuizResult(models.Model):
     respuesta_seleccionada = fields.Char(string="Respuesta seleccionada")
     respuesta1 = fields.Char(string="Respuesta aleatoria")
     respuesta2 = fields.Char(string="Respuesta aleatoria")
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        for values in vals_list:
+            quiz_result = super().create(values)
+        return quiz_result
