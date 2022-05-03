@@ -334,7 +334,7 @@ class AuthRegisterHome(Home):
     @http.route(
         '/api/get_salas_by_comuna',
         type='http', auth='user', methods=['GET'], csrf=False)
-    def get_comunas(self, **params):
+    def get_salas_by_comuna(self, **params):
         try:
             comuna_id = params["comuna_id"]
             user_id = params["user_id"]
@@ -356,6 +356,54 @@ class AuthRegisterHome(Home):
                 res = {
                     "salas_studies_today": serializer.data,  # Cantidad de salas para hoy
                     "salas_studies_later": serializer_later.data,  # Cantidad de salas para hoy
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+    @http.route(
+        '/api/get_studies_by_place',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def get_studies_by_place(self, **params):
+        try:
+            place_id = params["place_id"]
+            user_id = params["user_id"]
+            today = datetime.utcnow().date()
+            records = request.env['planograma'].search(
+                [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
+                 ('place_id', '=', int(place_id))])
+
+            records_later = request.env['planograma'].search(
+                [('date_start', '>', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
+                 ('place_id', '=', int(place_id))])
+            try:
+                serializer = Serializer(records,
+                                        query='{study_id{id,name,variable_id{id,name,id_variable,type}}}',
+                                        many=True)
+                serializer_later = Serializer(records_later,
+                                              query='{study_id{id,name,variable_id{id,name,id_variable,type}}}',
+                                              many=True)
+
+                res = {
+                    "studies_today": serializer.data,  # Cantidad de salas para hoy
+                    "studies_later": serializer_later.data,  # Cantidad de salas para hoy
                 }
                 return http.Response(
                     json.dumps(res),
