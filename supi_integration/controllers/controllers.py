@@ -425,3 +425,51 @@ class AuthRegisterHome(Home):
                 status=200,
                 mimetype='application/json'
             )
+
+    @http.route(
+        '/api/get_products_by_study',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def get_products_by_study(self, **params):
+        try:
+            study_id = params["study_id"]
+            user_id = params["user_id"]
+            today = datetime.utcnow().date()
+            records = request.env['planograma'].search(
+                [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
+                 ('study_id', '=', int(study_id))])
+
+            records_later = request.env['planograma'].search(
+                [('date_start', '>', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
+                 ('study_id', '=', int(study_id))])
+            try:
+                serializer = Serializer(records,
+                                        query='{product_id{id,name,default_code,barcode,image_1920}}',
+                                        many=True)
+                serializer_later = Serializer(records_later,
+                                              query='{product_id{id,name,default_code,barcode,image_1920}}',
+                                              many=True)
+
+                res = {
+                    "products_today": serializer.data,  # Cantidad de salas para hoy
+                    "products_later": serializer_later.data,  # Cantidad de salas para hoy
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
