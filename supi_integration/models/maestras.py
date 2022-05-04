@@ -137,3 +137,8 @@ class Planograma(models.Model):
     perc_validation = fields.Float(string="Validation %")
     historic_value = fields.Float(string="Historic value")
     user_id = fields.Many2one('res.users', string='Auditor', default=lambda self: self.env.user)
+    quebrado = fields.Boolean(string="Quebrado", default=False)
+    cautivo = fields.Boolean(string="Cautivo", default=False)
+    c_erroneo = fields.Boolean(string="Código erróneo", default=False)
+    cartel = fields.Boolean(string="Cartel", default=False)
+    image = fields.Image("Imagen")

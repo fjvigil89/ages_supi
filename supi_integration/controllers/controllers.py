@@ -427,9 +427,57 @@ class AuthRegisterHome(Home):
             )
 
     @http.route(
-        '/api/get_products_by_study',
+        '/api/get_products_by_categ_id',
         type='http', auth='user', methods=['GET'], csrf=False)
-    def get_products_by_study(self, **params):
+    def get_products_by_categ_id(self, **params):
+        try:
+            categ_id = params["categ_id"]
+            sala_id = params["sala_id"]
+            study_id = params["study_id"]
+            user_id = params["user_id"]
+            today = datetime.utcnow().date()
+            records = request.env['planograma'].search(
+                [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
+                 ('place_id', '=', int(sala_id)), ('study_id', '=', int(study_id)),
+                 ('product_id.categ_id', '=', int(categ_id))])
+
+            try:
+                serializer = Serializer(records,
+                                        query='{id,quebrado,cartel,cautivo,c_erroneo,image,product_id{id,name,default_code,barcode,image_1920}}',
+                                        many=True)
+                # serializer_later = Serializer(records_later,
+                #                               query='{product_id{id,name,default_code,barcode,image_1920}}',
+                #                               many=True)
+
+                res = {
+                    "products_today": serializer.data,  # Cantidad de salas para hoy
+                    # "products_later": serializer_later.data,  # Cantidad de salas para hoy
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+    @http.route(
+        '/api/get_categories_of_products_by_study',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def get_categories_of_products_by_study(self, **params):
         try:
             study_id = params["study_id"]
             user_id = params["user_id"]
@@ -442,16 +490,16 @@ class AuthRegisterHome(Home):
                 [('date_start', '>', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
                  ('study_id', '=', int(study_id))])
             try:
-                serializer = Serializer(records,
-                                        query='{product_id{id,name,default_code,barcode,image_1920}}',
+                serializer = Serializer(records.mapped('product_id'),
+                                        query='{categ_id{id,name}}',
                                         many=True)
-                serializer_later = Serializer(records_later,
-                                              query='{product_id{id,name,default_code,barcode,image_1920}}',
+                serializer_later = Serializer(records.mapped('product_id'),
+                                              query='{categ_id{id,name}}',
                                               many=True)
 
                 res = {
-                    "products_today": serializer.data,  # Cantidad de salas para hoy
-                    "products_later": serializer_later.data,  # Cantidad de salas para hoy
+                    "categorias_today": serializer.data,  # Cantidad de salas para hoy
+                    "categorias_later": serializer_later.data,  # Cantidad de salas para hoy
                 }
                 return http.Response(
                     json.dumps(res),

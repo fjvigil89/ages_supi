@@ -794,6 +794,21 @@
                                 <field name="historic_value"/>
                             </group>
                         </group>
+                         <notebook>
+                        <page name="audit_price" string="Auditoria">
+                            <group>
+                                <group>
+                                    <field name="quebrado"/>
+                                    <field name="cautivo"/>
+                                    <field name="c_erroneo"/>
+                                    <field name="cartel"/>
+                                </group>
+                                <group>
+                                    <field name="image" string="Imagen"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
                     </sheet>
                 </form>
             </field>
@@ -814,6 +829,7 @@
                     <field name="perc_validation"/>
                     <field name="historic_value"/>
                     <field name="state"/>
+
                 </tree>
             </field>
         </record>
