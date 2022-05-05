@@ -443,7 +443,7 @@ class AuthRegisterHome(Home):
 
             try:
                 serializer = Serializer(records,
-                                        query='{id,quebrado,cartel,cautivo,c_erroneo,image,product_id{id,name,default_code,barcode,image_1920}}',
+                                        query='{id,quebrado,cartel,cautivo,c_erroneo,image,product_id{id,name,default_code,barcode,lst_price,pack,image_1920}}',
                                         many=True)
                 # serializer_later = Serializer(records_later,
                 #                               query='{product_id{id,name,default_code,barcode,image_1920}}',
