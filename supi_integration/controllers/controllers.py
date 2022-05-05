@@ -8,6 +8,7 @@ from odoo.addons.web.controllers.main import ensure_db, Home
 from odoo.exceptions import UserError
 from odoo.http import request
 from datetime import datetime, date
+from odoo import http, _, exceptions
 
 from .serializers import Serializer
 from .exceptions import QueryFormatError
@@ -443,7 +444,7 @@ class AuthRegisterHome(Home):
 
             try:
                 serializer = Serializer(records,
-                                        query='{id,quebrado,cartel,cautivo,c_erroneo,image,product_id{id,name,default_code,barcode,lst_price,pack,image_1920}}',
+                                        query='{id,state,quebrado,cartel,cautivo,c_erroneo,image,product_id{id,name,default_code,barcode,lst_price,pack,image_1920}}',
                                         many=True)
                 # serializer_later = Serializer(records_later,
                 #                               query='{product_id{id,name,default_code,barcode,image_1920}}',
@@ -521,3 +522,33 @@ class AuthRegisterHome(Home):
                 status=200,
                 mimetype='application/json'
             )
+
+    @http.route(
+        '/api/update_planogramas/',
+        type='json', auth="user", methods=['PUT'], csrf=False)
+    def update_planogramas(self, **post):
+        try:
+            data = post['data']
+        except KeyError:
+            msg = "`data` parameter is not found on PUT request body"
+            raise exceptions.ValidationError(msg)
+        try:
+            for item in data:
+                planograma = request.env['planograma'].search([('id', '=', item.get('id'))])
+                planograma.update({
+                    'quebrado': item.get('quebrado'),
+                    'cartel': item.get('cartel'),
+                    'cautivo': item.get('cautivo'),
+                    'c_erroneo': item.get('c_erroneo'),
+                    'image': item.get('image'),
+                    'state': item.get('state'),
+                })
+                planograma.product_id.sudo().update({
+                    'lst_price': item.get('product_id').get('lst_price'),
+                    'pack': item.get('product_id').get('pack'),
+                })
+
+            return "updated"
+        except Exception as e:
+            # TODO: Return error message(e.msg) on a response
+            return False
