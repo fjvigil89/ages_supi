@@ -39,6 +39,7 @@ jobs:
         before_script: | 
           rm -rf ~/odoo14/addons/*
         after_script: |
+          sudo chmod -R 755 ~/odoo14/addons
           sudo docker-compose -f ~/odoo14/docker-compose.yml restart
           
    
