@@ -37,9 +37,10 @@ jobs:
         scp_source: ./*
         scp_target: ~/odoo14/addons/
         before_script: | 
+          sudo chmod -R 755 ~/odoo14/addons
           rm -rf ~/odoo14/addons/*
         after_script: |
-          sudo chmod -R 755 ~/odoo14/addons
+          
           sudo docker-compose -f ~/odoo14/docker-compose.yml restart
           
    
