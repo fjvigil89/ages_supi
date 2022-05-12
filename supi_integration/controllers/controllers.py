@@ -295,21 +295,84 @@ class AuthRegisterHome(Home):
         try:
             user_id = params["user_id"]
             today = datetime.utcnow().date()
+            print(today)
             records = request.env['planograma'].search(
                 [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
                 'place_id').mapped('comuna_id')
+            data_today = []
+            for comuna in records:
+                red = False
+                blue = False
+                yellow = False
+                green = False
+                brown = False
+                records = request.env['planograma'].search(
+                    [('date_start', '=', today), ('state', '=', 'ready'), ('place_id.comuna_id', '=', comuna.id),
+                     ('user_id', '=', int(user_id))]).mapped('study_id').mapped('variable_id')
+
+                for variable in records:
+                    if variable.type == 'cold_equipment':
+                        red = True
+                    if variable.type == 'exhibitions':
+                        blue = True
+                    if variable.type == 'price':
+                        yellow = True
+                    if variable.type == 'osa':
+                        green = True
+                    if variable.type == 'facing':
+                        brown = True
+                comuna_data = {
+                    'comuna_id': comuna.id,
+                    "nombre_comuna": comuna.name,
+                    "ROJO": red,
+                    "AZUL": blue,
+                    "AMARILLO": yellow,
+                    "VERDE": green,
+                    "CARMELITA": brown
+                }
+                data_today.append(comuna_data)
 
             records_later = request.env['planograma'].search(
                 [('date_start', '>', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
                 'place_id').mapped('comuna_id')
+            data_later = []
+            for comuna in records_later:
+                red = False
+                blue = False
+                yellow = False
+                green = False
+                brown = False
+                records = request.env['planograma'].search(
+                    [('date_start', '>', today), ('state', '=', 'ready'), ('place_id.comuna_id', '=', comuna.id),
+                     ('user_id', '=', int(user_id))]).mapped('study_id').mapped('variable_id')
+
+                for variable in records:
+                    if variable.type == 'cold_equipment':
+                        red = True
+                    if variable.type == 'exhibitions':
+                        blue = True
+                    if variable.type == 'price':
+                        yellow = True
+                    if variable.type == 'osa':
+                        green = True
+                    if variable.type == 'facing':
+                        brown = True
+                comuna_data = {
+                    'comuna_id': comuna.id,
+                    "nombre_comuna": comuna.name,
+                    "ROJO": red,
+                    "AZUL": blue,
+                    "AMARILLO": yellow,
+                    "VERDE": green,
+                    "CARMELITA": brown
+                }
+                data_later.append(comuna_data)
 
             try:
-                serializer = Serializer(records, query='{name,id,state_id{id,name}}', many=True)
-                serializer_later = Serializer(records_later, query='{name,id,state_id{id,name}}', many=True)
 
                 res = {
-                    "comunas_studies_today": serializer.data,  # Cantidad de salas para hoy
-                    "comunas_studies_later": serializer_later.data,  # Cantidad de salas para hoy
+                    "Comunas de hoy": data_today,  # Cantidad de salas para hoy
+                    "Comunas de Semana Próxima": data_later,  # Cantidad de salas para hoy
                 }
                 return http.Response(
                     json.dumps(res),
