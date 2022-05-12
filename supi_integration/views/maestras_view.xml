@@ -804,7 +804,7 @@
                                     <field name="cartel"/>
                                 </group>
                                 <group>
-                                    <field name="image" string="Imagen"/>
+                                    <field name="image" string="Imagen" widget="image"/>
                                 </group>
                             </group>
                         </page>
