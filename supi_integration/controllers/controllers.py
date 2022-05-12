@@ -402,13 +402,18 @@ class AuthRegisterHome(Home):
         try:
             comuna_id = params["comuna_id"]
             user_id = params["user_id"]
+            type = params["type"]
             today = datetime.utcnow().date()
             records = request.env['planograma'].search(
-                [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
+                [('date_start', '=', today),
+                 ('state', '=', 'ready'),
+                 ('study_id.variable_id.type', '=', type),
+                 ('user_id', '=', int(user_id)),
                  ('place_id.comuna_id', '=', int(comuna_id))])
 
             records_later = request.env['planograma'].search(
-                [('date_start', '>', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
+                [('date_start', '>', today), ('state', '=', 'ready'), ('study_id.variable_id.type', '=', type),
+                 ('user_id', '=', int(user_id)),
                  ('place_id.comuna_id', '=', int(comuna_id))])
             try:
                 serializer = Serializer(records, query='{place_id{id,name,folio,geo{lat,long},state_id{id,name}}}',
