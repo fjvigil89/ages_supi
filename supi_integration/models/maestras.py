@@ -54,9 +54,9 @@ class Salas(models.Model):
     def compute_url_image(self):
         print("url")
         base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
-
-        image_url_1920 = base_url + '/web/image?' + 'model=salas&id=' + str(self.id) + '&field=image'
-        self.url_image = image_url_1920
+        for rec in self:
+            image_url_1920 = base_url + '/web/image?' + 'model=salas&id=' + str(rec.id) + '&field=image'
+            rec.url_image = image_url_1920
 
 
 class PhotoSupi(models.Model):
