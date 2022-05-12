@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.tools.image import image_data_uri
 
 
 # https://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&key=YOUR_API_KEY
@@ -44,9 +45,18 @@ class Salas(models.Model):
     address = fields.Char(string="Address")
     folio = fields.Char(string="Folio")
     image = fields.Binary(string="Imagen")
+    url_image = fields.Char(string="Url imagen", compute='compute_url_image')
     comuna_id = fields.Many2one('comunas', string="Comuna")
     state_id = fields.Many2one('res.country.state', string="Region", domain=[('country_id', '=', 46)])
     geo = fields.Many2one('geo', string="Geolocalization ")
+
+    @api.depends('image')
+    def compute_url_image(self):
+        print("url")
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+
+        image_url_1920 = base_url + '/web/image?' + 'model=salas&id=' + str(self.id) + '&field=image'
+        self.url_image = image_url_1920
 
 
 class PhotoSupi(models.Model):

@@ -13,6 +13,8 @@ from odoo import http, _, exceptions
 from .serializers import Serializer
 from .exceptions import QueryFormatError
 
+from odoo.tools.image import image_data_uri
+
 _logger = logging.getLogger(__name__)
 
 from odoo import http
@@ -417,10 +419,10 @@ class AuthRegisterHome(Home):
                  ('place_id.comuna_id', '=', int(comuna_id))])
             try:
                 serializer = Serializer(records,
-                                        query='{place_id{id,image,name,folio,geo{lat,long},state_id{id,name}}}',
+                                        query='{place_id{id,url_image,name,folio,geo{lat,long},state_id{id,name}}}',
                                         many=True)
                 serializer_later = Serializer(records_later,
-                                              query='{place_id{id,image,name,folio,geo{lat,long},state_id{id,name}}}',
+                                              query='{place_id{id,url_image,name,folio,geo{lat,long},state_id{id,name}}}',
                                               many=True)
 
                 res = {
