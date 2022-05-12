@@ -43,6 +43,7 @@ class Salas(models.Model):
     name = fields.Char(string="Name")
     address = fields.Char(string="Address")
     folio = fields.Char(string="Folio")
+    image = fields.Binary(string="Imagen")
     comuna_id = fields.Many2one('comunas', string="Comuna")
     state_id = fields.Many2one('res.country.state', string="Region", domain=[('country_id', '=', 46)])
     geo = fields.Many2one('geo', string="Geolocalization ")

@@ -196,6 +196,7 @@
                             <group>
                                 <field name="folio" required="1"/>
                                 <field name="geo"/>
+                                <field name="image" widget="image"/>
                             </group>
 
                         </group>
@@ -794,21 +795,21 @@
                                 <field name="historic_value"/>
                             </group>
                         </group>
-                         <notebook>
-                        <page name="audit_price" string="Auditoria">
-                            <group>
+                        <notebook>
+                            <page name="audit_price" string="Auditoria">
                                 <group>
-                                    <field name="quebrado"/>
-                                    <field name="cautivo"/>
-                                    <field name="c_erroneo"/>
-                                    <field name="cartel"/>
+                                    <group>
+                                        <field name="quebrado"/>
+                                        <field name="cautivo"/>
+                                        <field name="c_erroneo"/>
+                                        <field name="cartel"/>
+                                    </group>
+                                    <group>
+                                        <field name="image" string="Imagen" widget="image"/>
+                                    </group>
                                 </group>
-                                <group>
-                                    <field name="image" string="Imagen" widget="image"/>
-                                </group>
-                            </group>
-                        </page>
-                    </notebook>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
