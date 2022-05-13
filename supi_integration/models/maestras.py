@@ -48,6 +48,8 @@ class Salas(models.Model):
     url_image = fields.Char(string="Url imagen", compute='compute_url_image')
     comuna_id = fields.Many2one('comunas', string="Comuna")
     state_id = fields.Many2one('res.country.state', string="Region", domain=[('country_id', '=', 46)])
+    lat = fields.Char(string="Latitud")
+    long = fields.Char(string="Longitud")
     geo = fields.Many2one('geo', string="Geolocalization ")
 
     @api.depends('image')

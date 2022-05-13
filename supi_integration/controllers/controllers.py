@@ -419,10 +419,10 @@ class AuthRegisterHome(Home):
                  ('place_id.comuna_id', '=', int(comuna_id))])
             try:
                 serializer = Serializer(records,
-                                        query='{place_id{id,url_image,name,folio,geo{lat,long},state_id{id,name}}}',
+                                        query='{place_id{id,url_image,name,folio,lat,long,state_id{id,name}}}',
                                         many=True)
                 serializer_later = Serializer(records_later,
-                                              query='{place_id{id,url_image,name,folio,geo{lat,long},state_id{id,name}}}',
+                                              query='{place_id{id,url_image,name,folio,lat,long,state_id{id,name}}}',
                                               many=True)
 
                 res = {

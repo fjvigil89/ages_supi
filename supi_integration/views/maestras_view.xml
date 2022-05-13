@@ -195,7 +195,9 @@
                             </group>
                             <group>
                                 <field name="folio" required="1"/>
-                                <field name="geo"/>
+                                <field name="lat" required="1"/>
+                                <field name="long" required="1"/>
+                                <!--                                <field name="geo"/>-->
                                 <field name="image" widget="image"/>
                             </group>
 
