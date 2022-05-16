@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="base.module_category_marketing_events" model="ir.module.category">
+            <field name="description">Helps you handle your event request.</field>
+            <field name="sequence">1</field>
+        </record>
+
+        <record id="group_event_request" model="res.groups">
+            <field name="name">User Event Requests</field>
+            <field name="category_id" ref="base.module_category_marketing_events"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+            <field name="comment">the user will have access to his own data in the event application.</field>
+        </record>
+    </data>
+</odoo>

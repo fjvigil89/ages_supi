@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem id="inscription_request_root"
+                  name="Inscription"/>
+
+        <menuitem name="Inscriptions"
+                  id="inscription_management"
+                  sequence="1"
+                  parent="inscription_request_root"/>
+
+    </data>
+</odoo>
