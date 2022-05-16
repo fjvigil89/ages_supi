@@ -34,7 +34,6 @@ class Inscription(models.Model):
         string='State'
     )
 
-
     user_id = fields.Many2one(
         'res.users',
         readonly=True
@@ -60,8 +59,8 @@ class Inscription(models.Model):
                 'name': record.name,
                 'user_id': user.id,
                 'address_home_id': self.env['res.partner'].create({
-                    'name':record.name,
-                    'street':record.address,
+                    'name': record.name,
+                    'street': record.address,
                 }).id,
                 'phone': record.phone,
                 'private_email': record.email,
