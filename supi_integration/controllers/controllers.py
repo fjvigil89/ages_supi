@@ -98,7 +98,7 @@ class AuthRegisterHome(Home):
             if request.httprequest.method == 'POST':
                 try:
 
-                    users = request.env['res.users'].sudo().search([('login', '', kw.get('data').get('login'))])
+                    users = request.env['res.users'].sudo().search([('login', '=', kw.get('data').get('login'))])
                     if users:
                         return {
                             "jsonrpc": "2.0",
