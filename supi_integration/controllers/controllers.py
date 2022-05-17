@@ -98,9 +98,8 @@ class AuthRegisterHome(Home):
             if request.httprequest.method == 'POST':
                 try:
 
-                    user = request.env['res.users'].sudo().create(kw.get('data'))
-
-                    if user:
+                    users = request.env['res.users'].sudo().search([('login', '', kw.get('data').get('login'))])
+                    if users:
                         return {
                             "jsonrpc": "2.0",
                             "data": {
@@ -108,6 +107,8 @@ class AuthRegisterHome(Home):
                                 "message": "Este correo electrónico está en uso",
                             }
                         }
+
+                    user = request.env['res.users'].sudo().create(kw.get('data'))
 
                     return {
                         "jsonrpc": "2.0",
