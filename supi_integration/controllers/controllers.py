@@ -100,6 +100,15 @@ class AuthRegisterHome(Home):
 
                     user = request.env['res.users'].sudo().create(kw.get('data'))
 
+                    if user:
+                        return {
+                            "jsonrpc": "2.0",
+                            "data": {
+                                "code": 403,
+                                "message": "Este correo electrónico está en uso",
+                            }
+                        }
+
                     return {
                         "jsonrpc": "2.0",
                         "id": user.id,
