@@ -74,7 +74,7 @@ class Variables(models.Model):
 
     name = fields.Char(string="Name")
     id_variable = fields.Char(string="ID VARIABLE")
-    type = fields.Selection(
+    tipo_dato = fields.Selection(
         [('price', 'Price'), ('pop', 'Pop'), ('cold_equipment', 'Cold Equipment'), ('facing', 'Facing'),
          ('sovi', 'Sovi'), ('osa', 'OSA'),
          ('exhibitions', 'Exhibitions')],
