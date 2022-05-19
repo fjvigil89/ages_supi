@@ -74,12 +74,26 @@ class Variables(models.Model):
 
     name = fields.Char(string="Name")
     id_variable = fields.Char(string="ID VARIABLE")
+    valores_combobox = fields.Char(string="Valores combobox")
     tipo_dato = fields.Selection(
-        [('price', 'Price'), ('pop', 'Pop'), ('cold_equipment', 'Cold Equipment'), ('facing', 'Facing'),
-         ('sovi', 'Sovi'), ('osa', 'OSA'),
-         ('exhibitions', 'Exhibitions')],
+        [('2', 'Price'),
+         ('4', 'Carteleria'),
+         ('3', 'Facing'),
+         ('1', 'OSA'),
+         ('5', 'Exhibitions')],
         string='Tipo de estudio', default='price')
     image = fields.Binary(string="Image")
+
+
+class Muebles(models.Model):
+    _name = "muebles"
+
+    name = fields.Char(string="Nombre")
+    category = fields.Char(string="Categoría")
+    marca = fields.Char(string="Marca")
+    puerta = fields.Integer(string="Puerta")
+    division = fields.Integer(string="División")
+    bandeja = fields.Integer(string="Bandeja")
 
 
 class Study(models.Model):
