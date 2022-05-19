@@ -122,14 +122,28 @@ class Quiz(models.Model):
 class Planning(models.Model):
     _name = "planning"
 
-    place_id = fields.Many2one('salas', string="Place")
-    coordinator_id = fields.Many2one('res.users', string="Coordinator")
-    state_id = fields.Many2one('res.country.state', string="Commune")
-    region = fields.Char(string="Region")
-    address = fields.Char(string="Address")
-    channel = fields.Char(string="Channel")
-    name = fields.Char(string="Chain")
-    geo = fields.Many2one('geo', string="Geolocalization ")
+    name = fields.Char(string="Cadena")
+    channel = fields.Char(string="Canal")
+    planograma_id = fields.Many2one("planograma", string="Planograma")
+    study_id = fields.Many2one("study", string="Estudio")
+    product_id = fields.Many2one("product.product", string="Producto")
+    place_id = fields.Many2one("salas", string="Sala")
+    variable_id = fields.Many2one("variable", string="Variable")
+    comuna_id = fields.Many2one('comunas', string="Comuna")
+    state_id = fields.Many2one('res.country.state', string="Region", domain=[('country_id', '=', 46)])
+    date_start = fields.Date('Date start')
+    date_end = fields.Date('Date end')
+    description = fields.Char(size=100, string="Descripción")
+    user_id = fields.Many2one('res.users', string="Usuario")
+    state = fields.Selection([
+        ('ready', 'Listo'),
+        ('proceeding', 'En proceso'),
+        ('cancel', 'Cancelado'),
+        ('done', 'Hecho'),
+    ], string='Estado', help='Estados de la planificacion', default='ready')
+    tiene_cartel = fields.Boolean(string="Tiene cartel?")
+    mecanica = fields.Boolean(string="Mecánica")
+    result = fields.Integer(string="Resultado")
 
 
 class PlanningStudies(models.Model):
