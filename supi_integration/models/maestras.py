@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
-from odoo.tools.image import image_data_uri
 
 
 # https://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&key=YOUR_API_KEY
@@ -144,28 +143,24 @@ class PlanningStudies(models.Model):
 
 class Planograma(models.Model):
     _name = "planograma"
+    _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(related='product_id.name')
-    state = fields.Selection([
-        ('ready', 'Listo'),
-        ('in_process', 'En proceso'),
-        ('done', 'Hecho'),
-    ], string='Estado', default='ready')
+    name = fields.Char(related='partner_id.name')
     date_start = fields.Date('Date start')
     date_end = fields.Date('Date end')
-    place_id = fields.Many2one('salas', string="Place")
+    partner_id = fields.Many2one("res.partner", string="Cliente")
     study_id = fields.Many2one('study', string="Study")
-    product_id = fields.Many2one('product.product', string="Product")
-    section_id = fields.Many2one('section', string="Section")
-    area_id = fields.Many2one('area', string="Area")
+    user_id = fields.Many2one('res.users', string="Usuario")
+    description = fields.Char(size=100, string="Descripción")
+    line_ids = fields.One2many('planograma.line', 'planograma_id', string='Productos/Salas Planograma', copy=True)
+
+
+class PlanogramaLines(models.Model):
+    _name = "planograma.line"
+
+    planograma_id = fields.Many2one("planograma", string="Planograma")
+    product_id = fields.Many2one('product.product', string="Producto")
+    place_id = fields.Many2one('salas', string="Sala")
+    variable_id = fields.Many2one('variables', string="Variables")
     target = fields.Char(size=100, string="Target")
-    base = fields.Char(size=100, string="Base")
-    comment = fields.Char(size=100, string="Comment")
     perc_validation = fields.Float(string="Validation %")
-    historic_value = fields.Float(string="Historic value")
-    user_id = fields.Many2one('res.users', string='Auditor', default=lambda self: self.env.user)
-    quebrado = fields.Boolean(string="Quebrado", default=False)
-    cautivo = fields.Boolean(string="Cautivo", default=False)
-    c_erroneo = fields.Boolean(string="Código erróneo", default=False)
-    cartel = fields.Boolean(string="Cartel", default=False)
-    image = fields.Image("Imagen")
