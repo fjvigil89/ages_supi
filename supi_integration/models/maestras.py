@@ -146,6 +146,21 @@ class Planning(models.Model):
     result = fields.Integer(string="Resultado")
 
 
+class PlanningSalas(models.Model):
+    _name = "planning.salas"
+
+    planning_id = fields.Many2one('planning', string="Planning")
+    place_id = fields.Many2one('salas', string="Sala")
+    auditor_id = fields.Many2one('res.users', string="Auditor")
+    coordinator_id = fields.Many2one('res.users', string="Coordinador")
+    state = fields.Selection([
+        ('ready', 'Listo'),
+        ('proceeding', 'En proceso'),
+        ('cancel', 'Cancelado'),
+        ('done', 'Hecho'),
+    ], string='Estado', help='Estado', default='ready')
+
+
 class PlanningStudies(models.Model):
     _name = "planning.studies"
 

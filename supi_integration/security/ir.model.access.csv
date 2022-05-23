@@ -18,3 +18,4 @@ access_supi_integration_import_planograma,supi_integration.import.planograma,mod
 access_supi_quiz_result,supi_integration.quiz.result,model_quiz_result,,1,1,1,1
 access_supi_product_product,product.product.product,model_product_product,,1,1,1,1
 access_supi_muebles,supi_integration.muebles,model_muebles,,1,1,1,1
+access_supi_planning_salas,supi_integration.planning.salas,model_planning_salas,,1,1,1,1
