@@ -401,12 +401,11 @@
                             </group>
                             <group>
                                 <field name="id_variable" required="1"/>
-                                <field name="valores_combobox"/>
                             </group>
                         </group>
                         <group>
                             <group>
-                                <field name="tipo_dato" required="1"/>
+                                <field name="type" required="1"/>
                             </group>
                             <group>
                                 <field name="image" widget="image" required="0"/>
@@ -423,7 +422,7 @@
             <field name="arch" type="xml">
                 <tree string="Variables">
                     <field name="name"/>
-                    <field name="tipo_dato"/>
+                    <field name="type"/>
                 </tree>
             </field>
         </record>
@@ -434,7 +433,7 @@
             <field name="arch" type="xml">
                 <search string="Variables">
                     <field name="name"/>
-                    <field name="tipo_dato"/>
+                    <field name="type"/>
                 </search>
             </field>
         </record>
@@ -455,85 +454,6 @@
         <menuitem id="menu_variables_supi"
                   name="Variables"
                   action="action_variables"
-                  parent="supi_integration.secondary_data_supi"
-                  sequence="7"/>
-
-
-        <!--        VARIABLES-->
-        <record model="ir.ui.view" id="view_muebles_form">
-            <field name="name">muebles.form</field>
-            <field name="model">muebles</field>
-            <field name="arch" type="xml">
-                <form string="Muebles">
-                    <sheet>
-                        <div class="oe_title">
-                            <label for="name" class="oe_edit_only"/>
-                            <h1>
-
-                            </h1>
-                        </div>
-                        <group>
-                            <group>
-                                <field name="name" required="1"/>
-                            </group>
-                            <group>
-                                <field name="category"/>
-                                <field name="marca"/>
-                            </group>
-                        </group>
-                        <group>
-                            <group>
-                                <field name="puerta"/>
-                                <field name="division"/>
-                                <field name="bandeja"/>
-                            </group>
-                            <group>
-                                <field name="bandeja"/>
-                            </group>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="view_muebles_tree">
-            <field name="name">muebles.tree</field>
-            <field name="model">muebles</field>
-            <field name="arch" type="xml">
-                <tree string="Muebles">
-                    <field name="name"/>
-                    <field name="category"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_muebles_search" model="ir.ui.view">
-            <field name="name">muebles.search</field>
-            <field name="model">muebles</field>
-            <field name="arch" type="xml">
-                <search string="Muebles">
-                    <field name="name"/>
-                    <field name="category"/>
-                </search>
-            </field>
-        </record>
-
-        <record id="action_muebles" model="ir.actions.act_window">
-            <field name="name">Muebles</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">muebles</field>
-            <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref="view_muebles_search"/>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Create a new muebles in your system
-                </p>
-            </field>
-        </record>
-
-        <menuitem id="menu_muebles_supi"
-                  name="Muebles"
-                  action="action_muebles"
                   parent="supi_integration.secondary_data_supi"
                   sequence="7"/>
 
@@ -703,10 +623,6 @@
             <field name="arch" type="xml">
                 <form string="Planning">
                     <sheet>
-                        <header>
-                            <field name="state" widget="statusbar"
-                                   statusbar_visible="ready,proceeding,done"/>
-                        </header>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only"/>
                             <h1>
@@ -716,23 +632,16 @@
 
                         <group>
                             <group>
-                                <field name="date_start"/>
                                 <field name="place_id"/>
                                 <field name="state_id"/>
-                                <field name="study_id"/>
-                                <field name="variable_id"/>
-                                <field name="comuna_id"/>
                                 <field name="channel"/>
-                                <field name="result"/>
+                                <field name="geo"/>
+
                             </group>
                             <group>
-                                <field name="date_end"/>
-                                <field name="user_id"/>
-                                <field name="planograma_id"/>
-                                <field name="product_id"/>
-                                <field name="mecanica"/>
-                                <field name="description"/>
-                                <field name="tiene_cartel"/>
+                                <field name="coordinator_id"/>
+                                <field name="region"/>
+                                <field name="address"/>
                             </group>
                         </group>
                     </sheet>
@@ -748,7 +657,7 @@
                     <field name="name"/>
                     <field name="place_id"/>
                     <field name="state_id"/>
-                    <field name="user_id"/>
+                    <field name="coordinator_id"/>
                 </tree>
             </field>
         </record>
@@ -783,81 +692,6 @@
                   action="action_planning"
                   parent="supi_integration.secondary_data_supi"
                   sequence="1"/>
-
-
-        <!--        PLANNING STUDIES-->
-        <record model="ir.ui.view" id="view_planning_salas_form">
-            <field name="name">planning.salas.form</field>
-            <field name="model">planning.salas</field>
-            <field name="arch" type="xml">
-                <form string="Salas planificadas">
-                    <sheet>
-                        <header>
-                            <field name="state" widget="statusbar"
-                                   statusbar_visible="ready,proceeding,done"/>
-                        </header>
-                        <group>
-                            <group>
-                                <field name="planning_id" required="1"/>
-                                <field name="place_id" required="1"/>
-
-                            </group>
-                            <group>
-                                <field name="auditor_id" required="1"/>
-                                <field name="coordinator_id" required="1"/>
-                            </group>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
-
-        <record model="ir.ui.view" id="view_planning_salas_tree">
-            <field name="name">planning.salas.tree</field>
-            <field name="model">planning.salas</field>
-            <field name="arch" type="xml">
-                <tree string="Planning Studies">
-                    <field name="place_id"/>
-                    <field name="planning_id"/>
-                    <field name="auditor_id"/>
-                    <field name="coordinator_id"/>
-                    <field name="state"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_planning_salas_search" model="ir.ui.view">
-            <field name="name">planning.salas.search</field>
-            <field name="model">planning.salas</field>
-            <field name="arch" type="xml">
-                <search string="Salas planificadas">
-                    <field name="place_id"/>
-                    <field name="planning_id"/>
-                    <field name="auditor_id"/>
-                    <field name="coordinator_id"/>
-                    <field name="state"/>
-                </search>
-            </field>
-        </record>
-
-        <record id="action_planning_salas" model="ir.actions.act_window">
-            <field name="name">Salas planificadas</field>
-            <field name="type">ir.actions.act_window</field>
-            <field name="res_model">planning.salas</field>
-            <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref="view_planning_salas_search"/>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Planificar nueva sala
-                </p>
-            </field>
-        </record>
-
-        <menuitem id="menu_planning_salas_supi"
-                  name="Salas planificadas"
-                  action="action_planning_salas"
-                  parent="supi_integration.secondary_data_supi"
-                  sequence="2"/>
 
 
         <!--        PLANNING STUDIES-->
@@ -936,39 +770,49 @@
             <field name="model">planograma</field>
             <field name="arch" type="xml">
                 <form string="Planograma">
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="ready,in_process,done"/>
+                    </header>
                     <sheet>
                         <group>
                             <group>
                                 <field name="name" invisible="1"/>
                                 <field name="date_start" required="1"/>
-                                <field name="partner_id" required="1"/>
+                                <field name="place_id" required="1"/>
+                                <field name="product_id" required="1"/>
+                                <field name="area_id" required="1"/>
+                                <field name="base"/>
+                                <field name="perc_validation"/>
+                                <field name="perc_validation"/>
+
                             </group>
                             <group>
+
                                 <field name="date_end" required="1"/>
                                 <field name="user_id" required="1"/>
                                 <field name="study_id" required="1"/>
+                                <field name="section_id" required="1"/>
+                                <field name="target"/>
+                                <field name="comment"/>
+                                <field name="historic_value"/>
                             </group>
                         </group>
                         <notebook>
-                            <page string="Productos/Salas Planograma">
-                                <field name="line_ids">
-                                    <tree editable="bottom">
-                                        <field name="product_id" required="1"/>
-                                        <field name="place_id" required="1"/>
-                                        <field name="variable_id" required="1"/>
-                                        <field name="target" required="1"/>
-                                        <field name="perc_validation" required="1"/>
-                                        <field name="planograma_id" invisible="1"/>
-                                    </tree>
-                                </field>
+                            <page name="audit_price" string="Auditoria">
+                                <group>
+                                    <group>
+                                        <field name="quebrado"/>
+                                        <field name="cautivo"/>
+                                        <field name="c_erroneo"/>
+                                        <field name="cartel"/>
+                                    </group>
+                                    <group>
+                                        <field name="image" string="Imagen" widget="image"/>
+                                    </group>
+                                </group>
                             </page>
                         </notebook>
                     </sheet>
-                    <div class="oe_chatter">
-                        <field name="message_follower_ids"/>
-                        <field name="activity_ids"/>
-                        <field name="message_ids"/>
-                    </div>
                 </form>
             </field>
         </record>
@@ -980,9 +824,15 @@
                 <tree string="Planograma">
                     <field name="date_start"/>
                     <field name="date_end"/>
+                    <field name="place_id"/>
                     <field name="study_id"/>
-                    <field name="partner_id"/>
-                    <field name="user_id"/>
+                    <field name="product_id"/>
+                    <field name="section_id"/>
+                    <field name="area_id"/>
+                    <field name="perc_validation"/>
+                    <field name="historic_value"/>
+                    <field name="state"/>
+
                 </tree>
             </field>
         </record>
@@ -994,7 +844,14 @@
                 <search string="Planograma">
                     <field name="date_start"/>
                     <field name="date_end"/>
+                    <field name="place_id"/>
                     <field name="study_id"/>
+                    <field name="product_id"/>
+                    <field name="section_id"/>
+                    <field name="area_id"/>
+                    <field name="perc_validation"/>
+                    <field name="historic_value"/>
+                    <field name="state"/>
                 </search>
             </field>
         </record>
