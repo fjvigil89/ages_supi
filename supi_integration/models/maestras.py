@@ -161,6 +161,15 @@ class PlanningSalas(models.Model):
     ], string='Estado', help='Estado', default='ready')
 
 
+class PlanningProducts(models.Model):
+    _name = "planning.product"
+
+    planning_salas_id = fields.Many2one('planning.salas', string="Planning")
+    product_id = fields.Many2one('product.product', string="Producto")
+    variable_id = fields.Many2one('variable', string="Variable")
+    valor_por_defecto = fields.Char("Valor por defecto")
+
+
 class PlanningStudies(models.Model):
     _name = "planning.studies"
 

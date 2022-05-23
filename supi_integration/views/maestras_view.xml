@@ -781,7 +781,7 @@
         <menuitem id="menu_planning_supi"
                   name="Planning"
                   action="action_planning"
-                  parent="supi_integration.secondary_data_supi"
+                  parent="supi_integration.planificaciones_supi"
                   sequence="1"/>
 
 
@@ -856,8 +856,74 @@
         <menuitem id="menu_planning_salas_supi"
                   name="Salas planificadas"
                   action="action_planning_salas"
-                  parent="supi_integration.secondary_data_supi"
+                  parent="supi_integration.planificaciones_supi"
                   sequence="2"/>
+
+        <!--        PLANNING STUDIES-->
+        <record model="ir.ui.view" id="view_planning_product_form">
+            <field name="name">planning.product.form</field>
+            <field name="model">planning.product</field>
+            <field name="arch" type="xml">
+                <form string="Productos planificados">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="planning_salas_id" required="1"/>
+                                <field name="product_id" required="1"/>
+
+                            </group>
+                            <group>
+                                <field name="variable_id" required="1"/>
+                                <field name="valor_por_defecto" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_planning_product_tree">
+            <field name="name">planning.product.tree</field>
+            <field name="model">planning.product</field>
+            <field name="arch" type="xml">
+                <tree string="Productos planificados">
+                    <field name="planning_salas_id"/>
+                    <field name="product_id"/>
+                    <field name="variable_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_planning_product_search" model="ir.ui.view">
+            <field name="name">planning.product.search</field>
+            <field name="model">planning.product</field>
+            <field name="arch" type="xml">
+                <search string="Productos planificados">
+                    <field name="planning_salas_id"/>
+                    <field name="product_id"/>
+                    <field name="variable_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_planning_product" model="ir.actions.act_window">
+            <field name="name">Productos planificados</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">planning.product</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_planning_product_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Planificar nueva producto
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_planning_product_supi"
+                  name="Productos planificados"
+                  action="action_planning_product"
+                  parent="supi_integration.planificaciones_supi"
+                  sequence="3"/>
 
 
         <!--        PLANNING STUDIES-->
@@ -926,7 +992,7 @@
         <menuitem id="menu_planning_studies_supi"
                   name="Planning studies"
                   action="action_planning_studies"
-                  parent="supi_integration.secondary_data_supi"
+                  parent="supi_integration.planificaciones_supi"
                   sequence="2"/>
 
 
@@ -1015,7 +1081,7 @@
         <menuitem id="menu_planograma_supi"
                   name="Planogramas"
                   action="action_planograma"
-                  parent="supi_integration.secondary_data_supi"
+                  parent="supi_integration.planificaciones_supi"
                   sequence="3"/>
 
 

@@ -78,6 +78,6 @@
                   name="Resultados de quiz"
                   action="action_quiz_result"
                   parent="supi_integration.operations_supi"
-                  sequence="2"/>
+                  sequence="10"/>
     </data>
 </odoo>

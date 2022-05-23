@@ -43,6 +43,11 @@
                   sequence="3"
                   parent="supi"/>
 
+        <menuitem name="Planificaciones"
+                  id="planificaciones_supi"
+                  sequence="1"
+                  parent="operations_supi"/>
+
         <menuitem name="Ajustes"
                   id="ajustes_data_supi"
                   sequence="4"
