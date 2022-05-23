@@ -148,6 +148,7 @@ class Planning(models.Model):
 
 class PlanningSalas(models.Model):
     _name = "planning.salas"
+    _rec_name = 'planning_id'
 
     planning_id = fields.Many2one('planning', string="Planning")
     place_id = fields.Many2one('salas', string="Sala")
@@ -164,10 +165,18 @@ class PlanningSalas(models.Model):
 class PlanningProducts(models.Model):
     _name = "planning.product"
 
-    planning_salas_id = fields.Many2one('planning.salas', string="Planning")
+    planning_salas_id = fields.Many2one('planning.salas', string="Sala planificada")
     product_id = fields.Many2one('product.product', string="Producto")
     variable_id = fields.Many2one('variable', string="Variable")
     valor_por_defecto = fields.Char("Valor por defecto")
+
+
+class StudiesDone(models.Model):
+    _name = "studies.done"
+
+    planning_salas_id = fields.Many2one('planning.salas', string="Sala planificada")
+    quizs_ids = fields.One2many('quiz.result', 'studie_done_id', string='Quizs', copy=True)
+    image = fields.Binary(string="Foto inicial")
 
 
 class PlanningStudies(models.Model):

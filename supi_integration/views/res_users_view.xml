@@ -43,6 +43,11 @@
                   sequence="3"
                   parent="supi"/>
 
+        <menuitem name="Auditorías"
+                  id="auditoria_supi"
+                  sequence="4"
+                  parent="supi"/>
+
         <menuitem name="Planificaciones"
                   id="planificaciones_supi"
                   sequence="1"
@@ -50,7 +55,7 @@
 
         <menuitem name="Ajustes"
                   id="ajustes_data_supi"
-                  sequence="4"
+                  sequence="6"
                   parent="supi"/>
 
     </data>

@@ -17,6 +17,7 @@
                         <group>
                             <group>
                                 <field name="user_id" readonly="1"/>
+                                <field name="studie_done_id" readonly="1"/>
                             </group>
                             <group>
                                 <field name="quiz_id" readonly="1"/>
@@ -44,6 +45,7 @@
                     <field name="name"/>
                     <field name="quiz_id"/>
                     <field name="user_id"/>
+                    <field name="studie_done_id"/>
                     <field name="respuesta_seleccionada"/>
                 </tree>
             </field>
@@ -57,6 +59,7 @@
                     <field name="name"/>
                     <field name="user_id"/>
                     <field name="quiz_id"/>
+                    <field name="studie_done_id"/>
                 </search>
             </field>
         </record>

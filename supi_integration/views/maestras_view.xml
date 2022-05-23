@@ -1150,6 +1150,76 @@
                   parent="supi_integration.main_data_supi"
                   sequence="3"/>
 
+        <!--        SALAS-->
+        <record model="ir.ui.view" id="view_studies_done_form">
+            <field name="name">studies.done.form</field>
+            <field name="model">studies.done</field>
+            <field name="arch" type="xml">
+                <form string="Estudios hechos">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="planning_salas_id" required="1"/>
+                            </group>
+                            <group>
+                                <field name="image" widget="image"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Quiz realizados">
+                                <field name="quizs_ids">
+                                    <tree editable="bottom">
+                                        <field name="name" required="1"/>
+                                        <field name="user_id" required="1"/>
+                                        <field name="studie_done_id" required="1"/>
+                                        <field name="quiz_id" required="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
 
+        <record model="ir.ui.view" id="view_studies_done_tree">
+            <field name="name">studies.done.tree</field>
+            <field name="model">studies.done</field>
+            <field name="arch" type="xml">
+                <tree string="Estudios hechos">
+                    <field name="planning_salas_id"/>
+                    <field name="image"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_studies_done_search" model="ir.ui.view">
+            <field name="name">studies.done.search</field>
+            <field name="model">studies.done</field>
+            <field name="arch" type="xml">
+                <search string="Estudios hechos">
+                    <field name="planning_salas_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_studies_done" model="ir.actions.act_window">
+            <field name="name">Estudios hechos</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">studies.done</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_studies_done_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Realizar estudio
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="menu_studies_done_supi"
+                  name="Estudios hechos"
+                  action="action_studies_done"
+                  parent="supi_integration.auditoria_supi"
+                  sequence="1"/>
     </data>
 </odoo>

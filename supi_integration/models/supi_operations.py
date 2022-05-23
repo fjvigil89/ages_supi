@@ -7,6 +7,7 @@ class QuizResult(models.Model):
     _name = 'quiz.result'
 
     quiz_id = fields.Many2one('quiz', string="Test")
+    studie_done_id = fields.Many2one('studies.done', string="Estudios realizados")
     user_id = fields.Many2one('res.users', string="Usuario")
     name = fields.Char(related="quiz_id.correct_answer", string="Respuesta correcta")
     respuesta_seleccionada = fields.Char(string="Respuesta seleccionada")
