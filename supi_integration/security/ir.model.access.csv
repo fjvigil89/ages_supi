@@ -21,3 +21,5 @@ access_supi_muebles,supi_integration.muebles,model_muebles,,1,1,1,1
 access_supi_planning_salas,supi_integration.planning.salas,model_planning_salas,,1,1,1,1
 access_supi_planning_product,supi_integration.planning.product,model_planning_product,,1,1,1,1
 access_supi_studies_done,supi_integration.studies.done,model_studies_done,,1,1,1,1
+access_supi_study_type,supi_integration.study.type,model_study_type,,1,1,1,1
+access_supi_study_frecuency,supi_integration.study.frecuency,model_study_frecuency,,1,1,1,1

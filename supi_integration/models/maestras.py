@@ -95,11 +95,25 @@ class Muebles(models.Model):
     bandeja = fields.Integer(string="Bandeja")
 
 
+class StudyType(models.Model):
+    _name = "study.type"
+
+    name = fields.Char(string="Name")
+
+
+class StudyFrecuency(models.Model):
+    _name = "study.frecuency"
+
+    name = fields.Char(string="Name")
+
+
 class Study(models.Model):
     _name = "study"
 
     name = fields.Char(string="Name")
-    variable_id = fields.Many2one('variables', string="Variable")
+    # variable_id = fields.Many2one('variables', string="Variable")
+    tipo_estudio = fields.Many2one('study.type')
+    frecuency = fields.Many2one('study.frecuency')
 
 
 class Quiz(models.Model):

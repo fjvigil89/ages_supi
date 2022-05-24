@@ -553,7 +553,8 @@
                         </div>
                         <group>
                             <group>
-                                <field name="variable_id" required="1"/>
+                                <field name="tipo_estudio" required="1"/>
+                                <field name="frecuency" required="1"/>
                             </group>
                         </group>
                     </sheet>
@@ -567,7 +568,6 @@
             <field name="arch" type="xml">
                 <tree string="Studies">
                     <field name="name"/>
-                    <field name="variable_id"/>
                 </tree>
             </field>
         </record>
@@ -578,7 +578,6 @@
             <field name="arch" type="xml">
                 <search string="Studies">
                     <field name="name"/>
-                    <field name="variable_id"/>
                 </search>
             </field>
         </record>
