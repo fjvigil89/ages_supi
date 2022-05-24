@@ -80,7 +80,7 @@ class Variables(models.Model):
          ('3', 'Facing'),
          ('1', 'OSA'),
          ('5', 'Exhibitions')],
-        string='Tipo de estudio', default='price')
+        string='Tipo de estudio')
     image = fields.Binary(string="Image")
     icon = fields.Binary(string="Icono")
     study_id = fields.Many2one("study", string="Estudio")
