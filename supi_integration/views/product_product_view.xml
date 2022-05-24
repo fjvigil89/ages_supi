@@ -1,13 +1,21 @@
 <?xml version="1.0"?>
 <odoo>
     <data>
+        <menuitem id="menu_products_supi"
+                  name="Productos"
+                  action="product.product_normal_action"
+                  parent="supi_integration.main_data_supi"
+                  sequence="5"/>
+
         <!-- Res users extension !-->
         <record id="product_normal_form_view_pack" model="ir.ui.view">
             <field name="name">product.normal.form.view</field>
             <field name="model">product.product</field>
             <field name="inherit_id" ref="product.product_normal_form_view"/>
             <field name="arch" type="xml">
-
+                <field name="barcode" position="attributes">
+                    <attribute name="string">EAN</attribute>
+                </field>
                 <field name="default_code" position="after">
                     <field name="pack"/>
                 </field>
