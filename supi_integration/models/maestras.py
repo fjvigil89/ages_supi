@@ -95,6 +95,7 @@ class Muebles(models.Model):
     puerta = fields.Integer(string="Puerta")
     division = fields.Integer(string="División")
     bandeja = fields.Integer(string="Bandeja")
+    product_id = fields.Many2one('product.product', string="Producto")
 
 
 class StudyType(models.Model):
@@ -221,15 +222,32 @@ class Planograma(models.Model):
     study_id = fields.Many2one('study', string="Study")
     user_id = fields.Many2one('res.users', string="Usuario")
     description = fields.Char(size=100, string="Descripción")
-    line_ids = fields.One2many('planograma.line', 'planograma_id', string='Productos/Salas Planograma', copy=True)
+    salas_planograma_ids = fields.One2many('salas.planograma', 'planograma_id', string='Salas del planograma',
+                                           copy=True)
+    variables_estudios_ids = fields.One2many('variables.studies', 'planograma_id', string='Variables de estudio',
+                                             copy=True)
 
 
-class PlanogramaLines(models.Model):
-    _name = "planograma.line"
+class VariablesEstudios(models.Model):
+    _name = "variables.studies"
+    _rec_name = 'variable_id'
 
     planograma_id = fields.Many2one("planograma", string="Planograma")
-    product_id = fields.Many2one('product.product', string="Producto")
+    variable_id = fields.Many2one('variables', string="Variable")
+
+
+class SalasPlanograma(models.Model):
+    _name = "salas.planograma"
+
+    planograma_id = fields.Many2one("planograma", string="Planograma")
     place_id = fields.Many2one('salas', string="Sala")
-    variable_id = fields.Many2one('variables', string="Variables")
-    target = fields.Char(size=100, string="Target")
-    perc_validation = fields.Float(string="Validation %")
+    products_sala_planogram_ids = fields.One2many('producto.salas.planograma', 'salas_planograma_id',
+                                                  string='Salas del planograma',
+                                                  copy=True)
+
+
+class ProductSalasPlanograma(models.Model):
+    _name = "producto.salas.planograma"
+
+    salas_planograma_id = fields.Many2one("producto.salas.planograma", string="Productos/Salas Planograma")
+    id_product_mueble = fields.Many2one('muebles', string="Mueble")

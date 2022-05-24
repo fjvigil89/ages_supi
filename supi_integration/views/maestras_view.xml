@@ -407,7 +407,7 @@
                         <group>
                             <group>
                                 <field name="tipo_dato" required="1"/>
-                                <field name="study_id" />
+                                <field name="study_id"/>
                             </group>
                             <group>
                                 <field name="image" widget="image" required="0"/>
@@ -481,6 +481,7 @@
                             <group>
                                 <field name="category"/>
                                 <field name="marca"/>
+                                <field name="product_id"/>
                             </group>
                         </group>
                         <group>
@@ -1025,14 +1026,19 @@
                             </group>
                         </group>
                         <notebook>
-                            <page string="Productos/Salas Planograma">
-                                <field name="line_ids">
+                            <page string="Salas del Planograma">
+                                <field name="salas_planograma_ids">
                                     <tree editable="bottom">
-                                        <field name="product_id" required="1"/>
                                         <field name="place_id" required="1"/>
+                                        <field name="products_sala_planogram_ids"/>
+                                        <field name="planograma_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Variables del estudio">
+                                <field name="variables_estudios_ids">
+                                    <tree editable="bottom">
                                         <field name="variable_id" required="1"/>
-                                        <field name="target" required="1"/>
-                                        <field name="perc_validation" required="1"/>
                                         <field name="planograma_id" invisible="1"/>
                                     </tree>
                                 </field>
