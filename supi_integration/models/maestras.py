@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.tools.image import image_data_uri
 
 
 # https://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&key=YOUR_API_KEY
@@ -73,26 +74,12 @@ class Variables(models.Model):
 
     name = fields.Char(string="Name")
     id_variable = fields.Char(string="ID VARIABLE")
-    valores_combobox = fields.Char(string="Valores combobox")
-    tipo_dato = fields.Selection(
-        [('2', 'Price'),
-         ('4', 'Carteleria'),
-         ('3', 'Facing'),
-         ('1', 'OSA'),
-         ('5', 'Exhibitions')],
+    type = fields.Selection(
+        [('price', 'Price'), ('pop', 'Pop'), ('cold_equipment', 'Cold Equipment'), ('facing', 'Facing'),
+         ('sovi', 'Sovi'), ('osa', 'OSA'),
+         ('exhibitions', 'Exhibitions')],
         string='Tipo de estudio', default='price')
     image = fields.Binary(string="Image")
-
-
-class Muebles(models.Model):
-    _name = "muebles"
-
-    name = fields.Char(string="Nombre")
-    category = fields.Char(string="Categoría")
-    marca = fields.Char(string="Marca")
-    puerta = fields.Integer(string="Puerta")
-    division = fields.Integer(string="División")
-    bandeja = fields.Integer(string="Bandeja")
 
 
 class Study(models.Model):
@@ -122,6 +109,7 @@ class Quiz(models.Model):
 class Planning(models.Model):
     _name = "planning"
 
+<<<<<<< HEAD
     name = fields.Char(string="Cadena")
     channel = fields.Char(string="Canal")
     planograma_id = fields.Many2one("planograma", string="Planograma")
@@ -160,6 +148,16 @@ class PlanningSalas(models.Model):
         ('cancel', 'Cancelado'),
         ('done', 'Hecho'),
     ], string='Estado', help='Estado', default='ready')
+=======
+    place_id = fields.Many2one('salas', string="Place")
+    coordinator_id = fields.Many2one('res.users', string="Coordinator")
+    state_id = fields.Many2one('res.country.state', string="Commune")
+    region = fields.Char(string="Region")
+    address = fields.Char(string="Address")
+    channel = fields.Char(string="Channel")
+    name = fields.Char(string="Chain")
+    geo = fields.Many2one('geo', string="Geolocalization ")
+>>>>>>> 9ceb3f5d49e046ae87daec669e56a84e6e684ec7
 
 
 class PlanningProducts(models.Model):
@@ -190,24 +188,28 @@ class PlanningStudies(models.Model):
 
 class Planograma(models.Model):
     _name = "planograma"
-    _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(related='partner_id.name')
+    name = fields.Char(related='product_id.name')
+    state = fields.Selection([
+        ('ready', 'Listo'),
+        ('in_process', 'En proceso'),
+        ('done', 'Hecho'),
+    ], string='Estado', default='ready')
     date_start = fields.Date('Date start')
     date_end = fields.Date('Date end')
-    partner_id = fields.Many2one("res.partner", string="Cliente")
+    place_id = fields.Many2one('salas', string="Place")
     study_id = fields.Many2one('study', string="Study")
-    user_id = fields.Many2one('res.users', string="Usuario")
-    description = fields.Char(size=100, string="Descripción")
-    line_ids = fields.One2many('planograma.line', 'planograma_id', string='Productos/Salas Planograma', copy=True)
-
-
-class PlanogramaLines(models.Model):
-    _name = "planograma.line"
-
-    planograma_id = fields.Many2one("planograma", string="Planograma")
-    product_id = fields.Many2one('product.product', string="Producto")
-    place_id = fields.Many2one('salas', string="Sala")
-    variable_id = fields.Many2one('variables', string="Variables")
+    product_id = fields.Many2one('product.product', string="Product")
+    section_id = fields.Many2one('section', string="Section")
+    area_id = fields.Many2one('area', string="Area")
     target = fields.Char(size=100, string="Target")
+    base = fields.Char(size=100, string="Base")
+    comment = fields.Char(size=100, string="Comment")
     perc_validation = fields.Float(string="Validation %")
+    historic_value = fields.Float(string="Historic value")
+    user_id = fields.Many2one('res.users', string='Auditor', default=lambda self: self.env.user)
+    quebrado = fields.Boolean(string="Quebrado", default=False)
+    cautivo = fields.Boolean(string="Cautivo", default=False)
+    c_erroneo = fields.Boolean(string="Código erróneo", default=False)
+    cartel = fields.Boolean(string="Cartel", default=False)
+    image = fields.Image("Imagen")
