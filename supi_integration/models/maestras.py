@@ -109,7 +109,6 @@ class Quiz(models.Model):
 class Planning(models.Model):
     _name = "planning"
 
-<<<<<<< HEAD
     name = fields.Char(string="Cadena")
     channel = fields.Char(string="Canal")
     planograma_id = fields.Many2one("planograma", string="Planograma")
@@ -148,7 +147,7 @@ class PlanningSalas(models.Model):
         ('cancel', 'Cancelado'),
         ('done', 'Hecho'),
     ], string='Estado', help='Estado', default='ready')
-=======
+
     place_id = fields.Many2one('salas', string="Place")
     coordinator_id = fields.Many2one('res.users', string="Coordinator")
     state_id = fields.Many2one('res.country.state', string="Commune")
@@ -157,7 +156,6 @@ class PlanningSalas(models.Model):
     channel = fields.Char(string="Channel")
     name = fields.Char(string="Chain")
     geo = fields.Many2one('geo', string="Geolocalization ")
->>>>>>> 9ceb3f5d49e046ae87daec669e56a84e6e684ec7
 
 
 class PlanningProducts(models.Model):
