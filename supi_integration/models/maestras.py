@@ -82,6 +82,8 @@ class Variables(models.Model):
          ('5', 'Exhibitions')],
         string='Tipo de estudio', default='price')
     image = fields.Binary(string="Image")
+    icon = fields.Binary(string="Icono")
+    study_id = fields.Many2one("study", string="Estudio")
 
 
 class Muebles(models.Model):
@@ -113,6 +115,12 @@ class Study(models.Model):
     name = fields.Char(string="Name")
     # variable_id = fields.Many2one('variables', string="Variable")
     tipo_estudio = fields.Many2one('study.type')
+    naturaleza = fields.Selection(
+        [('0', 'Productos'),
+         ('1', 'Muebles sin productos'),
+         ('2', 'Muebles con productos'),
+         ('3', 'Salas')],
+        string='Naturaleza del estudio')
     frecuency = fields.Many2one('study.frecuency')
 
 

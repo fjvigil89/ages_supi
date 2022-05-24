@@ -407,9 +407,11 @@
                         <group>
                             <group>
                                 <field name="tipo_dato" required="1"/>
+                                <field name="study_id" />
                             </group>
                             <group>
                                 <field name="image" widget="image" required="0"/>
+                                <field name="icon" widget="image" required="0"/>
                             </group>
                         </group>
                     </sheet>
@@ -549,12 +551,14 @@
                             <label for="name" class="oe_edit_only"/>
                             <h1>
                                 <field name="name" required="1"/>
+
                             </h1>
                         </div>
                         <group>
                             <group>
                                 <field name="tipo_estudio" required="1"/>
                                 <field name="frecuency" required="1"/>
+                                <field name="naturaleza" required="1"/>
                             </group>
                         </group>
                     </sheet>
@@ -568,6 +572,9 @@
             <field name="arch" type="xml">
                 <tree string="Studies">
                     <field name="name"/>
+                    <field name="tipo_estudio"/>
+                    <field name="frecuency"/>
+                    <field name="naturaleza"/>
                 </tree>
             </field>
         </record>
@@ -578,6 +585,9 @@
             <field name="arch" type="xml">
                 <search string="Studies">
                     <field name="name"/>
+                    <field name="tipo_estudio"/>
+                    <field name="frecuency"/>
+                    <field name="naturaleza"/>
                 </search>
             </field>
         </record>
