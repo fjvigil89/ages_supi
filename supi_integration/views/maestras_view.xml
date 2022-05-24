@@ -1030,7 +1030,7 @@
                                 <field name="salas_planograma_ids">
                                     <tree editable="bottom">
                                         <field name="place_id" required="1"/>
-                                        <field name="products_sala_planogram_ids"/>
+                                        <field name="muebles_ids" widget="many2many_tags"/>
                                         <field name="planograma_id" invisible="1"/>
                                     </tree>
                                 </field>

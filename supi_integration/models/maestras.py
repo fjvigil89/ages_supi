@@ -241,13 +241,15 @@ class SalasPlanograma(models.Model):
 
     planograma_id = fields.Many2one("planograma", string="Planograma")
     place_id = fields.Many2one('salas', string="Sala")
-    products_sala_planogram_ids = fields.One2many('producto.salas.planograma', 'salas_planograma_id',
-                                                  string='Salas del planograma',
-                                                  copy=True)
-
-
-class ProductSalasPlanograma(models.Model):
-    _name = "producto.salas.planograma"
-
-    salas_planograma_id = fields.Many2one("producto.salas.planograma", string="Productos/Salas Planograma")
-    id_product_mueble = fields.Many2one('muebles', string="Mueble")
+    muebles_ids = fields.Many2many('muebles')
+#     products_sala_planogram_ids = fields.One2many('producto.salas.planograma', 'salas_planograma_id',
+#                                                   string='Salas del planograma',
+#                                                   copy=True)
+#
+#
+# class ProductSalasPlanograma(models.Model):
+#     _name = "producto.salas.planograma"
+#     _rec_name = 'salas_planograma_id'
+#
+#     salas_planograma_id = fields.Many2one("producto.salas.planograma", string="Productos/Salas Planograma")
+#     id_product_mueble = fields.Many2one('muebles', string="Mueble")
