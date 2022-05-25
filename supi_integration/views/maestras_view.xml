@@ -737,6 +737,23 @@
                                 <field name="description"/>
                             </group>
                         </group>
+                        <notebook>
+                            <page string="Salas planificadas">
+                                <field name="planning_salas_ids">
+                                    <tree editable="bottom">
+                                        <field name="planning_id" invisible="1"/>
+                                        <field name="place_id" required="1"/>
+                                        <field name="auditor_id" required="1"/>
+                                        <field name="coordinator_id" required="1"/>
+                                        <field name="specifications" required="1"/>
+                                        <field name="comment" required="1"/>
+                                        <field name="quizs_ids" widget="many2many_tags"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                        </notebook>
                     </sheet>
                 </form>
             </field>

@@ -166,22 +166,13 @@ class Planning(models.Model):
     date_end = fields.Date('Date end')
     description = fields.Char(size=100, string="Descripción")
     user_id = fields.Many2one('res.users', string="Usuario")
+    planning_salas_ids = fields.One2many('planning.salas', 'planning_id', string="Salas planificadas")
     state = fields.Selection([
         ('ready', 'Listo'),
         ('proceeding', 'En proceso'),
         ('cancel', 'Cancelado'),
         ('done', 'Hecho'),
     ], string='Estado', help='Estados de la planificacion', default='ready')
-
-    # study_id = fields.Many2one("study", string="Estudio")
-    # product_id = fields.Many2one("product.product", string="Producto")
-    # place_id = fields.Many2one("salas", string="Sala")
-    # variable_id = fields.Many2one("variable", string="Variable")
-    # comuna_id = fields.Many2one('comunas', string="Comuna")
-    # state_id = fields.Many2one('res.country.state', string="Region", domain=[('country_id', '=', 46)])
-    # tiene_cartel = fields.Boolean(string="Tiene cartel?")
-    # mecanica = fields.Boolean(string="Mecánica")
-    # result = fields.Integer(string="Resultado")
 
 
 class PlanningSalas(models.Model):
@@ -193,6 +184,10 @@ class PlanningSalas(models.Model):
     place_id = fields.Many2one('salas', string="Sala")
     auditor_id = fields.Many2one('res.users', string="Auditor")
     coordinator_id = fields.Many2one('res.users', string="Coordinador")
+    specifications = fields.Char(size=100, string="Especificaciones")
+    comment = fields.Char(size=100, string="Comentario")
+    image = fields.Binary(string="Foto inicial")
+    quizs_ids = fields.One2many('quiz.result', 'planning_salas_id', string='Quizs', copy=True)
     state = fields.Selection([
         ('ready', 'Listo'),
         ('proceeding', 'En proceso'),
