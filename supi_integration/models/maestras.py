@@ -6,6 +6,7 @@ from odoo import models, fields, api
 # https://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&key=YOUR_API_KEY
 class Geo(models.Model):
     _name = 'geo'
+    _description = "Geolocalizacion"
 
     name = fields.Char(string="Name")
     lat = fields.Char(string="Latitude")
@@ -14,18 +15,21 @@ class Geo(models.Model):
 
 class Section(models.Model):
     _name = 'section'
+    _description = "Seccion"
 
     name = fields.Char(string="Section")
 
 
 class Area(models.Model):
     _name = 'area'
+    _description = "Area"
 
     name = fields.Char(string="Area")
 
 
 class Parameters(models.Model):
     _name = 'parameters'
+    _description = "Parametros"
 
     name = fields.Char(string="Parameters")
     detail = fields.Char(string="Details")
@@ -33,12 +37,14 @@ class Parameters(models.Model):
 
 class Comunas(models.Model):
     _name = 'comunas'
+    _description = "Comunas"
     name = fields.Char(string="Name")
     state_id = fields.Many2one('res.country.state', string="Region", domain=[('country_id', '=', 46)])
 
 
 class Salas(models.Model):
     _name = 'salas'
+    _description = "Salas"
 
     name = fields.Char(string="Name")
     address = fields.Char(string="Address")
@@ -62,6 +68,7 @@ class Salas(models.Model):
 
 class PhotoSupi(models.Model):
     _name = 'photos.supi'
+    _description = "Photo Supi"
 
     name = fields.Char(string="Name")
     image = fields.Binary(string="Image")
@@ -70,6 +77,7 @@ class PhotoSupi(models.Model):
 
 class Variables(models.Model):
     _name = 'variables'
+    _description = "Variables"
 
     name = fields.Char(string="Name")
     id_variable = fields.Char(string="ID VARIABLE")
@@ -88,6 +96,7 @@ class Variables(models.Model):
 
 class Muebles(models.Model):
     _name = "muebles"
+    _description = "Muebles"
 
     name = fields.Char(string="Nombre")
     category = fields.Char(string="Categoría")
@@ -100,18 +109,21 @@ class Muebles(models.Model):
 
 class StudyType(models.Model):
     _name = "study.type"
+    _description = "Tipo estudios"
 
     name = fields.Char(string="Name")
 
 
 class StudyFrecuency(models.Model):
     _name = "study.frecuency"
+    _description = "Frecuencia del estudio"
 
     name = fields.Char(string="Name")
 
 
 class Study(models.Model):
     _name = "study"
+    _description = "Estudios"
 
     name = fields.Char(string="Name")
     # variable_id = fields.Many2one('variables', string="Variable")
@@ -127,6 +139,7 @@ class Study(models.Model):
 
 class Quiz(models.Model):
     _name = "quiz"
+    _description = "Quiz"
 
     name = fields.Char(string="Name")
     study_id = fields.Many2one('study', string="Study")
@@ -144,16 +157,11 @@ class Quiz(models.Model):
 
 class Planning(models.Model):
     _name = "planning"
+    _description = "Planificacion"
 
     name = fields.Char(string="Cadena")
     channel = fields.Char(string="Canal")
     planograma_id = fields.Many2one("planograma", string="Planograma")
-    study_id = fields.Many2one("study", string="Estudio")
-    product_id = fields.Many2one("product.product", string="Producto")
-    place_id = fields.Many2one("salas", string="Sala")
-    variable_id = fields.Many2one("variable", string="Variable")
-    comuna_id = fields.Many2one('comunas', string="Comuna")
-    state_id = fields.Many2one('res.country.state', string="Region", domain=[('country_id', '=', 46)])
     date_start = fields.Date('Date start')
     date_end = fields.Date('Date end')
     description = fields.Char(size=100, string="Descripción")
@@ -164,14 +172,22 @@ class Planning(models.Model):
         ('cancel', 'Cancelado'),
         ('done', 'Hecho'),
     ], string='Estado', help='Estados de la planificacion', default='ready')
-    tiene_cartel = fields.Boolean(string="Tiene cartel?")
-    mecanica = fields.Boolean(string="Mecánica")
-    result = fields.Integer(string="Resultado")
+
+    # study_id = fields.Many2one("study", string="Estudio")
+    # product_id = fields.Many2one("product.product", string="Producto")
+    # place_id = fields.Many2one("salas", string="Sala")
+    # variable_id = fields.Many2one("variable", string="Variable")
+    # comuna_id = fields.Many2one('comunas', string="Comuna")
+    # state_id = fields.Many2one('res.country.state', string="Region", domain=[('country_id', '=', 46)])
+    # tiene_cartel = fields.Boolean(string="Tiene cartel?")
+    # mecanica = fields.Boolean(string="Mecánica")
+    # result = fields.Integer(string="Resultado")
 
 
 class PlanningSalas(models.Model):
     _name = "planning.salas"
     _rec_name = 'planning_id'
+    _description = "Salas planificadas"
 
     planning_id = fields.Many2one('planning', string="Planning")
     place_id = fields.Many2one('salas', string="Sala")
@@ -187,6 +203,7 @@ class PlanningSalas(models.Model):
 
 class PlanningProducts(models.Model):
     _name = "planning.product"
+    _description = "Productos planificados"
 
     planning_salas_id = fields.Many2one('planning.salas', string="Sala planificada")
     product_id = fields.Many2one('product.product', string="Producto")
@@ -196,6 +213,7 @@ class PlanningProducts(models.Model):
 
 class StudiesDone(models.Model):
     _name = "studies.done"
+    _description = "Estudios realizados"
 
     planning_salas_id = fields.Many2one('planning.salas', string="Sala planificada")
     quizs_ids = fields.One2many('quiz.result', 'studie_done_id', string='Quizs', copy=True)
@@ -204,6 +222,7 @@ class StudiesDone(models.Model):
 
 class PlanningStudies(models.Model):
     _name = "planning.studies"
+    _description = "Estudios planificados"
 
     study_id = fields.Many2one('study', string="Study")
     planning_id = fields.Many2one('planning', string="Planning")
@@ -213,6 +232,7 @@ class PlanningStudies(models.Model):
 
 class Planograma(models.Model):
     _name = "planograma"
+    _description = "Planograma"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
     name = fields.Char(related='partner_id.name')
@@ -230,6 +250,7 @@ class Planograma(models.Model):
 
 class VariablesEstudios(models.Model):
     _name = "variables.studies"
+    _description = "Variables de estudios"
     _rec_name = 'variable_id'
 
     planograma_id = fields.Many2one("planograma", string="Planograma")
@@ -238,18 +259,8 @@ class VariablesEstudios(models.Model):
 
 class SalasPlanograma(models.Model):
     _name = "salas.planograma"
+    _description = "Salas del planograma"
 
     planograma_id = fields.Many2one("planograma", string="Planograma")
     place_id = fields.Many2one('salas', string="Sala")
     muebles_ids = fields.Many2many('muebles')
-#     products_sala_planogram_ids = fields.One2many('producto.salas.planograma', 'salas_planograma_id',
-#                                                   string='Salas del planograma',
-#                                                   copy=True)
-#
-#
-# class ProductSalasPlanograma(models.Model):
-#     _name = "producto.salas.planograma"
-#     _rec_name = 'salas_planograma_id'
-#
-#     salas_planograma_id = fields.Many2one("producto.salas.planograma", string="Productos/Salas Planograma")
-#     id_product_mueble = fields.Many2one('muebles', string="Mueble")

@@ -24,4 +24,3 @@ access_supi_study_type,supi_integration.study.type,model_study_type,,1,1,1,1
 access_supi_study_frecuency,supi_integration.study.frecuency,model_study_frecuency,,1,1,1,1
 access_supi_variables_studies,supi_integration.variables.studies,model_variables_studies,,1,1,1,1
 access_supi_salas_planograma,supi_integration.salas.planograma,model_salas_planograma,,1,1,1,1
-access_supi_producto_salas_planograma,supi_integration.producto.salas.planograma,model_producto_salas_planograma,,1,1,1,1

@@ -727,22 +727,14 @@
                         <group>
                             <group>
                                 <field name="date_start"/>
-                                <field name="place_id"/>
-                                <field name="state_id"/>
-                                <field name="study_id"/>
-                                <field name="variable_id"/>
-                                <field name="comuna_id"/>
+
                                 <field name="channel"/>
-                                <field name="result"/>
                             </group>
                             <group>
                                 <field name="date_end"/>
                                 <field name="user_id"/>
                                 <field name="planograma_id"/>
-                                <field name="product_id"/>
-                                <field name="mecanica"/>
                                 <field name="description"/>
-                                <field name="tiene_cartel"/>
                             </group>
                         </group>
                     </sheet>
@@ -756,8 +748,6 @@
             <field name="arch" type="xml">
                 <tree string="Planning">
                     <field name="name"/>
-                    <field name="place_id"/>
-                    <field name="state_id"/>
                     <field name="user_id"/>
                 </tree>
             </field>
@@ -769,8 +759,6 @@
             <field name="arch" type="xml">
                 <search string="Planning">
                     <field name="name"/>
-                    <field name="place_id"/>
-                    <field name="state_id"/>
                 </search>
             </field>
         </record>
