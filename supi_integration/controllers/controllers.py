@@ -307,8 +307,7 @@ class AuthRegisterHome(Home):
         try:
             user_id = params["user_id"]
             today = datetime.utcnow().date()
-            print(today)
-            records = request.env['planograma'].search(
+            records = request.env['planning'].search(
                 [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
                 'place_id').mapped('comuna_id')
             data_today = []

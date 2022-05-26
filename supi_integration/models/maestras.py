@@ -189,11 +189,10 @@ class PlanningSalas(models.Model):
     image = fields.Binary(string="Foto inicial")
     quizs_ids = fields.One2many('quiz.result', 'planning_salas_id', string='Quizs', copy=True)
     state = fields.Selection([
-        ('ready', 'Listo'),
-        ('proceeding', 'En proceso'),
-        ('cancel', 'Cancelado'),
-        ('done', 'Hecho'),
-    ], string='Estado', help='Estado', default='ready')
+
+        ('done', 'Realizado'),
+        ('no_done', 'No realizado'),
+    ], string='Estado', help='Estado')
 
 
 class PlanningProducts(models.Model):
@@ -241,6 +240,32 @@ class Planograma(models.Model):
                                            copy=True)
     variables_estudios_ids = fields.One2many('variables.studies', 'planograma_id', string='Variables de estudio',
                                              copy=True)
+
+    def name_get(self):
+        result = []
+        for planograma in self:
+            result.append((planograma.id, '%s-%s' % (planograma.partner_id.name, planograma.study_id.name)))
+        return result
+
+    def generate_planning(self):
+        vals = {
+            "date_start": self.date_start,
+            "date_end": self.date_end,
+            "user_id": self.id,
+            "planograma_id": self.id,
+            "name": self.partner_id.name,
+            "description": self.description,
+        }
+        planning_id = self.env['planning'].create(vals)
+
+        for line in self.salas_planograma_ids:
+            vals = {
+                "planning_id": planning_id.id,
+                "place_id": line.place_id.id,
+                "auditor_id": self.user_id.id,
+                "coordinator_id": self.user_id.id,
+            }
+            self.env['planning.salas'].create(vals)
 
 
 class VariablesEstudios(models.Model):

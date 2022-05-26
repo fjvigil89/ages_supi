@@ -797,7 +797,7 @@
                   name="Planning"
                   action="action_planning"
                   parent="supi_integration.planificaciones_supi"
-                  sequence="1"/>
+                  sequence="2"/>
 
 
         <!--        PLANNING STUDIES-->
@@ -868,11 +868,11 @@
             </field>
         </record>
 
-        <menuitem id="menu_planning_salas_supi"
-                  name="Salas planificadas"
-                  action="action_planning_salas"
-                  parent="supi_integration.planificaciones_supi"
-                  sequence="2"/>
+<!--        <menuitem id="menu_planning_salas_supi"-->
+<!--                  name="Salas planificadas"-->
+<!--                  action="action_planning_salas"-->
+<!--                  parent="supi_integration.planificaciones_supi"-->
+<!--                  sequence="2"/>-->
 
         <!--        PLANNING STUDIES-->
         <record model="ir.ui.view" id="view_planning_product_form">
@@ -1018,6 +1018,10 @@
             <field name="arch" type="xml">
                 <form string="Planograma">
                     <sheet>
+                        <header>
+                            <button string="Crear planificacion" name="generate_planning" type="object"
+                                    class="oe_highlight"/>
+                        </header>
                         <group>
                             <group>
                                 <field name="name" invisible="1"/>
@@ -1102,7 +1106,7 @@
                   name="Planogramas"
                   action="action_planograma"
                   parent="supi_integration.planificaciones_supi"
-                  sequence="3"/>
+                  sequence="1"/>
 
 
         <!--       PLANOGRAMA-->
