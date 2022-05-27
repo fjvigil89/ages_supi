@@ -533,11 +533,11 @@
             </field>
         </record>
 
-        <menuitem id="menu_muebles_supi"
-                  name="Muebles"
-                  action="action_muebles"
-                  parent="supi_integration.secondary_data_supi"
-                  sequence="7"/>
+<!--        <menuitem id="menu_muebles_supi"-->
+<!--                  name="Muebles"-->
+<!--                  action="action_muebles"-->
+<!--                  parent="supi_integration.secondary_data_supi"-->
+<!--                  sequence="7"/>-->
 
 
         <!--        Study-->
