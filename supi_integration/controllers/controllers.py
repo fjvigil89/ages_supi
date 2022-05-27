@@ -480,30 +480,51 @@ class AuthRegisterHome(Home):
             comuna_id = params["comuna_id"]
             user_id = params["user_id"]
             type = params["type"]
-            today = datetime.utcnow().date()
-            records = request.env['planograma'].search(
-                [('date_start', '=', today),
-                 ('state', '=', 'ready'),
-                 ('study_id.variable_id.type', '=', type),
-                 ('user_id', '=', int(user_id)),
-                 ('place_id.comuna_id', '=', int(comuna_id))])
+            today = datetime.utcnow()
 
-            records_later = request.env['planograma'].search(
-                [('date_start', '>', today), ('state', '=', 'ready'), ('study_id.variable_id.type', '=', type),
-                 ('user_id', '=', int(user_id)),
-                 ('place_id.comuna_id', '=', int(comuna_id))])
+            today = self.get_date_by_tz(today)
+
+            planning_salas_ids = request.env['planning'].search(
+                [('date_start', '=', today), ('state', '=', 'ready')]).mapped(
+                'planning_salas_ids')
+            data = []
+            for planning_salas in planning_salas_ids:
+                if planning_salas.place_id.comuna_id.id == int(comuna_id) and planning_salas.state == 'prepared' \
+                        and planning_salas.auditor_id.id == int(user_id):
+                    for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
+                        if variable.tipo_estudio == type:
+                            sala_data = {
+                                'id': planning_salas.place_id.id,
+                                'folio': planning_salas.place_id.folio or '',
+                                'name': planning_salas.place_id.name or '',
+                                'lat': planning_salas.place_id.lat or '',
+                                'long': planning_salas.place_id.long or '',
+                                'address': planning_salas.place_id.address or '',
+                                'image': planning_salas.place_id.url_image or '',
+                            }
+                            data.append(sala_data)
+
+            planning_salas_ids = request.env['planning'].search(
+                [('date_start', '>', today), ('state', '=', 'ready')]).mapped(
+                'planning_salas_ids')
+            data_later = []
+            for planning_salas in planning_salas_ids:
+                if planning_salas.place_id.comuna_id.id == int(comuna_id) and planning_salas.state == 'prepared' \
+                        and planning_salas.auditor_id.id == int(user_id):
+                    for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
+                        if variable.tipo_estudio == type:
+                            sala_data = {
+                                'id': planning_salas.place_id.id,
+                                'folio': planning_salas.place_id.folio or '',
+                                'name': planning_salas.place_id.name or '',
+                                'lat': planning_salas.place_id.lat or '',
+                                'long': planning_salas.place_id.long or '',
+                                'address': planning_salas.place_id.address or '',
+                                'image': planning_salas.place_id.url_image or '',
+                            }
+                            data_later.append(sala_data)
             try:
-                serializer = Serializer(records,
-                                        query='{place_id{id,url_image,name,folio,lat,long,state_id{id,name}}}',
-                                        many=True)
-                serializer_later = Serializer(records_later,
-                                              query='{place_id{id,url_image,name,folio,lat,long,state_id{id,name}}}',
-                                              many=True)
-
-                res = {
-                    "salas_studies_today": serializer.data,  # Cantidad de salas para hoy
-                    "salas_studies_later": serializer_later.data,  # Cantidad de salas para hoy
-                }
+                res = {'hoy': data, 'next': data_later}
                 return http.Response(
                     json.dumps(res),
                     status=200,
