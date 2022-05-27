@@ -345,7 +345,7 @@ class AuthRegisterHome(Home):
                     if planning_salas.place_id.comuna_id.id == comuna.id and planning_salas.state == 'prepared' \
                             and planning_salas.auditor_id.id == int(user_id):
                         for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
-                            if variable.tipo_estudio == '0':
+                            if variable.tipo_estudio == '4':
                                 # cold_equipment
                                 red = True
                                 count_red += 1

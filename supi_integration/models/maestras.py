@@ -85,10 +85,9 @@ class Variables(models.Model):
     valores_combobox = fields.Char(string="Valores combobox")
     tipo_estudio = fields.Selection(
         [('2', 'Price'),
-         ('4', 'Carteleria'),
          ('3', 'Facing'),
          ('1', 'OSA'),
-         ('0', 'Equipos de frio'),
+         ('4', 'Equipos de frio'),
          ('5', 'Exhibitions')],
         string='Tipo de estudio')
 
