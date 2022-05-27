@@ -748,3 +748,13 @@ msgstr "Estudio"
 #: model:ir.model,name:supi_integration.model_variables
 msgid "variables"
 msgstr "Variables"
+
+
+#. module: product
+#: model:ir.actions.act_window,name:product.product_normal_action
+#: model:ir.actions.act_window,name:product.product_normal_action_sell
+#: model:ir.actions.act_window,name:product.product_variant_action
+#: model_terms:ir.ui.view,arch_db:product.product_product_tree_view
+#: model_terms:ir.ui.view,arch_db:product.product_product_view_activity
+msgid "Product Variants"
+msgstr "PRODUCTOS Y TIPOS DE MUEBLES"

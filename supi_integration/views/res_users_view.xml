@@ -9,7 +9,6 @@
             <field name="arch" type="xml">
                 <xpath expr="//notebook/page[last()]" position="after">
                     <page string="Supi Integration">
-
                         <group>
                             <group>
 
