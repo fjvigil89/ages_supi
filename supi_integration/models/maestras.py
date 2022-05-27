@@ -250,7 +250,7 @@ class Planograma(models.Model):
                                            copy=True)
     variables_estudios_ids = fields.One2many('variables.studies', 'planograma_id', string='Variables de estudio',
                                              copy=True)
-    study_id_naturaleza = fields.Char()
+    study_id_naturaleza = fields.Char(string="Naturaleza", default='0')
 
     def name_get(self):
         result = []
