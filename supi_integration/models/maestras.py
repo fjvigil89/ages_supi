@@ -103,6 +103,13 @@ class Variables(models.Model):
     icon = fields.Binary(string="Icono")
     study_id = fields.Many2one("study", string="Estudio")
 
+    def name_get(self):
+        result = []
+        for variable in self:
+            result.append((variable.id, '%s - %s' % (
+                variable.label_visual, dict(self._fields['tipo_estudio'].selection).get(variable.tipo_estudio))))
+        return result
+
 
 class Muebles(models.Model):
     _name = "muebles"
@@ -196,13 +203,23 @@ class PlanningSalas(models.Model):
     coordinator_id = fields.Many2one('res.users', string="Coordinador")
     specifications = fields.Char(size=100, string="Especificaciones")
     comment = fields.Char(size=100, string="Comentario")
+    planning_products_ids = fields.One2many('planning.product', 'planning_salas_id', string="Productos")
     image = fields.Binary(string="Foto inicial")
     quizs_ids = fields.One2many('quiz.result', 'planning_salas_id', string='Quizs', copy=True)
     state = fields.Selection([
 
+        ('prepared', 'Preparado'),
         ('done', 'Realizado'),
         ('no_done', 'No realizado'),
-    ], string='Estado', help='Estado')
+    ], string='Estado', help='Estado', default='prepared')
+
+    def name_get(self):
+        result = []
+        for salas in self:
+            result.append((salas.id, '%s - %s- %s' % (salas.place_id.name, salas.auditor_id.name,
+                                                      dict(self._fields['state'].selection).get(
+                                                          salas.state))))
+        return result
 
 
 class PlanningProducts(models.Model):
@@ -211,8 +228,27 @@ class PlanningProducts(models.Model):
 
     planning_salas_id = fields.Many2one('planning.salas', string="Sala planificada")
     product_id = fields.Many2one('product.product', string="Producto")
-    variable_id = fields.Many2one('variable', string="Variable")
+    product_ids = fields.Many2many('product.product')
+    variable_id = fields.Many2one('variables', string="Variable")
+    variable_ids = fields.Many2many('variables', string="Variables")
     valor_por_defecto = fields.Char("Valor por defecto")
+    validation_perc = fields.Char("% Validación")
+    disponibilidad = fields.Char("Disponibilidad")
+    respuesta = fields.Char("Respuesta")
+    comment = fields.Char("Comentario")
+    posicion_x = fields.Char("Posicion X del producto")
+    posicion_y = fields.Char("Posicion Y del producto")
+    date_start = fields.Date(string='Momento de medicion')
+    product_padre_id = fields.Many2one('product.product', string="Producto padre")
+
+    def name_get(self):
+        result = []
+        for product in self:
+            name = ''
+            for prod in product.product_ids:
+                name += str(prod.name)
+            result.append((product.id, '%s - %s' % (name, product.variable_id.label_visual)))
+        return result
 
 
 class StudiesDone(models.Model):
@@ -272,7 +308,7 @@ class Planograma(models.Model):
         vals = {
             "date_start": self.date_start,
             "date_end": self.date_end,
-            "user_id": self.id,
+            "user_id": self.env.user.id,
             "planograma_id": self.id,
             "name": self.partner_id.name,
             "description": self.description,
@@ -286,7 +322,13 @@ class Planograma(models.Model):
                 "auditor_id": self.user_id.id,
                 "coordinator_id": self.user_id.id,
             }
-            self.env['planning.salas'].create(vals)
+            planning_sala_id = self.env['planning.salas'].create(vals)
+            vals = {
+                "planning_salas_id": planning_sala_id.id,
+                "product_ids": [(6, 0, line.muebles_ids.ids)],
+                "variable_ids": [(6, 0, self.variables_estudios_ids.ids)],
+            }
+            self.env['planning.product'].create(vals)
 
 
 class VariablesEstudios(models.Model):

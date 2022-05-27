@@ -309,29 +309,49 @@ class AuthRegisterHome(Home):
             today = datetime.utcnow().date()
             records = request.env['planning'].search(
                 [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
-                'place_id').mapped('comuna_id')
+                'planning_salas_ids').mapped('place_id').mapped('comuna_id')
             data_today = []
             for comuna in records:
                 red = False
+                count_red = 0
                 blue = False
+                count_blue = False
                 yellow = False
+                count_yellow = False
                 green = False
+                count_green = False
                 brown = False
-                records = request.env['planograma'].search(
-                    [('date_start', '=', today), ('state', '=', 'ready'), ('place_id.comuna_id', '=', comuna.id),
-                     ('user_id', '=', int(user_id))]).mapped('study_id').mapped('variable_id')
+                count_brown = False
+                planning_salas_ids = request.env['planning'].search(
+                    [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
+                    'planning_salas_ids')
+                planogramas = request.env['planning'].search(
+                    [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
+                    'planograma_id')
+
+                # for planning_salas in planning_salas_ids:
+
+
+                # records = request.env['planograma'].search(
+                #     [('date_start', '=', today), ('state', '=', 'ready'), ('place_id.comuna_id', '=', comuna.id),
+                #      ('user_id', '=', int(user_id))]).mapped('study_id').mapped('variable_id')
 
                 for variable in records:
                     if variable.type == 'cold_equipment':
                         red = True
+                        count_red += 1
                     if variable.type == 'exhibitions':
                         blue = True
+                        count_blue += 1
                     if variable.type == 'price':
                         yellow = True
+                        count_yellow += 1
                     if variable.type == 'osa':
                         green = True
+                        count_green += 1
                     if variable.type == 'facing':
                         brown = True
+                        count_brown += 1
                 comuna_data = {
                     'comuna_id': comuna.id,
                     "nombre_comuna": comuna.name,

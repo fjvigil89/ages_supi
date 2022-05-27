@@ -14,5 +14,6 @@ class ProductTemplate(models.Model):
 
     can_be_mueble = fields.Boolean(string="Puede ser mueble")
     product_id = fields.Many2one("product.template")
+    # planning_product = fields.Many2one("planning.product")
     product_ids = fields.One2many("product.template", 'product_id')
     partner_id = fields.Many2one("res.partner", string="Cliente")

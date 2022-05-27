@@ -746,6 +746,7 @@
                                         <field name="coordinator_id" required="1"/>
                                         <field name="specifications" required="1"/>
                                         <field name="comment" required="1"/>
+                                        <field name="planning_products_ids" widget="many2many_tags" required="1"/>
                                         <field name="quizs_ids" widget="many2many_tags"/>
                                         <field name="state"/>
                                     </tree>
@@ -808,7 +809,7 @@
                     <sheet>
                         <header>
                             <field name="state" widget="statusbar"
-                                   statusbar_visible="ready,proceeding,done"/>
+                                   statusbar_visible="prepared,done,no_done"/>
                         </header>
                         <group>
                             <group>
@@ -883,12 +884,21 @@
                         <group>
                             <group>
                                 <field name="planning_salas_id" required="1"/>
-                                <field name="product_id" required="1"/>
-
+                                <field name="product_id"/>
+                                <field name="product_ids" widget="many2many_tags"/>
+                                <field name="variable_ids" widget="many2many_tags"/>
+                                <field name="validation_perc"/>
+                                <field name="disponibilidad"/>
+                                <field name="posicion_x"/>
+                                <field name="date_start"/>
                             </group>
                             <group>
-                                <field name="variable_id" required="1"/>
+                                <field name="variable_id"/>
                                 <field name="valor_por_defecto" required="1"/>
+                                <field name="respuesta"/>
+                                <field name="comment"/>
+                                <field name="posicion_y"/>
+                                <field name="product_padre_id"/>
                             </group>
                         </group>
                     </sheet>
@@ -921,7 +931,7 @@
         </record>
 
         <record id="action_planning_product" model="ir.actions.act_window">
-            <field name="name">Productos planificados</field>
+            <field name="name">Productos planogramados</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">planning.product</field>
             <field name="view_mode">tree,form</field>
@@ -937,7 +947,7 @@
                   name="Productos planificados"
                   action="action_planning_product"
                   parent="supi_integration.planificaciones_supi"
-                  sequence="3"/>
+                  sequence="2"/>
 
 
         <!--        PLANNING STUDIES-->
