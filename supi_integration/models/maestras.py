@@ -261,7 +261,11 @@ class Planograma(models.Model):
     @api.onchange('study_id')
     def onchange_study_id(self):
         if self.study_id:
-            self.study_id_naturaleza = self.study_id.naturaleza
+            if self.study_id.naturaleza:
+                self.study_id_naturaleza = self.study_id.naturaleza
+            else:
+                self.study_id_naturaleza = '0'
+
         self.salas_planograma_ids = False
 
     def generate_planning(self):
@@ -310,6 +314,7 @@ class SalasPlanograma(models.Model):
     @api.onchange('place_id', 'planograma_id')
     def _compute_product_id_domain(self):
         for rec in self:
+            print(rec.planograma_id.study_id_naturaleza)
             if rec.planograma_id.study_id_naturaleza == '0':
                 rec.product_id_domain = json.dumps(
                     [('can_be_mueble', '=', False)]
