@@ -330,13 +330,13 @@ class AuthRegisterHome(Home):
                 red = False
                 count_red = 0
                 blue = False
-                count_blue = False
+                count_blue = 0
                 yellow = False
-                count_yellow = False
+                count_yellow = 0
                 green = False
-                count_green = False
+                count_green = 0
                 brown = False
-                count_brown = False
+                count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
                     [('date_start', '=', today), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids')
@@ -392,13 +392,13 @@ class AuthRegisterHome(Home):
                 red = False
                 count_red = 0
                 blue = False
-                count_blue = False
+                count_blue = 0
                 yellow = False
-                count_yellow = False
+                count_yellow = 0
                 green = False
-                count_green = False
+                count_green = 0
                 brown = False
-                count_brown = False
+                count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
                     [('date_start', '>', today), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids')
