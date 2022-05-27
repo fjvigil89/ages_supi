@@ -79,16 +79,25 @@ class Variables(models.Model):
     _name = 'variables'
     _description = "Variables"
 
-    name = fields.Char(string="Name")
+    label_visual = fields.Char(string="Label visual")
     id_variable = fields.Char(string="ID VARIABLE")
     valores_combobox = fields.Char(string="Valores combobox")
-    tipo_dato = fields.Selection(
+    tipo_estudio = fields.Selection(
         [('2', 'Price'),
          ('4', 'Carteleria'),
          ('3', 'Facing'),
          ('1', 'OSA'),
          ('5', 'Exhibitions')],
         string='Tipo de estudio')
+
+    tipo_dato = fields.Selection(
+        [('1', 'Texto'),
+         ('2', 'Int'),
+         ('3', 'Double'),
+         ('4', 'Bool'),
+         ('5', 'Select'),
+         ('6', 'Price')],
+        string='Tipo de dato')
     image = fields.Binary(string="Image")
     icon = fields.Binary(string="Icono")
     study_id = fields.Many2one("study", string="Estudio")

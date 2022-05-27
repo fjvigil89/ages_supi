@@ -390,27 +390,26 @@
                 <form string="Variables">
                     <sheet>
                         <div class="oe_title">
-                            <label for="name" class="oe_edit_only"/>
+                            <label for="label_visual" class="oe_edit_only"/>
                             <h1>
-
+                                <field name="label_visual" required="1"/>
                             </h1>
                         </div>
                         <group>
                             <group>
-                                <field name="name" required="1"/>
+                                <field name="study_id"/>
                             </group>
                             <group>
-                                <field name="id_variable" required="1"/>
                                 <field name="valores_combobox"/>
                             </group>
                         </group>
                         <group>
                             <group>
                                 <field name="tipo_dato" required="1"/>
-                                <field name="study_id"/>
+                                <field name="tipo_estudio" required="1"/>
+
                             </group>
                             <group>
-                                <field name="image" widget="image" required="0"/>
                                 <field name="icon" widget="image" required="0"/>
                             </group>
                         </group>
@@ -424,7 +423,7 @@
             <field name="model">variables</field>
             <field name="arch" type="xml">
                 <tree string="Variables">
-                    <field name="name"/>
+                    <field name="label_visual"/>
                     <field name="tipo_dato"/>
                 </tree>
             </field>
@@ -435,7 +434,7 @@
             <field name="model">variables</field>
             <field name="arch" type="xml">
                 <search string="Variables">
-                    <field name="name"/>
+                    <field name="label_visual"/>
                     <field name="tipo_dato"/>
                 </search>
             </field>
@@ -868,11 +867,11 @@
             </field>
         </record>
 
-<!--        <menuitem id="menu_planning_salas_supi"-->
-<!--                  name="Salas planificadas"-->
-<!--                  action="action_planning_salas"-->
-<!--                  parent="supi_integration.planificaciones_supi"-->
-<!--                  sequence="2"/>-->
+        <!--        <menuitem id="menu_planning_salas_supi"-->
+        <!--                  name="Salas planificadas"-->
+        <!--                  action="action_planning_salas"-->
+        <!--                  parent="supi_integration.planificaciones_supi"-->
+        <!--                  sequence="2"/>-->
 
         <!--        PLANNING STUDIES-->
         <record model="ir.ui.view" id="view_planning_product_form">

@@ -528,7 +528,7 @@ msgstr "Pregunta"
 #: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_search
 #: model_terms:ir.ui.view,arch_db:supi_integration.view_quiz_tree
 msgid "Quiz"
-msgstr "Test"
+msgstr "Quiz"
 
 #. module: supi_integration
 #: model:ir.model.fields,field_description:supi_integration.field_planning__region
