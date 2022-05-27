@@ -34,6 +34,10 @@
                         <label for="can_be_mueble"/>
                     </div>
                 </div>
+                <field name="default_code" position="after">
+                    <field name="partner_id"/>
+                </field>
+
                 <xpath expr="//page[@name='general_information']" position="after">
                     <page string="Supi" attrs="{'invisible':[('can_be_mueble','=',False)]}" name="supi">
                         <field name="product_ids">

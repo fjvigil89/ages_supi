@@ -414,7 +414,7 @@ msgstr "OSA (Presencia)"
 #: model_terms:ir.ui.view,arch_db:supi_integration.view_parameters_search
 #: model_terms:ir.ui.view,arch_db:supi_integration.view_parameters_tree
 msgid "Parameters"
-msgstr "Parámetros"
+msgstr "Fotos entrenadas"
 
 #. module: supi_integration
 #: model:ir.model.fields,field_description:supi_integration.field_quiz__partner_id
