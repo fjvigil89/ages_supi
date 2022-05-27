@@ -34,6 +34,19 @@
                         <label for="can_be_mueble"/>
                     </div>
                 </div>
+                <xpath expr="//page[@name='general_information']" position="after">
+                    <page string="Supi" attrs="{'invisible':[('can_be_mueble','=',False)]}" name="supi">
+                        <field name="product_ids">
+                            <tree editable="bottom">
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="lst_price"/>
+                                <field name="default_code"/>
+                                <field name="barcode"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
             </field>
         </record>
     </data>

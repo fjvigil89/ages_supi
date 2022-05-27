@@ -14,3 +14,5 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     can_be_mueble = fields.Boolean(string="Puede ser mueble")
+    product_id = fields.Many2one("product.template")
+    product_ids = fields.One2many("product.template", 'product_id')
