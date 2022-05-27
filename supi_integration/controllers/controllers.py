@@ -3,6 +3,7 @@
 import logging
 import json
 from odoo import http, _
+import pytz
 from odoo.addons.auth_signup.models.res_users import SignupError
 from odoo.addons.web.controllers.main import ensure_db, Home
 from odoo.exceptions import UserError
@@ -41,6 +42,14 @@ def error_response(error, msg):
 
 
 class AuthRegisterHome(Home):
+
+    def get_date_by_tz(self, val_date, format_a=None):
+        utc_timestamp = pytz.utc.localize(val_date, is_dst=False)
+        context_tz = pytz.timezone('Chile/Continental')
+        if not format_a:
+            return utc_timestamp.astimezone(context_tz).date()
+        else:
+            return utc_timestamp.astimezone(context_tz).strftime(format_a).date()
 
     @http.route('/web/restart_password', type='json', auth='public', website=True, sitemap=False)
     def web_reset_password(self, *args, **kw):
@@ -306,12 +315,18 @@ class AuthRegisterHome(Home):
     def get_comunas(self, **params):
         try:
             user_id = params["user_id"]
-            today = datetime.utcnow().date()
-            records = request.env['planning'].search(
-                [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
+            today = datetime.utcnow()
+            today = self.get_date_by_tz(today)
+            comunas_ids = request.env['planning'].search(
+                [('date_start', '=', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
+
+            final_data = []
+            comunas_final = []
             data_today = []
-            for comuna in records:
+            for comuna in comunas_ids:
+                if comuna.id not in comunas_final:
+                    comunas_final.append({'name': comuna.name})
                 red = False
                 count_red = 0
                 blue = False
@@ -323,87 +338,118 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = False
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
+                    [('date_start', '=', today), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids')
-                planogramas = request.env['planning'].search(
-                    [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
-                    'planograma_id')
 
-                # for planning_salas in planning_salas_ids:
+                for planning_salas in planning_salas_ids:
+                    if planning_salas.place_id.comuna_id.id == comuna.id and planning_salas.state == 'prepared' \
+                            and planning_salas.auditor_id.id == int(user_id):
+                        for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
+                            if variable.tipo_estudio == '0':
+                                # cold_equipment
+                                red = True
+                                count_red += 1
+                            if variable.tipo_estudio == '5':
+                                # exhibitions
+                                blue = True
+                                count_blue += 1
+                            if variable.tipo_estudio == '2':
+                                # price
+                                yellow = True
+                                count_yellow += 1
+                            if variable.tipo_estudio == '1':
+                                # osa
+                                green = True
+                                count_green += 1
+                            if variable.tipo_estudio == '3':
+                                # facing
+                                brown = True
+                                count_brown += 1
 
+                        comuna_data = {
+                            'comuna_id': comuna.id,
+                            "nombre_comuna": comuna.name,
+                            "ROJO": red,
+                            "count_rojo": count_red,
+                            "AZUL": blue,
+                            "count_azul": count_blue,
+                            "AMARILLO": yellow,
+                            "count_amarillo": count_yellow,
+                            "VERDE": green,
+                            "count_verde": count_green,
+                            "CARMELITA": brown,
+                            "count_carmelita": count_brown,
+                        }
+                        data_today.append(comuna_data)
 
-                # records = request.env['planograma'].search(
-                #     [('date_start', '=', today), ('state', '=', 'ready'), ('place_id.comuna_id', '=', comuna.id),
-                #      ('user_id', '=', int(user_id))]).mapped('study_id').mapped('variable_id')
-
-                for variable in records:
-                    if variable.type == 'cold_equipment':
-                        red = True
-                        count_red += 1
-                    if variable.type == 'exhibitions':
-                        blue = True
-                        count_blue += 1
-                    if variable.type == 'price':
-                        yellow = True
-                        count_yellow += 1
-                    if variable.type == 'osa':
-                        green = True
-                        count_green += 1
-                    if variable.type == 'facing':
-                        brown = True
-                        count_brown += 1
-                comuna_data = {
-                    'comuna_id': comuna.id,
-                    "nombre_comuna": comuna.name,
-                    "ROJO": red,
-                    "AZUL": blue,
-                    "AMARILLO": yellow,
-                    "VERDE": green,
-                    "CARMELITA": brown
-                }
-                data_today.append(comuna_data)
-
-            records_later = request.env['planograma'].search(
-                [('date_start', '>', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
-                'place_id').mapped('comuna_id')
+            comunas_ids = request.env['planning'].search(
+                [('date_start', '>', today), ('state', '=', 'ready')]).mapped(
+                'planning_salas_ids').mapped('place_id').mapped('comuna_id')
             data_later = []
-            for comuna in records_later:
+            for comuna in comunas_ids:
+                if comuna.id not in comunas_final:
+                    comunas_final.append({'name': comuna.name})
                 red = False
+                count_red = 0
                 blue = False
+                count_blue = False
                 yellow = False
+                count_yellow = False
                 green = False
+                count_green = False
                 brown = False
-                records = request.env['planograma'].search(
-                    [('date_start', '>', today), ('state', '=', 'ready'), ('place_id.comuna_id', '=', comuna.id),
-                     ('user_id', '=', int(user_id))]).mapped('study_id').mapped('variable_id')
+                count_brown = False
+                planning_salas_ids = request.env['planning'].search(
+                    [('date_start', '>', today), ('state', '=', 'ready')]).mapped(
+                    'planning_salas_ids')
 
-                for variable in records:
-                    if variable.type == 'cold_equipment':
-                        red = True
-                    if variable.type == 'exhibitions':
-                        blue = True
-                    if variable.type == 'price':
-                        yellow = True
-                    if variable.type == 'osa':
-                        green = True
-                    if variable.type == 'facing':
-                        brown = True
-                comuna_data = {
-                    'comuna_id': comuna.id,
-                    "nombre_comuna": comuna.name,
-                    "ROJO": red,
-                    "AZUL": blue,
-                    "AMARILLO": yellow,
-                    "VERDE": green,
-                    "CARMELITA": brown
-                }
-                data_later.append(comuna_data)
+                for planning_salas in planning_salas_ids:
+                    if planning_salas.place_id.comuna_id.id == comuna.id and planning_salas.state == 'prepared' \
+                            and planning_salas.auditor_id.id == int(user_id):
+                        for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
+                            if variable.tipo_estudio == '0':
+                                # cold_equipment
+                                red = True
+                                count_red += 1
+                            if variable.tipo_estudio == '5':
+                                # exhibitions
+                                blue = True
+                                count_blue += 1
+                            if variable.tipo_estudio == '2':
+                                # price
+                                yellow = True
+                                count_yellow += 1
+                            if variable.tipo_estudio == '1':
+                                # osa
+                                green = True
+                                count_green += 1
+                            if variable.tipo_estudio == '3':
+                                # facing
+                                brown = True
+                                count_brown += 1
+
+                        comuna_data = {
+                            'comuna_id': comuna.id,
+                            "nombre_comuna": comuna.name,
+                            "ROJO": red,
+                            "count_rojo": count_red,
+                            "AZUL": blue,
+                            "count_azul": count_blue,
+                            "AMARILLO": yellow,
+                            "count_amarillo": count_yellow,
+                            "VERDE": green,
+                            "count_verde": count_green,
+                            "CARMELITA": brown,
+                            "count_carmelita": count_brown,
+                        }
+                        data_later.append(comuna_data)
 
             try:
-
+                final_data.append({'comunas': comunas_final})
                 res = {
                     "Comunas de hoy": data_today,  # Cantidad de salas para hoy
                     "Comunas de Semana Próxima": data_later,  # Cantidad de salas para hoy
+
                 }
                 return http.Response(
                     json.dumps(res),

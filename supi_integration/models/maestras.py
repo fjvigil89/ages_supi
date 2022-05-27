@@ -88,6 +88,7 @@ class Variables(models.Model):
          ('4', 'Carteleria'),
          ('3', 'Facing'),
          ('1', 'OSA'),
+         ('0', 'Equipos de frio'),
          ('5', 'Exhibitions')],
         string='Tipo de estudio')
 
