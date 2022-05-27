@@ -533,11 +533,11 @@
             </field>
         </record>
 
-<!--        <menuitem id="menu_muebles_supi"-->
-<!--                  name="Muebles"-->
-<!--                  action="action_muebles"-->
-<!--                  parent="supi_integration.secondary_data_supi"-->
-<!--                  sequence="7"/>-->
+        <!--        <menuitem id="menu_muebles_supi"-->
+        <!--                  name="Muebles"-->
+        <!--                  action="action_muebles"-->
+        <!--                  parent="supi_integration.secondary_data_supi"-->
+        <!--                  sequence="7"/>-->
 
 
         <!--        Study-->
@@ -796,7 +796,7 @@
                   name="Planning"
                   action="action_planning"
                   parent="supi_integration.planificaciones_supi"
-                  sequence="2"/>
+                  sequence="3"/>
 
 
         <!--        PLANNING STUDIES-->
@@ -867,11 +867,11 @@
             </field>
         </record>
 
-        <!--        <menuitem id="menu_planning_salas_supi"-->
-        <!--                  name="Salas planificadas"-->
-        <!--                  action="action_planning_salas"-->
-        <!--                  parent="supi_integration.planificaciones_supi"-->
-        <!--                  sequence="2"/>-->
+        <menuitem id="menu_planning_salas_supi"
+                  name="Salas planificadas"
+                  action="action_planning_salas"
+                  parent="supi_integration.planificaciones_supi"
+                  sequence="4"/>
 
         <!--        PLANNING STUDIES-->
         <record model="ir.ui.view" id="view_planning_product_form">
@@ -1004,10 +1004,10 @@
         </record>
 
         <menuitem id="menu_planning_studies_supi"
-                  name="Planning studies"
+                  name="Estudios Planificados"
                   action="action_planning_studies"
                   parent="supi_integration.planificaciones_supi"
-                  sequence="2"/>
+                  sequence="5"/>
 
 
         <!--       PLANOGRAMA-->
@@ -1031,6 +1031,7 @@
                                 <field name="date_end" required="1"/>
                                 <field name="user_id" required="1"/>
                                 <field name="study_id" required="1"/>
+                                <field name="study_id_naturaleza" invisible="1"/>
                             </group>
                         </group>
                         <notebook>
@@ -1038,7 +1039,10 @@
                                 <field name="salas_planograma_ids">
                                     <tree editable="bottom">
                                         <field name="place_id" required="1"/>
-                                        <field name="muebles_ids" widget="many2many_tags"/>
+                                        <field name="product_id_domain" invisible="1"/>
+                                        <field name="muebles_ids" widget="many2many_tags"
+                                               domain="product_id_domain"
+                                               attrs="{'invisible':[('parent.study_id_naturaleza','=','3')]}"/>
                                         <field name="planograma_id" invisible="1"/>
                                     </tree>
                                 </field>

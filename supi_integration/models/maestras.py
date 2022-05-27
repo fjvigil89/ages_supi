@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import json
 
 from odoo import models, fields, api
 
@@ -249,12 +250,19 @@ class Planograma(models.Model):
                                            copy=True)
     variables_estudios_ids = fields.One2many('variables.studies', 'planograma_id', string='Variables de estudio',
                                              copy=True)
+    study_id_naturaleza = fields.Char()
 
     def name_get(self):
         result = []
         for planograma in self:
             result.append((planograma.id, '%s-%s' % (planograma.partner_id.name, planograma.study_id.name)))
         return result
+
+    @api.onchange('study_id')
+    def onchange_study_id(self):
+        if self.study_id:
+            self.study_id_naturaleza = self.study_id.naturaleza
+        self.salas_planograma_ids = False
 
     def generate_planning(self):
         vals = {
@@ -292,4 +300,27 @@ class SalasPlanograma(models.Model):
 
     planograma_id = fields.Many2one("planograma", string="Planograma")
     place_id = fields.Many2one('salas', string="Sala")
-    muebles_ids = fields.Many2many('muebles')
+    product_id_domain = fields.Char(
+        compute="_compute_product_id_domain",
+        readonly=True,
+        store=False,
+    )
+    muebles_ids = fields.Many2many('product.product')
+
+    @api.onchange('place_id', 'planograma_id')
+    def _compute_product_id_domain(self):
+        for rec in self:
+            if rec.planograma_id.study_id_naturaleza == '0':
+                rec.product_id_domain = json.dumps(
+                    [('can_be_mueble', '=', False)]
+                )
+            if rec.planograma_id.study_id_naturaleza == '1':
+                rec.product_id_domain = json.dumps(
+                    [('can_be_mueble', '=', True),
+                     ('product_ids', '=', False)]
+                )
+            if rec.planograma_id.study_id_naturaleza == '2':
+                rec.product_id_domain = json.dumps(
+                    [('can_be_mueble', '=', True),
+                     ('product_ids', '!=', False)]
+                )
