@@ -1043,7 +1043,7 @@
                                 <field name="user_id" required="1"/>
                                 <field name="study_id" required="1"/>
                                 <field name="study_id_naturaleza" invisible="1"/>
-                                <field name="study_id_type" invisible="0"/>
+                                <field name="study_id_type" invisible="1"/>
                             </group>
                         </group>
                         <notebook>
