@@ -307,9 +307,12 @@ class Planograma(models.Model):
         if self.study_id:
             if self.study_id.naturaleza:
                 self.study_id_naturaleza = self.study_id.naturaleza
-                self.write({'study_id_type': self.study_id.type})
             else:
                 self.study_id_naturaleza = '0'
+            if self.study_id.type:
+                self.write({'study_id_type': self.study_id.type})
+            else:
+                self.write({'study_id_type': ''})
 
         self.salas_planograma_ids = False
 

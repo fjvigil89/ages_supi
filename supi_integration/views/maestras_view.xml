@@ -397,7 +397,8 @@
                         </div>
                         <group>
                             <group>
-                                <field name="study_id"/>
+                                <field name="study_id"
+                                       help="Tipo de estudio importado de los excel de maestras, pero NO se usara en el sistema para las peticiones de la aplicacion movil"/>
                             </group>
                             <group>
                                 <field name="valores_combobox"/>
@@ -406,7 +407,7 @@
                         <group>
                             <group>
                                 <field name="tipo_dato" required="1"/>
-                                <field name="tipo_estudio" required="1"/>
+                                <field name="tipo_estudio" required="1" help="Tipo de estudio utilizado para las peticiones de la app"/>
 
                             </group>
                             <group>
@@ -1062,9 +1063,10 @@
                             </page>
                             <page string="Variables del estudio">
                                 <field name="variables_estudios_ids"
-                                       >
+                                >
                                     <tree editable="bottom">
-                                        <field name="variable_id" required="1" domain="[('tipo_estudio','=',parent.study_id_type)]"/>
+                                        <field name="variable_id" required="1"
+                                               domain="[('tipo_estudio','=',parent.study_id_type)]"/>
                                         <field name="planograma_id" invisible="1"/>
                                     </tree>
                                 </field>
