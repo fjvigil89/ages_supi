@@ -143,6 +143,13 @@ class Study(models.Model):
     _description = "Estudios"
 
     name = fields.Char(string="Name")
+    type = fields.Selection(
+        [('2', 'Price'),
+         ('3', 'Facing'),
+         ('1', 'OSA'),
+         ('4', 'Equipos de frio'),
+         ('5', 'Exhibitions')],
+        string='Tipo de estudio')
     # variable_id = fields.Many2one('variables', string="Variable")
     tipo_estudio = fields.Many2one('study.type')
     naturaleza = fields.Selection(
@@ -287,6 +294,7 @@ class Planograma(models.Model):
     variables_estudios_ids = fields.One2many('variables.studies', 'planograma_id', string='Variables de estudio',
                                              copy=True)
     study_id_naturaleza = fields.Char(string="Naturaleza", default='0')
+    study_id_type = fields.Char(string="Type")
 
     def name_get(self):
         result = []
@@ -299,6 +307,7 @@ class Planograma(models.Model):
         if self.study_id:
             if self.study_id.naturaleza:
                 self.study_id_naturaleza = self.study_id.naturaleza
+                self.write({'study_id_type': self.study_id.type})
             else:
                 self.study_id_naturaleza = '0'
 

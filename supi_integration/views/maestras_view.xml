@@ -557,6 +557,7 @@
                         <group>
                             <group>
                                 <field name="tipo_estudio" required="1"/>
+                                <field name="type" required="1"/>
                                 <field name="frecuency" required="1"/>
                                 <field name="naturaleza" required="1"/>
                             </group>
@@ -1042,6 +1043,7 @@
                                 <field name="user_id" required="1"/>
                                 <field name="study_id" required="1"/>
                                 <field name="study_id_naturaleza" invisible="1"/>
+                                <field name="study_id_type" invisible="0"/>
                             </group>
                         </group>
                         <notebook>
@@ -1059,9 +1061,10 @@
                                 </field>
                             </page>
                             <page string="Variables del estudio">
-                                <field name="variables_estudios_ids">
+                                <field name="variables_estudios_ids"
+                                       >
                                     <tree editable="bottom">
-                                        <field name="variable_id" required="1"/>
+                                        <field name="variable_id" required="1" domain="[('tipo_estudio','=',parent.study_id_type)]"/>
                                         <field name="planograma_id" invisible="1"/>
                                     </tree>
                                 </field>
