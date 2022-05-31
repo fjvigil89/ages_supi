@@ -278,7 +278,10 @@ class PlanningProducts(models.Model):
             name = ''
             for prod in product.product_ids:
                 name += str(prod.name)
-            result.append((product.id, '%s - %s' % (name, product.variable_id.label_visual)))
+            if product.variable_id.label_visual and name != '':
+                result.append((product.id, '%s - %s' % (name, product.variable_id.label_visual)))
+            else:
+                result.append((product.id, '%s ' % "Producto"))
         return result
 
 
@@ -365,10 +368,19 @@ class Planograma(models.Model):
                 "coordinator_id": self.user_id.id,
             }
             planning_sala_id = self.env['planning.salas'].create(vals)
+
+            variables_list = []
+            for variable in self.variables_estudios_ids:
+                for var in variable.variable_id:
+                    if var.id not in variables_list:
+                        variables_list.append(var.id)
+            products = []
+            if line.muebles_ids:
+                products = line.muebles_ids.ids
             vals = {
                 "planning_salas_id": planning_sala_id.id,
-                "product_ids": [(6, 0, line.muebles_ids.ids)],
-                "variable_ids": [(6, 0, self.variables_estudios_ids.ids)],
+                "product_ids": [(6, 0, products)],
+                "variable_ids": [(6, 0, variables_list)],
             }
             self.env['planning.product'].create(vals)
 
