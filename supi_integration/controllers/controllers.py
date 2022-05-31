@@ -564,7 +564,7 @@ class AuthRegisterHome(Home):
                         "opcion_respuesta1_correcta": planning_sala.id_quiz_1.correct_answer or '',
                         "opcion_respuesta2": planning_sala.id_quiz_1.answer1 or '',
                         "opcion_respuesta3": planning_sala.id_quiz_1.answer2 or '',
-                        "respuesta_seleccionada_por_auditor": ""
+                        "respuesta_seleccionada_por_auditor": planning_sala.answer_quiz_1 or ''
                     },
                     {
                         "quiz2_id": planning_sala.id_quiz_2.id,
@@ -572,7 +572,7 @@ class AuthRegisterHome(Home):
                         "opcion_respuesta1_correcta": planning_sala.id_quiz_2.correct_answer or '',
                         "opcion_respuesta2": planning_sala.id_quiz_2.answer1 or '',
                         "opcion_respuesta3": planning_sala.id_quiz_2.answer2 or '',
-                        "respuesta_seleccionada_por_auditor": ""
+                        "respuesta_seleccionada_por_auditor": planning_sala.answer_quiz_2 or ''
                     },
                     {
                         "quiz3_id": planning_sala.id_quiz_3.id,
@@ -580,7 +580,7 @@ class AuthRegisterHome(Home):
                         "opcion_respuesta1_correcta": planning_sala.id_quiz_3.correct_answer or '',
                         "opcion_respuesta2": planning_sala.id_quiz_3.answer1 or '',
                         "opcion_respuesta3": planning_sala.id_quiz_3.answer2 or '',
-                        "respuesta_seleccionada_por_auditor": ""
+                        "respuesta_seleccionada_por_auditor": planning_sala.answer_quiz_3 or ''
                     }
                 ]
             }

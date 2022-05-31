@@ -431,8 +431,12 @@
             <field name="model">variables</field>
             <field name="arch" type="xml">
                 <tree string="Variables">
+                    <field name="name"/>
                     <field name="label_visual"/>
                     <field name="tipo_dato"/>
+                    <field name="tipo_estudio"/>
+                    <field name="tipo_dato"/>
+                    <field name="study_id" optional="hide"/>
                 </tree>
             </field>
         </record>
@@ -564,7 +568,8 @@
                         </div>
                         <group>
                             <group>
-                                <field name="tipo_estudio" required="1" help="Tipo de estudio importado de los excel de maestras, pero NO se usara en el sistema para las peticiones de la aplicacion movil"/>
+                                <field name="tipo_estudio" required="1"
+                                       help="Tipo de estudio importado de los excel de maestras, pero NO se usara en el sistema para las peticiones de la aplicacion movil"/>
                                 <field name="type" required="1"/>
                                 <field name="frecuency" required="1"/>
                                 <field name="naturaleza" required="1"/>
@@ -756,7 +761,7 @@
                                         <field name="specifications" required="1"/>
                                         <field name="comment" required="1"/>
                                         <field name="planning_products_ids" widget="many2many_tags" required="1"/>
-<!--                                        <field name="quizs_ids" widget="many2many_tags"/>-->
+                                        <!--                                        <field name="quizs_ids" widget="many2many_tags"/>-->
                                         <field name="state"/>
                                     </tree>
                                 </field>
@@ -775,6 +780,12 @@
                 <tree string="Planning">
                     <field name="name"/>
                     <field name="user_id"/>
+                    <field name="planograma_id" optional="hide"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="state"/>
+                    <field name="name" optional="hide"/>
+                    <field name="channel" optional="hide"/>
                 </tree>
             </field>
         </record>
@@ -848,8 +859,8 @@
 
                             </group>
                             <group>
-                                <field name="answer_quiz_1" />
-                                <field name="answer_quiz_2" />
+                                <field name="answer_quiz_1"/>
+                                <field name="answer_quiz_2"/>
                                 <field name="answer_quiz_3"/>
                             </group>
                         </group>
