@@ -686,6 +686,7 @@ class AuthRegisterHome(Home):
 
                         vals = {
                             "estudio_Id": planning_salas.planning_id.planograma_id.study_id.id,
+                            "consecutivo": planning_salas.name,
                             "Sala_Planificada": planning_salas.id,
                             "Nombre_Estudio": planning_salas.planning_id.planograma_id.study_id.name,
                             "Cliente": planning_salas.planning_id.planograma_id.partner_id.name,
