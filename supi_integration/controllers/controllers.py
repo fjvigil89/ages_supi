@@ -565,72 +565,73 @@ class AuthRegisterHome(Home):
             for planning_salas in planning_salas_ids:
                 if planning_salas.place_id.id == int(place_id) and planning_salas.state == 'prepared' \
                         and planning_salas.auditor_id.id == int(user_id):
-                    Tipo_estudio = ''
-                    if planning_salas.planning_id.planograma_id.study_id.type == '2':
-                        Tipo_estudio = "Precio"
-                    if planning_salas.planning_id.planograma_id.study_id.type == '3':
-                        Tipo_estudio = "Facing"
-                    if planning_salas.planning_id.planograma_id.study_id.type == '1':
-                        Tipo_estudio = "OSA"
+                    if planning_salas.planning_id.planograma_id.study_id.type == type:
+                        Tipo_estudio = ''
+                        if planning_salas.planning_id.planograma_id.study_id.type == '2':
+                            Tipo_estudio = "Precio"
+                        if planning_salas.planning_id.planograma_id.study_id.type == '3':
+                            Tipo_estudio = "Facing"
+                        if planning_salas.planning_id.planograma_id.study_id.type == '1':
+                            Tipo_estudio = "OSA"
 
-                    if planning_salas.planning_id.planograma_id.study_id.type == '4':
-                        Tipo_estudio = "Equipos de frio"
+                        if planning_salas.planning_id.planograma_id.study_id.type == '4':
+                            Tipo_estudio = "Equipos de frio"
 
-                    if planning_salas.planning_id.planograma_id.study_id.type == '5':
-                        Tipo_estudio = "Exhibitions"
+                        if planning_salas.planning_id.planograma_id.study_id.type == '5':
+                            Tipo_estudio = "Exhibitions"
 
-                    Naturaleza = ''
+                        Naturaleza = ''
 
-                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '0':
-                        Naturaleza = "Productos"
+                        if planning_salas.planning_id.planograma_id.study_id.naturaleza == '0':
+                            Naturaleza = "Productos"
 
-                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '1':
-                        Naturaleza = "Muebles sin productos"
+                        if planning_salas.planning_id.planograma_id.study_id.naturaleza == '1':
+                            Naturaleza = "Muebles sin productos"
 
-                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '2':
-                        Naturaleza = "Muebles con productos"
+                        if planning_salas.planning_id.planograma_id.study_id.naturaleza == '2':
+                            Naturaleza = "Muebles con productos"
 
-                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '3':
-                        Naturaleza = "Salas"
+                        if planning_salas.planning_id.planograma_id.study_id.naturaleza == '3':
+                            Naturaleza = "Salas"
 
-                    variables = []
+                        variables = []
 
-                    for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
-                        tipo_dato = ''
-                        if variable.tipo_dato == '1':
-                            tipo_dato = "Texto"
-                        if variable.tipo_dato == '2':
-                            tipo_dato = "Int"
-                        if variable.tipo_dato == '3':
-                            tipo_dato = "Double"
-                        if variable.tipo_dato == '4':
-                            tipo_dato = "Boolean"
-                        if variable.tipo_dato == '5':
-                            tipo_dato = "Select"
-                        if variable.tipo_dato == '6':
-                            tipo_dato = "Precio"
+                        for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
+                            tipo_dato = ''
+                            if variable.tipo_dato == '1':
+                                tipo_dato = "Texto"
+                            if variable.tipo_dato == '2':
+                                tipo_dato = "Int"
+                            if variable.tipo_dato == '3':
+                                tipo_dato = "Double"
+                            if variable.tipo_dato == '4':
+                                tipo_dato = "Boolean"
+                            if variable.tipo_dato == '5':
+                                tipo_dato = "Select"
+                            if variable.tipo_dato == '6':
+                                tipo_dato = "Precio"
 
-                        vals_val = {
-                            'id_variable': variable.id,
-                            'name_variable': variable.name or '',
-                            'label_visual': variable.label_visual or '',
-                            'Tipo_Dato': tipo_dato or '',
-                            'valores_combo': [],
-                            'icono': variable.url_icon,
+                            vals_val = {
+                                'id_variable': variable.id,
+                                'name_variable': variable.name or '',
+                                'label_visual': variable.label_visual or '',
+                                'Tipo_Dato': tipo_dato or '',
+                                'valores_combo': [],
+                                'icono': variable.url_icon,
+                            }
+                            variables.append(vals_val)
+
+                        vals = {
+                            "estudio_Id": planning_salas.planning_id.planograma_id.study_id.id,
+                            "Sala_Planificada": planning_salas.id,
+                            "Nombre_Estudio": planning_salas.planning_id.planograma_id.study_id.name,
+                            "Cliente": planning_salas.planning_id.planograma_id.partner_id.name,
+                            "Tipo_estudio": "%s- %s" % (
+                                planning_salas.planning_id.planograma_id.study_id.type, Tipo_estudio),
+                            "Naturaleza_Estudio": Naturaleza,
+                            "Variables": variables
                         }
-                        variables.append(vals_val)
-
-                    vals = {
-                        "estudio_Id": planning_salas.planning_id.planograma_id.study_id.id,
-                        "Sala_Planificada": planning_salas.id,
-                        "Nombre_Estudio": planning_salas.planning_id.planograma_id.study_id.name,
-                        "Cliente": planning_salas.planning_id.planograma_id.partner_id.name,
-                        "Tipo_estudio": "%s- %s" % (
-                            planning_salas.planning_id.planograma_id.study_id.type, Tipo_estudio),
-                        "Naturaleza_Estudio": Naturaleza,
-                        "Variables": variables
-                    }
-                    data.append(vals)
+                        data.append(vals)
             try:
                 res = {
                     "Lista de Estudios dados la selección": data,  # Cantidad de salas para hoy
