@@ -756,7 +756,7 @@
                                         <field name="specifications" required="1"/>
                                         <field name="comment" required="1"/>
                                         <field name="planning_products_ids" widget="many2many_tags" required="1"/>
-                                        <field name="quizs_ids" widget="many2many_tags"/>
+<!--                                        <field name="quizs_ids" widget="many2many_tags"/>-->
                                         <field name="state"/>
                                     </tree>
                                 </field>
@@ -836,6 +836,21 @@
                             <group>
                                 <field name="auditor_id" required="1"/>
                                 <field name="coordinator_id" required="1"/>
+                            </group>
+                        </group>
+
+                        <group>
+                            <group>
+                                <field name="id_quiz_1" required="1"/>
+                                <field name="id_quiz_2" required="1"/>
+                                <field name="id_quiz_3" required="1"/>
+
+
+                            </group>
+                            <group>
+                                <field name="answer_quiz_1" required="1"/>
+                                <field name="answer_quiz_2" required="1"/>
+                                <field name="answer_quiz_3" required="1"/>
                             </group>
                         </group>
                     </sheet>

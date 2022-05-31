@@ -182,10 +182,12 @@ class Quiz(models.Model):
     answer1 = fields.Char(string="Answer 1")
     answer2 = fields.Char(string="Answer 2")
     study_type = fields.Selection(
-        [('price', 'Price'), ('pop', 'Pop'), ('cold_equipment', 'Cold Equipment'), ('facing', 'Facing'),
-         ('sovi', 'Sovi'), ('osa', 'OSA'),
-         ('exhibitions', 'Exhibitions')],
-        string='Tipo de estudio', default='price')
+        [('2', 'Price'),
+         ('3', 'Facing'),
+         ('1', 'OSA'),
+         ('4', 'Equipos de frio'),
+         ('5', 'Exhibitions')],
+        string='Tipo de estudio')
     partner_id = fields.Many2one('res.partner', string="Partner")
 
 
@@ -222,7 +224,13 @@ class PlanningSalas(models.Model):
     comment = fields.Char(size=100, string="Comentario")
     planning_products_ids = fields.One2many('planning.product', 'planning_salas_id', string="Productos")
     image = fields.Binary(string="Foto inicial")
-    quizs_ids = fields.One2many('quiz.result', 'planning_salas_id', string='Quizs', copy=True)
+    id_quiz_1 = fields.Many2one('quiz', string="Id Quiz 1")
+    answer_quiz_1 = fields.Char("Respuesta 1")
+    id_quiz_2 = fields.Many2one('quiz', string="Id Quiz 2")
+    answer_quiz_2 = fields.Char("Respuesta 2")
+    id_quiz_3 = fields.Many2one('quiz', string="Id Quiz 3")
+    answer_quiz_3 = fields.Char("Respuesta 3")
+    # quizs_ids = fields.One2many('quiz.result', 'planning_salas_id', string='Quizs', copy=True)
     state = fields.Selection([
 
         ('prepared', 'Preparado'),
