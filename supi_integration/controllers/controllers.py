@@ -575,7 +575,7 @@ class AuthRegisterHome(Home):
                         "respuesta_seleccionada_por_auditor": ""
                     },
                     {
-                        "quiz2_id": planning_sala.id_quiz_3.id,
+                        "quiz3_id": planning_sala.id_quiz_3.id,
                         "Pregunta": planning_sala.id_quiz_3.question or '',
                         "opcion_respuesta1_correcta": planning_sala.id_quiz_3.correct_answer or '',
                         "opcion_respuesta2": planning_sala.id_quiz_3.answer1 or '',
