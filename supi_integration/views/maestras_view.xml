@@ -842,6 +842,7 @@
                                 <field name="planning_id" required="1"/>
 
                                 <field name="place_id" required="1"/>
+                                <field name="comment"/>
 
                             </group>
                             <group>

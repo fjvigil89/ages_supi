@@ -870,3 +870,24 @@ class AuthRegisterHome(Home):
         except Exception as e:
             # TODO: Return error message(e.msg) on a response
             return False
+
+    @http.route(
+        '/api/reject_study/',
+        type='json', auth="user", methods=['PUT'], csrf=False)
+    def reject_study(self, **post):
+        try:
+            data = post
+        except KeyError:
+            msg = "`params` parameter is not found on PUT request body"
+            raise exceptions.ValidationError(msg)
+        try:
+            planning_sala = request.env['planning.salas'].search([('id', '=', int(data.get('Id_SalaPlanificada')))])
+
+            planning_sala.write({
+                'state': data.get("state"),
+                'comment': data.get("comment"),
+            })
+            return "updated"
+        except Exception as e:
+            # TODO: Return error message(e.msg) on a response
+            return False
