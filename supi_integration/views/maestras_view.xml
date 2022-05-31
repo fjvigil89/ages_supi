@@ -564,7 +564,7 @@
                         </div>
                         <group>
                             <group>
-                                <field name="tipo_estudio" required="1"/>
+                                <field name="tipo_estudio" required="1" help="Tipo de estudio importado de los excel de maestras, pero NO se usara en el sistema para las peticiones de la aplicacion movil"/>
                                 <field name="type" required="1"/>
                                 <field name="frecuency" required="1"/>
                                 <field name="naturaleza" required="1"/>

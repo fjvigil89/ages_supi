@@ -584,10 +584,9 @@ class AuthRegisterHome(Home):
                     }
                 ]
             }
-
             try:
                 res = {
-                    "params": vals_return,  # Cantidad de salas para hoy
+                    "params": vals_return,
                 }
                 return http.Response(
                     json.dumps(res),
