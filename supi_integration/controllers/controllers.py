@@ -816,6 +816,8 @@ class AuthRegisterHome(Home):
                 mimetype='application/json'
             )
 
+    # TODOS LOS ESTUDIOS DEL LUNES AL VIERNES!
+
     @http.route(
         '/api/update_planogramas/',
         type='json', auth="user", methods=['PUT'], csrf=False)
@@ -841,6 +843,28 @@ class AuthRegisterHome(Home):
                     'pack': item.get('product_id').get('pack'),
                 })
 
+            return "updated"
+        except Exception as e:
+            # TODO: Return error message(e.msg) on a response
+            return False
+
+    @http.route(
+        '/api/update_quizs/',
+        type='json', auth="user", methods=['PUT'], csrf=False)
+    def update_quizs(self, **post):
+        try:
+            data = post
+        except KeyError:
+            msg = "`params` parameter is not found on PUT request body"
+            raise exceptions.ValidationError(msg)
+        try:
+            planning_sala = request.env['planning.salas'].search([('id', '=', int(data.get('Id_SalaPlanificada')))])
+
+            planning_sala.write({
+                'answer_quiz_1': data.get('data')[0].get('respuesta_seleccionada_por_auditor'),
+                'answer_quiz_2': data.get('data')[1].get('respuesta_seleccionada_por_auditor'),
+                'answer_quiz_3': data.get('data')[2].get('respuesta_seleccionada_por_auditor'),
+            })
             return "updated"
         except Exception as e:
             # TODO: Return error message(e.msg) on a response
