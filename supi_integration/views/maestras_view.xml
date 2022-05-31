@@ -825,7 +825,7 @@
             <field name="name">planning.salas.form</field>
             <field name="model">planning.salas</field>
             <field name="arch" type="xml">
-                <form string="Salas planificadas">
+                <form string="Quiz de salas planificadas">
                     <sheet>
                         <header>
                             <field name="state" widget="statusbar"
@@ -1017,7 +1017,7 @@
             <field name="name">planning.studies.form</field>
             <field name="model">planning.studies</field>
             <field name="arch" type="xml">
-                <form string="Planning Studies">
+                <form string="Resultados de las mediciones">
                     <sheet>
 
                         <group>
@@ -1040,7 +1040,7 @@
             <field name="name">planning.studies.tree</field>
             <field name="model">planning.studies</field>
             <field name="arch" type="xml">
-                <tree string="Planning Studies">
+                <tree string="Resultados de las mediciones">
                     <field name="study_id"/>
                     <field name="product_id"/>
                     <field name="planning_id"/>
@@ -1053,7 +1053,7 @@
             <field name="name">planning.studies.search</field>
             <field name="model">planning.studies</field>
             <field name="arch" type="xml">
-                <search string="Planning Studies">
+                <search string="Resultados de las mediciones">
                     <field name="study_id"/>
                     <field name="product_id"/>
                     <field name="planning_id"/>
@@ -1063,7 +1063,7 @@
         </record>
 
         <record id="action_planning_studies" model="ir.actions.act_window">
-            <field name="name">Planning studies</field>
+            <field name="name">Resultados de las mediciones</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">planning.studies</field>
             <field name="view_mode">tree,form</field>
@@ -1076,7 +1076,7 @@
         </record>
 
         <menuitem id="menu_planning_studies_supi"
-                  name="Estudios Planificados"
+                  name="Resultados de las mediciones"
                   action="action_planning_studies"
                   parent="supi_integration.planificaciones_supi"
                   sequence="5"/>

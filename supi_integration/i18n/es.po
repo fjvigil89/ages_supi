@@ -474,13 +474,13 @@ msgstr "Planificación"
 #: model_terms:ir.ui.view,arch_db:supi_integration.view_planning_studies_search
 #: model_terms:ir.ui.view,arch_db:supi_integration.view_planning_studies_tree
 msgid "Planning Studies"
-msgstr "Estudios de planificación"
+msgstr "Resultados de las mediciones"
 
 #. module: supi_integration
 #: model:ir.actions.act_window,name:supi_integration.action_planning_studies
 #: model:ir.ui.menu,name:supi_integration.menu_planning_studies_supi
 msgid "Planning studies"
-msgstr "Estudios de planificación"
+msgstr "Resultados de las mediciones"
 
 #. module: supi_integration
 #: model_terms:ir.ui.view,arch_db:supi_integration.view_planograma_form
