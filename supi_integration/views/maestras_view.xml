@@ -848,9 +848,9 @@
 
                             </group>
                             <group>
-                                <field name="answer_quiz_1" required="1"/>
-                                <field name="answer_quiz_2" required="1"/>
-                                <field name="answer_quiz_3" required="1"/>
+                                <field name="answer_quiz_1" />
+                                <field name="answer_quiz_2" />
+                                <field name="answer_quiz_3"/>
                             </group>
                         </group>
                     </sheet>
