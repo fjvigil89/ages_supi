@@ -1024,11 +1024,27 @@
                             <group>
                                 <field name="study_id" required="1"/>
                                 <field name="product_id" required="1"/>
+                                <field name="variable_id" required="1"/>
+
+                                <field name="valor_por_defecto" required="1"/>
+                                <field name="respuesta" required="1"/>
+                                <field name="comment" required="1"/>
+                                <field name="posicion_x" required="1"/>
+                                <field name="date_start" required="1"/>
+
 
                             </group>
                             <group>
                                 <field name="planning_id" required="1"/>
                                 <field name="auditor" required="1"/>
+
+
+                                <field name="validation_perc" required="1"/>
+                                <field name="disponibilidad" required="1"/>
+                                <field name="product_padre_id" required="1"/>
+                                <field name="posicion_y" required="1"/>
+
+
                             </group>
                         </group>
                     </sheet>

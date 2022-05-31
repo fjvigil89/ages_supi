@@ -300,9 +300,19 @@ class PlanningStudies(models.Model):
     _description = "Estudios planificados"
 
     study_id = fields.Many2one('study', string="Study")
-    planning_id = fields.Many2one('planning', string="Planning")
+    planning_id = fields.Many2one('planning.salas', string="Planning")
     product_id = fields.Many2one('product.product', string="Product")
+    variable_id = fields.Many2one('variables', string="Variable")
     auditor = fields.Many2one('res.users', string="Auditor")
+    valor_por_defecto = fields.Char("Valor por defecto")
+    validation_perc = fields.Char("% Validación")
+    disponibilidad = fields.Char("Disponibilidad")
+    respuesta = fields.Char("Respuesta")
+    comment = fields.Char("Comentario")
+    posicion_x = fields.Char("Posicion X del producto")
+    posicion_y = fields.Char("Posicion Y del producto")
+    date_start = fields.Date(string='Momento de medicion')
+    product_padre_id = fields.Many2one('product.product', string="Producto padre")
 
 
 class Planograma(models.Model):
