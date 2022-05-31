@@ -1060,7 +1060,16 @@
                     <field name="study_id"/>
                     <field name="product_id"/>
                     <field name="planning_id"/>
-                    <field name="auditor"/>
+                    <field name="auditor" optional="hide"/>
+                    <field name="valor_por_defecto" optional="hide"/>
+                    <field name="validation_perc" optional="hide"/>
+                    <field name="disponibilidad" optional="hide"/>
+                    <field name="respuesta" optional="hide"/>
+                    <field name="comment" optional="hide"/>
+                    <field name="posicion_x" optional="hide"/>
+                    <field name="posicion_y" optional="hide"/>
+                    <field name="date_start" optional="hide"/>
+                    <field name="product_padre_id" optional="hide"/>
                 </tree>
             </field>
         </record>
