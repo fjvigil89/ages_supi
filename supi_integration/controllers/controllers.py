@@ -13,6 +13,7 @@ from odoo import http, _, exceptions
 
 from .serializers import Serializer
 from .exceptions import QueryFormatError
+from odoo import fields
 
 from odoo.tools.image import image_data_uri
 
@@ -553,25 +554,86 @@ class AuthRegisterHome(Home):
         try:
             place_id = params["place_id"]
             user_id = params["user_id"]
-            today = datetime.utcnow().date()
-            records = request.env['planograma'].search(
-                [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
-                 ('place_id', '=', int(place_id))])
+            type = params["type"]
+            today = datetime.utcnow()
+            today = self.get_date_by_tz(today)
 
-            records_later = request.env['planograma'].search(
-                [('date_start', '>', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
-                 ('place_id', '=', int(place_id))])
+            planning_salas_ids = request.env['planning'].search(
+                [('date_start', '=', today), ('state', '=', 'ready')]).mapped(
+                'planning_salas_ids')
+            data = []
+            for planning_salas in planning_salas_ids:
+                if planning_salas.place_id.id == int(place_id) and planning_salas.state == 'prepared' \
+                        and planning_salas.auditor_id.id == int(user_id):
+                    Tipo_estudio = ''
+                    if planning_salas.planning_id.planograma_id.study_id.type == '2':
+                        Tipo_estudio = "Precio"
+                    if planning_salas.planning_id.planograma_id.study_id.type == '3':
+                        Tipo_estudio = "Facing"
+                    if planning_salas.planning_id.planograma_id.study_id.type == '1':
+                        Tipo_estudio = "OSA"
+
+                    if planning_salas.planning_id.planograma_id.study_id.type == '4':
+                        Tipo_estudio = "Equipos de frio"
+
+                    if planning_salas.planning_id.planograma_id.study_id.type == '5':
+                        Tipo_estudio = "Exhibitions"
+
+                    Naturaleza = ''
+
+                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '0':
+                        Naturaleza = "Productos"
+
+                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '1':
+                        Naturaleza = "Muebles sin productos"
+
+                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '2':
+                        Naturaleza = "Muebles con productos"
+
+                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '3':
+                        Naturaleza = "Salas"
+
+                    variables = []
+
+                    for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
+                        tipo_dato = ''
+                        if variable.tipo_dato == '1':
+                            tipo_dato = "Texto"
+                        if variable.tipo_dato == '2':
+                            tipo_dato = "Int"
+                        if variable.tipo_dato == '3':
+                            tipo_dato = "Double"
+                        if variable.tipo_dato == '4':
+                            tipo_dato = "Boolean"
+                        if variable.tipo_dato == '5':
+                            tipo_dato = "Select"
+                        if variable.tipo_dato == '6':
+                            tipo_dato = "Precio"
+
+                        vals_val = {
+                            'id_variable': variable.id,
+                            'name_variable': variable.name or '',
+                            'label_visual': variable.label_visual or '',
+                            'Tipo_Dato': tipo_dato or '',
+                            'valores_combo': [],
+                            'icono': variable.url_icon,
+                        }
+                        variables.append(vals_val)
+
+                    vals = {
+                        "estudio_Id": planning_salas.planning_id.planograma_id.study_id.id,
+                        "Sala_Planificada": planning_salas.id,
+                        "Nombre_Estudio": planning_salas.planning_id.planograma_id.study_id.name,
+                        "Cliente": planning_salas.planning_id.planograma_id.partner_id.name,
+                        "Tipo_estudio": "%s- %s" % (
+                            planning_salas.planning_id.planograma_id.study_id.type, Tipo_estudio),
+                        "Naturaleza_Estudio": Naturaleza,
+                        "Variables": variables
+                    }
+                    data.append(vals)
             try:
-                serializer = Serializer(records,
-                                        query='{study_id{id,name,variable_id{id,name,id_variable,type}}}',
-                                        many=True)
-                serializer_later = Serializer(records_later,
-                                              query='{study_id{id,name,variable_id{id,name,id_variable,type}}}',
-                                              many=True)
-
                 res = {
-                    "studies_today": serializer.data,  # Cantidad de salas para hoy
-                    "studies_later": serializer_later.data,  # Cantidad de salas para hoy
+                    "Lista de Estudios dados la selección": data,  # Cantidad de salas para hoy
                 }
                 return http.Response(
                     json.dumps(res),

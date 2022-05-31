@@ -51,12 +51,13 @@ class Salas(models.Model):
     address = fields.Char(string="Address")
     folio = fields.Char(string="Folio")
     image = fields.Binary(string="Imagen")
-    url_image = fields.Char(string="Url imagen", compute='compute_url_image')
+
     comuna_id = fields.Many2one('comunas', string="Comuna")
     state_id = fields.Many2one('res.country.state', string="Region", domain=[('country_id', '=', 46)])
     lat = fields.Char(string="Latitud")
     long = fields.Char(string="Longitud")
     geo = fields.Many2one('geo', string="Geolocalization ")
+    url_image = fields.Char(string="Url imagen", compute='compute_url_image')
 
     @api.depends('image')
     def compute_url_image(self):
@@ -81,6 +82,7 @@ class Variables(models.Model):
     _description = "Variables"
 
     label_visual = fields.Char(string="Label visual")
+    name = fields.Char(string="Nombre")
     id_variable = fields.Char(string="ID VARIABLE")
     valores_combobox = fields.Char(string="Valores combobox")
     tipo_estudio = fields.Selection(
@@ -102,6 +104,14 @@ class Variables(models.Model):
     image = fields.Binary(string="Image")
     icon = fields.Binary(string="Icono")
     study_id = fields.Many2one("study", string="Estudio")
+    url_icon = fields.Char(string="Url icono", compute='compute_url_icon')
+
+    @api.depends('icon')
+    def compute_url_icon(self):
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        for rec in self:
+            image_url_1920 = base_url + '/web/image?' + 'model=variables&id=' + str(rec.id) + '&field=icon'
+            rec.url_icon = image_url_1920
 
     def name_get(self):
         result = []
