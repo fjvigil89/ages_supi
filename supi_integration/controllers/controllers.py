@@ -548,6 +548,70 @@ class AuthRegisterHome(Home):
             )
 
     @http.route(
+        '/api/get_quiz',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def get_quiz(self, **params):
+        try:
+            id_sala_planificada = params["id_sala_planificada"]
+            planning_sala = request.env['planning.salas'].search([('id', '=', int(id_sala_planificada))])
+
+            vals_return = {
+                "Id_SalaPlanificada": planning_sala.id,
+                "data": [
+                    {
+                        "quiz1_id": planning_sala.id_quiz_1.id,
+                        "Pregunta": planning_sala.id_quiz_1.question or '',
+                        "opcion_respuesta1_correcta": planning_sala.id_quiz_1.correct_answer or '',
+                        "opcion_respuesta2": planning_sala.id_quiz_1.answer1 or '',
+                        "opcion_respuesta3": planning_sala.id_quiz_1.answer2 or '',
+                        "respuesta_seleccionada_por_auditor": ""
+                    },
+                    {
+                        "quiz2_id": planning_sala.id_quiz_2.id,
+                        "Pregunta": planning_sala.id_quiz_2.question or '',
+                        "opcion_respuesta1_correcta": planning_sala.id_quiz_2.correct_answer or '',
+                        "opcion_respuesta2": planning_sala.id_quiz_2.answer1 or '',
+                        "opcion_respuesta3": planning_sala.id_quiz_2.answer2 or '',
+                        "respuesta_seleccionada_por_auditor": ""
+                    },
+                    {
+                        "quiz2_id": planning_sala.id_quiz_3.id,
+                        "Pregunta": planning_sala.id_quiz_3.question,
+                        "opcion_respuesta1_correcta": planning_sala.id_quiz_3.correct_answer or '',
+                        "opcion_respuesta2": planning_sala.id_quiz_3.answer1 or '',
+                        "opcion_respuesta3": planning_sala.id_quiz_3.answer2 or '',
+                        "respuesta_seleccionada_por_auditor": ""
+                    }
+                ]
+            }
+
+            try:
+                res = {
+                    "params": vals_return,  # Cantidad de salas para hoy
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+    @http.route(
         '/api/get_studies_by_place',
         type='http', auth='user', methods=['GET'], csrf=False)
     def get_studies_by_place(self, **params):
