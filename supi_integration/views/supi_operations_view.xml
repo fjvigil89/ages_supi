@@ -77,10 +77,10 @@
             </field>
         </record>
 
-        <menuitem id="menu_quiz_result_supi"
-                  name="Resultados de quiz"
-                  action="action_quiz_result"
-                  parent="supi_integration.planificaciones_supi"
-                  sequence="10"/>
+<!--        <menuitem id="menu_quiz_result_supi"-->
+<!--                  name="Resultados de quiz"-->
+<!--                  action="action_quiz_result"-->
+<!--                  parent="supi_integration.planificaciones_supi"-->
+<!--                  sequence="10"/>-->
     </data>
 </odoo>

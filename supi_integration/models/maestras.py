@@ -2,6 +2,7 @@
 import json
 
 from odoo import models, fields, api
+import random
 
 
 # https://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&key=YOUR_API_KEY
@@ -361,11 +362,37 @@ class Planograma(models.Model):
         planning_id = self.env['planning'].create(vals)
 
         for line in self.salas_planograma_ids:
+            study_type = self.study_id.type
+            partner_id = self.partner_id.id
+
+            quiz = self.env['quiz'].search(
+                [('study_type', '=', int(study_type)), ('partner_id', '=', int(partner_id))]).ids
+            if len(quiz) < 3:
+                selected = random.sample(quiz, k=len(quiz))
+            else:
+                selected = random.sample(quiz, k=3)
+
+            id_quiz_1 = False
+            id_quiz_2 = False
+            id_quiz_3 = False
+            if len(selected) >= 1:
+                if len(selected) == 1:
+                    id_quiz_1 = selected[0]
+                if len(selected) == 2:
+                    id_quiz_1 = selected[0]
+                    id_quiz_2 = selected[1]
+                if len(selected) == 3:
+                    id_quiz_1 = selected[0]
+                    id_quiz_2 = selected[1]
+                    id_quiz_3 = selected[2]
             vals = {
                 "planning_id": planning_id.id,
                 "place_id": line.place_id.id,
                 "auditor_id": self.user_id.id,
                 "coordinator_id": self.user_id.id,
+                "id_quiz_1": id_quiz_1,
+                "id_quiz_2": id_quiz_2,
+                "id_quiz_3": id_quiz_3,
             }
             planning_sala_id = self.env['planning.salas'].create(vals)
 
