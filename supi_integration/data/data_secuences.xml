@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequences for lead mining requests -->
+        <record id="seq_planograma" model="ir.sequence">
+            <field name="name">Planograma</field>
+            <field name="code">planograma</field>
+            <field name="prefix">PLA-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_planning_salas" model="ir.sequence">
+            <field name="name">Salas Planogramadas</field>
+            <field name="code">planning.salas</field>
+            <field name="prefix">SP-</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+    </data>
+</odoo>

@@ -201,11 +201,11 @@ class Planning(models.Model):
 
 class PlanningSalas(models.Model):
     _name = "planning.salas"
-    _rec_name = 'planning_id'
     _description = "Salas planificadas"
 
     planning_id = fields.Many2one('planning', string="Planning")
     place_id = fields.Many2one('salas', string="Sala")
+    name = fields.Char("Consecutivo")
     auditor_id = fields.Many2one('res.users', string="Auditor")
     coordinator_id = fields.Many2one('res.users', string="Coordinador")
     specifications = fields.Char(size=100, string="Especificaciones")
@@ -219,6 +219,12 @@ class PlanningSalas(models.Model):
         ('done', 'Realizado'),
         ('no_done', 'No realizado'),
     ], string='Estado', help='Estado', default='prepared')
+
+    @api.model
+    def create(self, vals):
+        if not vals.get('name'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('planning.salas')
+        return super(PlanningSalas, self).create(vals)
 
     def name_get(self):
         result = []
@@ -282,7 +288,7 @@ class Planograma(models.Model):
     _description = "Planograma"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 
-    name = fields.Char(related='partner_id.name')
+    name = fields.Char("Consecutivo")
     date_start = fields.Date('Date start')
     date_end = fields.Date('Date end')
     partner_id = fields.Many2one("res.partner", string="Cliente")
@@ -295,6 +301,12 @@ class Planograma(models.Model):
                                              copy=True)
     study_id_naturaleza = fields.Char(string="Naturaleza", default='0')
     study_id_type = fields.Char(string="Type")
+
+    @api.model
+    def create(self, vals):
+        if not vals.get('name'):
+            vals['name'] = self.env['ir.sequence'].next_by_code('planograma')
+        return super(Planograma, self).create(vals)
 
     def name_get(self):
         result = []
