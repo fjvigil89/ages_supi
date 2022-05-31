@@ -576,7 +576,7 @@ class AuthRegisterHome(Home):
                     },
                     {
                         "quiz2_id": planning_sala.id_quiz_3.id,
-                        "Pregunta": planning_sala.id_quiz_3.question,
+                        "Pregunta": planning_sala.id_quiz_3.question or '',
                         "opcion_respuesta1_correcta": planning_sala.id_quiz_3.correct_answer or '',
                         "opcion_respuesta2": planning_sala.id_quiz_3.answer1 or '',
                         "opcion_respuesta3": planning_sala.id_quiz_3.answer2 or '',
