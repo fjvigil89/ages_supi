@@ -874,7 +874,9 @@
             <field name="name">planning.salas.tree</field>
             <field name="model">planning.salas</field>
             <field name="arch" type="xml">
-                <tree string="Planning Studies">
+                <tree string="Planning Studies" decoration-success="state == 'done'"
+                      decoration-danger="state == 'no_done'"
+                      decoration-info="state == 'prepared'">
                     <field name="place_id"/>
                     <field name="planning_id"/>
                     <field name="auditor_id"/>
@@ -887,7 +889,6 @@
                     <field name="answer_quiz_2" optional="hide"/>
                     <field name="id_quiz_3" optional="hide"/>
                     <field name="answer_quiz_3" optional="hide"/>
-                    <field name="state" optional="hide"/>
                     <field name="state"/>
                 </tree>
             </field>
