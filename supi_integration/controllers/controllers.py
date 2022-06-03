@@ -770,31 +770,26 @@ class AuthRegisterHome(Home):
             )
 
     @http.route(
-        '/api/get_categories_of_products_by_study',
+        '/api/get_categories_of_products_by_sala_planificada',
         type='http', auth='user', methods=['GET'], csrf=False)
-    def get_categories_of_products_by_study(self, **params):
+    def get_categories_of_products_by_sala_planificada(self, **params):
         try:
-            study_id = params["study_id"]
-            user_id = params["user_id"]
-            today = datetime.utcnow().date()
-            records = request.env['planograma'].search(
-                [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
-                 ('study_id', '=', int(study_id))])
-
-            records_later = request.env['planograma'].search(
-                [('date_start', '>', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
-                 ('study_id', '=', int(study_id))])
+            id_sala_planificada = params["id_sala_planificada"]
+            categories = request.env['planning.salas'].search(
+                [('id', '=', int(id_sala_planificada)), ('state', '=', 'prepared')]).mapped(
+                'planning_products_ids').mapped(
+                'product_ids').mapped('categ_id')
             try:
-                serializer = Serializer(records.mapped('product_id'),
-                                        query='{categ_id{id,name}}',
-                                        many=True)
-                serializer_later = Serializer(records.mapped('product_id'),
-                                              query='{categ_id{id,name}}',
-                                              many=True)
-
+                categories_data = []
+                for cat in categories:
+                    vals = {
+                        'id': cat.id,
+                        "name": cat.name
+                    }
+                    categories_data.append(vals)
                 res = {
-                    "categorias_today": serializer.data,  # Cantidad de salas para hoy
-                    "categorias_later": serializer_later.data,  # Cantidad de salas para hoy
+                    "Id_Sala_planificada": id_sala_planificada,
+                    "categories": categories_data,  # Cantidad de salas para hoy
                 }
                 return http.Response(
                     json.dumps(res),
