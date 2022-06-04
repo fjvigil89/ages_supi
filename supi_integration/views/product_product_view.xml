@@ -47,6 +47,15 @@
                         </field>
                     </page>
                 </xpath>
+                <field name="categ_id" position="after">
+                    <field name="categories_ids" string="Categoria por clientes">
+                        <tree editable="bottom">
+                            <field name="product_id" invisible="1"/>
+                            <field name="partner_id"/>
+                            <field name="category"/>
+                        </tree>
+                    </field>
+                </field>
             </field>
         </record>
     </data>

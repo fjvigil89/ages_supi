@@ -323,7 +323,7 @@ class Planograma(models.Model):
     name = fields.Char("Consecutivo")
     date_start = fields.Date('Date start')
     date_end = fields.Date('Date end')
-    partner_id = fields.Many2one("res.partner", string="Cliente")
+    partner_id = fields.Many2many('res.partner', string="Clientes")
     study_id = fields.Many2one('study', string="Study")
     user_id = fields.Many2one('res.users', string="Usuario")
     description = fields.Char(size=100, string="Descripción")

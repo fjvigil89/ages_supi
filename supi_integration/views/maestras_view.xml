@@ -1130,7 +1130,7 @@
                             <group>
                                 <!--                                <field name="name" readonly="1" string="Consecutivo"/>-->
                                 <field name="date_start" required="1"/>
-                                <field name="partner_id" required="1"/>
+                                <field name="partner_id" widget="many2many_tags" required="1"/>
                             </group>
                             <group>
                                 <field name="date_end" required="1"/>
