@@ -16,9 +16,9 @@ class PriceConsistence(models.Model):
         #     the purchase order views.
         # """
         # self.check_access_rights('read')
-        #
-        # result = {
-        #     'all_to_send': 0,
+        elements = self.env['price.consistence'].search([])
+        result = {
+            'count_elements': len(elements), }
         #     'all_waiting': 0,
         #     'all_late': 0,
         #     'my_to_send': 0,
@@ -83,4 +83,4 @@ class PriceConsistence(models.Model):
         # result['all_avg_days_to_purchase'] = round(res[1] or 0, 2)
         # result['all_total_last_7_days'] = round(res[2] or 0, res[3])
 
-        # return result
+        return result

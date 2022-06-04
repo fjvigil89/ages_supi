@@ -13,14 +13,12 @@
                                 <td class="o_text">
                                     <div>Varianza..</div>
                                 </td>
-                                <!--                                <td class="o_main o_dashboard_action" title="All Draft RFQs"-->
-                                <!--                                    name="purchase.purchase_action_dashboard"-->
-                                <!--                                    context='{"search_default_draft_rfqs": true}'>-->
-                                <!--                                    <a href="#">-->
-                                <!--                                        <t t-esc="values['all_to_send']"/>-->
-                                <!--                                        <br/>To Send-->
-                                <!--                                    </a>-->
-                                <!--                                </td>-->
+                                <td class="o_text" title="All Draft RFQs">
+                                    <a href="#">
+                                        <t t-esc="values['count_elements']"/>
+                                        <br/>Cantidad de registros
+                                    </a>
+                                </td>
                                 <!--                                <td class="o_main o_dashboard_action" title="All Waiting RFQs"-->
                                 <!--                                    name="purchase.purchase_action_dashboard"-->
                                 <!--                                    context='{"search_default_waiting_rfqs": true}'>-->
