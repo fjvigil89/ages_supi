@@ -21,9 +21,9 @@
 
         <record model="ir.ui.view" id="view_price_consistence_tree">
             <field name="name">price.consistence.tree</field>
-            <field name="model">section</field>
+            <field name="model">price.consistence</field>
             <field name="arch" type="xml">
-                <tree string="Consistencia de precio">
+                <tree string="Consistencia de precio" js_class="consistence_list_dashboard">
                     <field name="name"/>
                 </tree>
             </field>

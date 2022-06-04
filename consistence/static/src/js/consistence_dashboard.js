@@ -1,13 +1,5 @@
-odoo.define('purchase.dashboard', function (require) {
+odoo.define('consistence.dashboard', function (require) {
 "use strict";
-
-/**
- * This file defines the Purchase Dashboard view (alongside its renderer, model
- * and controller). This Dashboard is added to the top of list and kanban Purchase
- * views, it extends both views with essentially the same code except for
- * _onDashboardActionClicked function so we can apply filters without changing our
- * current view.
- */
 
 var core = require('web.core');
 var ListController = require('web.ListController');
@@ -26,16 +18,15 @@ var QWeb = core.qweb;
 // Add mock of method 'retrieve_dashboard' in SampleServer, so that we can have
 // the sample data in empty purchase kanban and list view
 let dashboardValues;
-SampleServer.mockRegistry.add('purchase.order/retrieve_dashboard', () => {
+SampleServer.mockRegistry.add('price.consistence/retrieve_dashboard', () => {
     return Object.assign({}, dashboardValues);
 });
-
 
 //--------------------------------------------------------------------------
 // List View
 //--------------------------------------------------------------------------
 
-var PurchaseListDashboardRenderer = ListRenderer.extend({
+var ConsistenceListDashboardRenderer = ListRenderer.extend({
     events:_.extend({}, ListRenderer.prototype.events, {
         'click .o_dashboard_action': '_onDashboardActionClicked',
     }),
@@ -48,10 +39,10 @@ var PurchaseListDashboardRenderer = ListRenderer.extend({
         var self = this;
         return this._super.apply(this, arguments).then(function () {
             var values = self.state.dashboardValues;
-            var purchase_dashboard = QWeb.render('purchase.PurchaseDashboard', {
+            var consistence_dashboard = QWeb.render('consistence.ConsistenceDashboard', {
                 values: values,
             });
-            self.$el.prepend(purchase_dashboard);
+            self.$el.prepend(consistence_dashboard);
         });
     },
 
@@ -69,18 +60,13 @@ var PurchaseListDashboardRenderer = ListRenderer.extend({
     },
 });
 
-var PurchaseListDashboardModel = ListModel.extend({
-    /**
-     * @override
-     */
+var  ConsistenceListDashboardModel = ListModel.extend({
+
     init: function () {
         this.dashboardValues = {};
         this._super.apply(this, arguments);
     },
 
-    /**
-     * @override
-     */
     __get: function (localID) {
         var result = this._super.apply(this, arguments);
         if (_.isObject(result)) {
@@ -88,30 +74,19 @@ var PurchaseListDashboardModel = ListModel.extend({
         }
         return result;
     },
-    /**
-     * @override
-     * @returns {Promise}
-     */
+
     __load: function () {
         return this._loadDashboard(this._super.apply(this, arguments));
     },
-    /**
-     * @override
-     * @returns {Promise}
-     */
+
     __reload: function () {
         return this._loadDashboard(this._super.apply(this, arguments));
     },
 
-    /**
-     * @private
-     * @param {Promise} super_def a promise that resolves with a dataPoint id
-     * @returns {Promise -> string} resolves to the dataPoint id
-     */
     _loadDashboard: function (super_def) {
         var self = this;
         var dashboard_def = this._rpc({
-            model: 'purchase.order',
+            model: 'price.consistence',
             method: 'retrieve_dashboard',
         });
         return Promise.all([super_def, dashboard_def]).then(function(results) {
@@ -123,7 +98,7 @@ var PurchaseListDashboardModel = ListModel.extend({
     },
 });
 
-var PurchaseListDashboardController = ListController.extend({
+var  ConsistenceListDashboardController = ListController.extend({
     custom_events: _.extend({}, ListController.prototype.custom_events, {
         dashboard_open_action: '_onDashboardOpenAction',
     }),
@@ -138,11 +113,11 @@ var PurchaseListDashboardController = ListController.extend({
     },
 });
 
-var PurchaseListDashboardView = ListView.extend({
+var ConsistenceListDashboardView = ListView.extend({
     config: _.extend({}, ListView.prototype.config, {
-        Model: PurchaseListDashboardModel,
-        Renderer: PurchaseListDashboardRenderer,
-        Controller: PurchaseListDashboardController,
+        Model: ConsistenceListDashboardModel,
+        Renderer: ConsistenceListDashboardRenderer,
+        Controller: ConsistenceListDashboardController,
     }),
 });
 
@@ -150,7 +125,7 @@ var PurchaseListDashboardView = ListView.extend({
 // Kanban View
 //--------------------------------------------------------------------------
 
-var PurchaseKanbanDashboardRenderer = KanbanRenderer.extend({
+var ConsistenceKanbanDashboardRenderer = KanbanRenderer.extend({
     events:_.extend({}, KanbanRenderer.prototype.events, {
         'click .o_dashboard_action': '_onDashboardActionClicked',
     }),
@@ -163,11 +138,11 @@ var PurchaseKanbanDashboardRenderer = KanbanRenderer.extend({
         var self = this;
         return this._super.apply(this, arguments).then(function () {
             var values = self.state.dashboardValues;
-            var purchase_dashboard = QWeb.render('purchase.PurchaseDashboard', {
+            var consistence_dashboard = QWeb.render('consistence.ConsistenceDashboard', {
                 values: values,
             });
-            self.$el.parent().find(".o_purchase_dashboard").remove();
-            self.$el.before(purchase_dashboard);
+            self.$el.parent().find(".o_consistence_dashboard").remove();
+            self.$el.before(consistence_dashboard);
         });
     },
 
@@ -185,7 +160,7 @@ var PurchaseKanbanDashboardRenderer = KanbanRenderer.extend({
     },
 });
 
-var PurchaseKanbanDashboardModel = KanbanModel.extend({
+var ConsistenceKanbanDashboardModel = KanbanModel.extend({
     /**
      * @override
      */
@@ -227,7 +202,7 @@ var PurchaseKanbanDashboardModel = KanbanModel.extend({
     _loadDashboard: function (super_def) {
         var self = this;
         var dashboard_def = this._rpc({
-            model: 'purchase.order',
+            model: 'price.consistence',
             method: 'retrieve_dashboard',
         });
         return Promise.all([super_def, dashboard_def]).then(function(results) {
@@ -239,7 +214,7 @@ var PurchaseKanbanDashboardModel = KanbanModel.extend({
     },
 });
 
-var PurchaseKanbanDashboardController = KanbanController.extend({
+var ConsistenceKanbanDashboardController = KanbanController.extend({
     custom_events: _.extend({}, KanbanController.prototype.custom_events, {
         dashboard_open_action: '_onDashboardOpenAction',
     }),
@@ -254,24 +229,24 @@ var PurchaseKanbanDashboardController = KanbanController.extend({
     },
 });
 
-var PurchaseKanbanDashboardView = KanbanView.extend({
+var ConsistenceKanbanDashboardView = KanbanView.extend({
     config: _.extend({}, KanbanView.prototype.config, {
-        Model: PurchaseKanbanDashboardModel,
-        Renderer: PurchaseKanbanDashboardRenderer,
-        Controller: PurchaseKanbanDashboardController,
+        Model: ConsistenceKanbanDashboardModel,
+        Renderer: ConsistenceKanbanDashboardRenderer,
+        Controller: ConsistenceKanbanDashboardController,
     }),
 });
 
-view_registry.add('purchase_list_dashboard', PurchaseListDashboardView);
-view_registry.add('purchase_kanban_dashboard', PurchaseKanbanDashboardView);
+view_registry.add('consistence_list_dashboard', ConsistenceListDashboardView);
+view_registry.add('consistence_kanban_dashboard', ConsistenceKanbanDashboardView);
 
 return {
-    PurchaseListDashboardModel: PurchaseListDashboardModel,
-    PurchaseListDashboardRenderer: PurchaseListDashboardRenderer,
-    PurchaseListDashboardController: PurchaseListDashboardController,
-    PurchaseKanbanDashboardModel: PurchaseKanbanDashboardModel,
-    PurchaseKanbanDashboardRenderer: PurchaseKanbanDashboardRenderer,
-    PurchaseKanbanDashboardController: PurchaseKanbanDashboardController
+    ConsistenceListDashboardModel: ConsistenceListDashboardModel,
+    ConsistenceListDashboardRenderer: ConsistenceListDashboardRenderer,
+    ConsistenceListDashboardController: ConsistenceListDashboardController,
+    ConsistenceKanbanDashboardModel: ConsistenceKanbanDashboardModel,
+    ConsistenceKanbanDashboardRenderer:ConsistenceKanbanDashboardRenderer,
+    ConsistenceKanbanDashboardController: ConsistenceKanbanDashboardController
 };
 
 });
