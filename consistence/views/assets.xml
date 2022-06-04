@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+    <template id="assets_backend" name="purchase assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/consistence/static/src/scss/consistence.scss"/>
+            <script type="text/javascript" src="/consistence/static/src/js/consistence_dashboard.js"></script>
+            <script type="text/javascript" src="/consistence/static/src/js/consistence_toaster_button.js"></script>
+        </xpath>
+        <xpath expr="script[last()]" position="after">
+            <script type="text/javascript" src="/consistence/static/src/js/tours/consistence.js"></script>
+        </xpath>
+    </template>
+
+<!--    <template id="assets_frontend" name="purchase assets" inherit_id="web.assets_frontend">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <script type="text/javascript" src="/consistence/static/src/js/consistence_datetimepicker.js"></script>-->
+<!--        </xpath>-->
+<!--    </template>-->
+</odoo>
