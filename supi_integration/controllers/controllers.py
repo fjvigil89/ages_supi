@@ -726,27 +726,116 @@ class AuthRegisterHome(Home):
         type='http', auth='user', methods=['GET'], csrf=False)
     def get_products_by_categ_id(self, **params):
         try:
-            categ_id = params["categ_id"]
-            sala_id = params["sala_id"]
-            study_id = params["study_id"]
-            user_id = params["user_id"]
-            today = datetime.utcnow().date()
-            records = request.env['planograma'].search(
-                [('date_start', '=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id)),
-                 ('place_id', '=', int(sala_id)), ('study_id', '=', int(study_id)),
-                 ('product_id.categ_id', '=', int(categ_id))])
-
+            # categ_id = params["categ_id"]
             try:
-                serializer = Serializer(records,
-                                        query='{id,state,quebrado,cartel,cautivo,c_erroneo,image,product_id{id,name,default_code,barcode,lst_price,pack,image_1920}}',
-                                        many=True)
-                # serializer_later = Serializer(records_later,
-                #                               query='{product_id{id,name,default_code,barcode,image_1920}}',
-                #                               many=True)
+                # serializer = Serializer(records,
+                #                         query='{id,state,quebrado,cartel,cautivo,c_erroneo,image,product_id{id,name,default_code,barcode,lst_price,pack,image_1920}}',
+                #                         many=True)
 
                 res = {
-                    "products_today": serializer.data,  # Cantidad de salas para hoy
-                    # "products_later": serializer_later.data,  # Cantidad de salas para hoy
+                    "Productos": [
+                        {
+                            "id_producto": "00001",
+                            "EAN": "7509546008370",
+                            "name_prod": "COLGATE ZIG ZAG PLUS MEDIANO N.A.",
+                            "Categoria": "ASEO",
+                            "es_mueble": False,
+                            "ícono": "http://....",
+                            "Variables": [
+                                {
+                                    "id_variable": "01",
+                                    "name_variable": "Is_present",
+                                    "label_visual": "Está presente?",
+                                    "Tipo_Dato": "bolean",
+                                    "valores_combo": [],
+                                    "ícono": "http://....",
+                                    "xN1": "",
+                                    "xN2": "",
+                                    "Valor_x_Defecto_target": "String",
+                                    "Porc_Validación": "NUMERIC",
+                                    "Disponibilidad": "INTEGER",
+                                    "Respuesta": "String",
+                                    "Comentario": "String",
+                                    "Momento_medición": "DateTime",
+                                    "Id_Producto_Planificado_Padre": "",
+                                    "Posicion_X_del_producto": "0",
+                                    "Posicion_Y_del_producto": "0",
+                                },
+                                {
+                                    "id_variable": "02",
+                                    "name_variable": "Is_present",
+                                    "label_visual": "Está presente?",
+                                    "Tipo_Dato": "price",
+                                    "valores_combo": [],
+                                    "ícono": "http://....",
+                                    "xN1": "",
+                                    "xN2": "",
+                                    "Valor_x_Defecto_target": "String",
+                                    "Porc_Validación": "NUMERIC",
+                                    "Disponibilidad": "INTEGER",
+                                    "Respuesta": "String",
+                                    "Comentario": "String",
+                                    "Momento_medición": "DateTime",
+                                    "Id_Producto_Planificado_Padre": "",
+                                    "Posicion_X_del_producto": "",
+                                    "Posicion_Y_del_producto": "",
+                                    "Color_Item": "HEXADECIMAL"
+                                }
+                            ],
+                            "Fotos medidas": ["BASE64", "BASE64", "BASE64"]
+                        },
+                        {
+                            "id_producto": "00002",
+                            "EAN": "7509546008370",
+                            "name_prod": "JABON PROTEX AVENA 3X90G",
+                            "Categoria": "ASEO",
+                            "es_mueble": False,
+                            "ícono": "http://....",
+                            "Variables": [
+                                {
+                                    "id_variable": "01",
+                                    "name_variable": "Promocion",
+                                    "label_visual": "Promocion",
+                                    "Tipo_Dato": "price",
+                                    "valores_combo": [],
+                                    "ícono": "http://....",
+                                    "xN1": "",
+                                    "xN2": "",
+                                    "Valor_x_Defecto_target": "String",
+                                    "Porc_Validación": "NUMERIC",
+                                    "Disponibilidad": "INTEGER",
+                                    "Respuesta": "String",
+                                    "Comentario": "String",
+                                    "Momento_medición": "DateTime",
+                                    "Id_Producto_Planificado_Padre": "",
+                                    "Posicion_X_del_producto": "",
+                                    "Posicion_Y_del_producto": "",
+                                    "Color_Item": "HEXADECIMAL"
+                                },
+                                {
+                                    "id_variable": "02",
+                                    "name_variable": "Promoción",
+                                    "label_visual": "Oferta Fin de Año",
+                                    "Tipo_Dato": "bolean",
+                                    "valores_combo": ["Compre uno y lleve dos", "Para los niños", "Navidad"],
+                                    "ícono": "http://....",
+                                    "xN1": "",
+                                    "xN2": "",
+                                    "Valor_x_Defecto_target": "String",
+                                    "Porc_Validación": "NUMERIC",
+                                    "Disponibilidad": "INTEGER",
+                                    "Respuesta": "String",
+                                    "Comentario": "String",
+                                    "Momento_medición": "DateTime",
+                                    "Id_Producto_Planificado_Padre": "",
+                                    "Posicion_X_del_producto": "",
+                                    "Posicion_Y_del_producto": "",
+                                    "Color_Item": "HEXADECIMAL"
+                                }
+                            ],
+                            "Fotos medidas": ["BASE64", "BASE64", "BASE64"]
+                        }
+                    ]
                 }
                 return http.Response(
                     json.dumps(res),
@@ -755,134 +844,139 @@ class AuthRegisterHome(Home):
                 )
             except (SyntaxError, QueryFormatError) as e:
                 res = error_response(e, e.msg)
-                return http.Response(
-                    json.dumps(res),
-                    status=200,
-                    mimetype='application/json'
-                )
-        except KeyError as e:
-            msg = "Wrong values"
-            res = error_response(e, msg)
             return http.Response(
                 json.dumps(res),
                 status=200,
                 mimetype='application/json'
             )
 
-    @http.route(
-        '/api/get_categories_of_products_by_sala_planificada',
-        type='http', auth='user', methods=['GET'], csrf=False)
-    def get_categories_of_products_by_sala_planificada(self, **params):
+        except KeyError as e:
+            msg = "Wrong values"
+        res = error_response(e, msg)
+        return http.Response(
+            json.dumps(res),
+            status=200,
+            mimetype='application/json'
+        )
+
+
+@http.route(
+    '/api/get_categories_of_products_by_sala_planificada',
+    type='http', auth='user', methods=['GET'], csrf=False)
+def get_categories_of_products_by_sala_planificada(self, **params):
+    try:
+        id_sala_planificada = params["id_sala_planificada"]
+        categories = request.env['planning.salas'].search(
+            [('id', '=', int(id_sala_planificada)), ('state', '=', 'prepared')]).mapped(
+            'planning_products_ids').mapped(
+            'product_ids').mapped('categ_id')
         try:
-            id_sala_planificada = params["id_sala_planificada"]
-            categories = request.env['planning.salas'].search(
-                [('id', '=', int(id_sala_planificada)), ('state', '=', 'prepared')]).mapped(
-                'planning_products_ids').mapped(
-                'product_ids').mapped('categ_id')
-            try:
-                categories_data = []
-                for cat in categories:
-                    vals = {
-                        'id': cat.id,
-                        "name": cat.name
-                    }
-                    categories_data.append(vals)
-                res = {
-                    "Id_Sala_planificada": id_sala_planificada,
-                    "categories": categories_data,  # Cantidad de salas para hoy
+            categories_data = []
+            for cat in categories:
+                vals = {
+                    'id': cat.id,
+                    "name": cat.name
                 }
-                return http.Response(
-                    json.dumps(res),
-                    status=200,
-                    mimetype='application/json'
-                )
-            except (SyntaxError, QueryFormatError) as e:
-                res = error_response(e, e.msg)
-                return http.Response(
-                    json.dumps(res),
-                    status=200,
-                    mimetype='application/json'
-                )
-        except KeyError as e:
-            msg = "Wrong values"
-            res = error_response(e, msg)
+                categories_data.append(vals)
+            res = {
+                "Id_Sala_planificada": id_sala_planificada,
+                "categories": categories_data,  # Cantidad de salas para hoy
+            }
             return http.Response(
                 json.dumps(res),
                 status=200,
                 mimetype='application/json'
             )
+        except (SyntaxError, QueryFormatError) as e:
+            res = error_response(e, e.msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+    except KeyError as e:
+        msg = "Wrong values"
+        res = error_response(e, msg)
+        return http.Response(
+            json.dumps(res),
+            status=200,
+            mimetype='application/json'
+        )
 
-    # TODOS LOS ESTUDIOS DEL LUNES AL VIERNES!
 
-    @http.route(
-        '/api/update_planogramas/',
-        type='json', auth="user", methods=['PUT'], csrf=False)
-    def update_planogramas(self, **post):
-        try:
-            data = post['data']
-        except KeyError:
-            msg = "`data` parameter is not found on PUT request body"
-            raise exceptions.ValidationError(msg)
-        try:
-            for item in data:
-                planograma = request.env['planograma'].search([('id', '=', item.get('id'))])
-                planograma.update({
-                    'quebrado': item.get('quebrado'),
-                    'cartel': item.get('cartel'),
-                    'cautivo': item.get('cautivo'),
-                    'c_erroneo': item.get('c_erroneo'),
-                    'image': item.get('image'),
-                    'state': item.get('state'),
-                })
-                planograma.product_id.sudo().update({
-                    'lst_price': item.get('product_id').get('lst_price'),
-                    'pack': item.get('product_id').get('pack'),
-                })
+# TODOS LOS ESTUDIOS DEL LUNES AL VIERNES!
 
-            return "updated"
-        except Exception as e:
-            # TODO: Return error message(e.msg) on a response
-            return False
-
-    @http.route(
-        '/api/update_quizs/',
-        type='json', auth="user", methods=['PUT'], csrf=False)
-    def update_quizs(self, **post):
-        try:
-            data = post
-        except KeyError:
-            msg = "`params` parameter is not found on PUT request body"
-            raise exceptions.ValidationError(msg)
-        try:
-            planning_sala = request.env['planning.salas'].search([('id', '=', int(data.get('Id_SalaPlanificada')))])
-
-            planning_sala.write({
-                'answer_quiz_1': data.get('data')[0].get('respuesta_seleccionada_por_auditor'),
-                'answer_quiz_2': data.get('data')[1].get('respuesta_seleccionada_por_auditor'),
-                'answer_quiz_3': data.get('data')[2].get('respuesta_seleccionada_por_auditor'),
+@http.route(
+    '/api/update_planogramas/',
+    type='json', auth="user", methods=['PUT'], csrf=False)
+def update_planogramas(self, **post):
+    try:
+        data = post['data']
+    except KeyError:
+        msg = "`data` parameter is not found on PUT request body"
+        raise exceptions.ValidationError(msg)
+    try:
+        for item in data:
+            planograma = request.env['planograma'].search([('id', '=', item.get('id'))])
+            planograma.update({
+                'quebrado': item.get('quebrado'),
+                'cartel': item.get('cartel'),
+                'cautivo': item.get('cautivo'),
+                'c_erroneo': item.get('c_erroneo'),
+                'image': item.get('image'),
+                'state': item.get('state'),
             })
-            return "updated"
-        except Exception as e:
-            # TODO: Return error message(e.msg) on a response
-            return False
-
-    @http.route(
-        '/api/reject_study/',
-        type='json', auth="user", methods=['PUT'], csrf=False)
-    def reject_study(self, **post):
-        try:
-            data = post
-        except KeyError:
-            msg = "`params` parameter is not found on PUT request body"
-            raise exceptions.ValidationError(msg)
-        try:
-            planning_sala = request.env['planning.salas'].search([('id', '=', int(data.get('Id_SalaPlanificada')))])
-
-            planning_sala.write({
-                'state': data.get("state"),
-                'comment': data.get("comment"),
+            planograma.product_id.sudo().update({
+                'lst_price': item.get('product_id').get('lst_price'),
+                'pack': item.get('product_id').get('pack'),
             })
-            return "updated"
-        except Exception as e:
-            # TODO: Return error message(e.msg) on a response
-            return False
+
+        return "updated"
+    except Exception as e:
+        # TODO: Return error message(e.msg) on a response
+        return False
+
+
+@http.route(
+    '/api/update_quizs/',
+    type='json', auth="user", methods=['PUT'], csrf=False)
+def update_quizs(self, **post):
+    try:
+        data = post
+    except KeyError:
+        msg = "`params` parameter is not found on PUT request body"
+        raise exceptions.ValidationError(msg)
+    try:
+        planning_sala = request.env['planning.salas'].search([('id', '=', int(data.get('Id_SalaPlanificada')))])
+
+        planning_sala.write({
+            'answer_quiz_1': data.get('data')[0].get('respuesta_seleccionada_por_auditor'),
+            'answer_quiz_2': data.get('data')[1].get('respuesta_seleccionada_por_auditor'),
+            'answer_quiz_3': data.get('data')[2].get('respuesta_seleccionada_por_auditor'),
+        })
+        return "updated"
+    except Exception as e:
+        # TODO: Return error message(e.msg) on a response
+        return False
+
+
+@http.route(
+    '/api/reject_study/',
+    type='json', auth="user", methods=['PUT'], csrf=False)
+def reject_study(self, **post):
+    try:
+        data = post
+    except KeyError:
+        msg = "`params` parameter is not found on PUT request body"
+        raise exceptions.ValidationError(msg)
+    try:
+        planning_sala = request.env['planning.salas'].search([('id', '=', int(data.get('Id_SalaPlanificada')))])
+
+        planning_sala.write({
+            'state': data.get("state"),
+            'comment': data.get("comment"),
+        })
+        return "updated"
+    except Exception as e:
+        # TODO: Return error message(e.msg) on a response
+        return False
