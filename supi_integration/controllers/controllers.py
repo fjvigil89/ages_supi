@@ -726,116 +726,64 @@ class AuthRegisterHome(Home):
         type='http', auth='user', methods=['GET'], csrf=False)
     def get_products_by_categ_id(self, **params):
         try:
-            # categ_id = params["categ_id"]
+            categ_id = params["categ_id"]
+            id_sala_planogramada = params["id_sala_planogramada"]
             try:
-                # serializer = Serializer(records,
-                #                         query='{id,state,quebrado,cartel,cautivo,c_erroneo,image,product_id{id,name,default_code,barcode,lst_price,pack,image_1920}}',
-                #                         many=True)
+                planning_products_ids = request.env['planning.salas'].search(
+                    [('id', '=', int(id_sala_planogramada))]).mapped('planning_products_ids')
 
-                res = {
-                    "Productos": [
-                        {
-                            "id_producto": "00001",
-                            "EAN": "7509546008370",
-                            "name_prod": "COLGATE ZIG ZAG PLUS MEDIANO N.A.",
-                            "Categoria": "ASEO",
-                            "es_mueble": False,
-                            "ícono": "http://....",
-                            "Variables": [
-                                {
-                                    "id_variable": "01",
-                                    "name_variable": "Is_present",
-                                    "label_visual": "Está presente?",
-                                    "Tipo_Dato": "bolean",
-                                    "valores_combo": [],
-                                    "ícono": "http://....",
-                                    "xN1": "",
-                                    "xN2": "",
-                                    "Valor_x_Defecto_target": "String",
-                                    "Porc_Validación": "NUMERIC",
-                                    "Disponibilidad": "INTEGER",
-                                    "Respuesta": "String",
-                                    "Comentario": "String",
-                                    "Momento_medición": "DateTime",
-                                    "Id_Producto_Planificado_Padre": "",
-                                    "Posicion_X_del_producto": "0",
-                                    "Posicion_Y_del_producto": "0",
-                                },
-                                {
-                                    "id_variable": "02",
-                                    "name_variable": "Is_present",
-                                    "label_visual": "Está presente?",
-                                    "Tipo_Dato": "price",
-                                    "valores_combo": [],
-                                    "ícono": "http://....",
-                                    "xN1": "",
-                                    "xN2": "",
-                                    "Valor_x_Defecto_target": "String",
-                                    "Porc_Validación": "NUMERIC",
-                                    "Disponibilidad": "INTEGER",
-                                    "Respuesta": "String",
-                                    "Comentario": "String",
-                                    "Momento_medición": "DateTime",
-                                    "Id_Producto_Planificado_Padre": "",
-                                    "Posicion_X_del_producto": "",
-                                    "Posicion_Y_del_producto": "",
-                                    "Color_Item": "HEXADECIMAL"
-                                }
-                            ],
-                            "Fotos medidas": ["BASE64", "BASE64", "BASE64"]
-                        },
-                        {
-                            "id_producto": "00002",
-                            "EAN": "7509546008370",
-                            "name_prod": "JABON PROTEX AVENA 3X90G",
-                            "Categoria": "ASEO",
-                            "es_mueble": False,
-                            "ícono": "http://....",
-                            "Variables": [
-                                {
-                                    "id_variable": "01",
-                                    "name_variable": "Promocion",
-                                    "label_visual": "Promocion",
-                                    "Tipo_Dato": "price",
-                                    "valores_combo": [],
-                                    "ícono": "http://....",
-                                    "xN1": "",
-                                    "xN2": "",
-                                    "Valor_x_Defecto_target": "String",
-                                    "Porc_Validación": "NUMERIC",
-                                    "Disponibilidad": "INTEGER",
-                                    "Respuesta": "String",
-                                    "Comentario": "String",
-                                    "Momento_medición": "DateTime",
-                                    "Id_Producto_Planificado_Padre": "",
-                                    "Posicion_X_del_producto": "",
-                                    "Posicion_Y_del_producto": "",
-                                    "Color_Item": "HEXADECIMAL"
-                                },
-                                {
-                                    "id_variable": "02",
-                                    "name_variable": "Promoción",
-                                    "label_visual": "Oferta Fin de Año",
-                                    "Tipo_Dato": "bolean",
-                                    "valores_combo": ["Compre uno y lleve dos", "Para los niños", "Navidad"],
-                                    "ícono": "http://....",
-                                    "xN1": "",
-                                    "xN2": "",
-                                    "Valor_x_Defecto_target": "String",
-                                    "Porc_Validación": "NUMERIC",
-                                    "Disponibilidad": "INTEGER",
-                                    "Respuesta": "String",
-                                    "Comentario": "String",
-                                    "Momento_medición": "DateTime",
-                                    "Id_Producto_Planificado_Padre": "",
-                                    "Posicion_X_del_producto": "",
-                                    "Posicion_Y_del_producto": "",
-                                    "Color_Item": "HEXADECIMAL"
-                                }
-                            ],
-                            "Fotos medidas": ["BASE64", "BASE64", "BASE64"]
+                products = []
+                for product in planning_products_ids.product_ids:
+                    variables = []
+                    for variable in planning_products_ids.variable_ids:
+                        tipo_dato = ''
+                        if variable.tipo_dato == '1':
+                            tipo_dato = "Texto"
+                        if variable.tipo_dato == '2':
+                            tipo_dato = "Int"
+                        if variable.tipo_dato == '3':
+                            tipo_dato = "Double"
+                        if variable.tipo_dato == '4':
+                            tipo_dato = "Boolean"
+                        if variable.tipo_dato == '5':
+                            tipo_dato = "Select"
+                        if variable.tipo_dato == '6':
+                            tipo_dato = "Precio"
+                        vals_var = {
+                            "id_variable": variable.id,
+                            "name_variable": variable.name,
+                            "label_visual": variable.label_visual,
+                            "Tipo_Dato": tipo_dato,
+                            "valores_combo": [],
+                            "ícono": variable.url_icon,
+                            "xN1": "",
+                            "xN2": "",
+                            "Valor_x_Defecto_target": "",
+                            "Porc_Validación": "",
+                            "Disponibilidad": "",
+                            "Respuesta": "",
+                            "Comentario": "",
+                            "Momento_medición": "",
+                            "Id_Producto_Planificado_Padre": "",
+                            "Posicion_X_del_producto": "",
+                            "Posicion_Y_del_producto": "",
                         }
-                    ]
+                        variables.append(vals_var)
+                    print(product.categ_id.id)
+                    if product.categ_id.id == int(categ_id):
+                        vals_prod = {
+                            "id_producto": product.id,
+                            "EAN": product.default_code,
+                            "name_prod": product.name,
+                            "Categoria": product.categ_id.name,
+                            "es_mueble": product.can_be_mueble,
+                            "ícono": product.url_icon,
+                            "Variables": variables,
+                            "Fotos medidas": []
+                        }
+                        products.append(vals_prod)
+                res = {
+                    "Productos": products
                 }
                 return http.Response(
                     json.dumps(res),

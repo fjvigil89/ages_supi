@@ -18,6 +18,14 @@ class ProductTemplate(models.Model):
     product_ids = fields.One2many("product.template", 'product_id')
     categories_ids = fields.One2many("product.partner.category", 'product_id')
     partner_id = fields.Many2one("res.partner", string="Cliente")
+    url_icon = fields.Char(string="Url icono", compute='compute_url_icon')
+
+    @api.depends('image_1920')
+    def compute_url_icon(self):
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        for rec in self:
+            image_url_1920 = base_url + '/web/image?' + 'model=product.product&id=' + str(rec.id) + '&field=image_1920'
+            rec.url_icon = image_url_1920
 
 
 class ProductPartnerCategories(models.Model):
