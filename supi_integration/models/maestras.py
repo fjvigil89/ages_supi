@@ -343,7 +343,7 @@ class Planograma(models.Model):
     def name_get(self):
         result = []
         for planograma in self:
-            result.append((planograma.id, '%s-%s' % (planograma.partner_id.name, planograma.study_id.name)))
+            result.append((planograma.id, '%s-%s' % (planograma.name, planograma.study_id.name)))
         return result
 
     @api.onchange('study_id')

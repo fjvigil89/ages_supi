@@ -381,7 +381,8 @@ class AuthRegisterHome(Home):
                             "CARMELITA": brown,
                             "count_carmelita": count_brown,
                         }
-                        data_today.append(comuna_data)
+
+                data_today.append(comuna_data)
 
             comunas_ids = request.env['planning'].search(
                 [('date_start', '>', today), ('state', '=', 'ready')]).mapped(
@@ -443,7 +444,7 @@ class AuthRegisterHome(Home):
                             "CARMELITA": brown,
                             "count_carmelita": count_brown,
                         }
-                        data_later.append(comuna_data)
+                data_later.append(comuna_data)
 
             try:
                 final_data.append({'comunas': comunas_final})
@@ -489,6 +490,7 @@ class AuthRegisterHome(Home):
                 [('date_start', '=', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids')
             data = []
+            salas_append = []
             for planning_salas in planning_salas_ids:
                 if planning_salas.place_id.comuna_id.id == int(comuna_id) and planning_salas.state == 'prepared' \
                         and planning_salas.auditor_id.id == int(user_id):
@@ -503,12 +505,15 @@ class AuthRegisterHome(Home):
                                 'address': planning_salas.place_id.address or '',
                                 'image': planning_salas.place_id.url_image or '',
                             }
-                            data.append(sala_data)
+                            if planning_salas.place_id.id not in salas_append:
+                                salas_append.append(planning_salas.place_id.id)
+                                data.append(sala_data)
 
             planning_salas_ids = request.env['planning'].search(
                 [('date_start', '>', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids')
             data_later = []
+            salas_append_later = []
             for planning_salas in planning_salas_ids:
                 if planning_salas.place_id.comuna_id.id == int(comuna_id) and planning_salas.state == 'prepared' \
                         and planning_salas.auditor_id.id == int(user_id):
@@ -523,7 +528,9 @@ class AuthRegisterHome(Home):
                                 'address': planning_salas.place_id.address or '',
                                 'image': planning_salas.place_id.url_image or '',
                             }
-                            data_later.append(sala_data)
+                            if planning_salas.place_id.id not in salas_append_later:
+                                salas_append_later.append(planning_salas.place_id.id)
+                                data_later.append(sala_data)
             try:
                 res = {'hoy': data, 'next': data_later}
                 return http.Response(
@@ -683,13 +690,18 @@ class AuthRegisterHome(Home):
                                 'icono': variable.url_icon,
                             }
                             variables.append(vals_val)
+                        clientes = request.env['res.partner'].search(
+                            [('id', 'in', planning_salas.planning_id.planograma_id.partner_id.ids)])
+                        clientes_name = ''
+                        for client in clientes:
+                            clientes_name += '%s ' % client.name
 
                         vals = {
                             "estudio_Id": planning_salas.planning_id.planograma_id.study_id.id,
                             "consecutivo": planning_salas.name,
                             "Sala_Planificada": planning_salas.id,
                             "Nombre_Estudio": planning_salas.planning_id.planograma_id.study_id.name,
-                            "Cliente": planning_salas.planning_id.planograma_id.partner_id.name,
+                            "Clientes": clientes_name,
                             "Tipo_estudio": "%s- %s" % (
                                 planning_salas.planning_id.planograma_id.study_id.type, Tipo_estudio),
                             "Naturaleza_Estudio": Naturaleza,
@@ -808,124 +820,120 @@ class AuthRegisterHome(Home):
             mimetype='application/json'
         )
 
-
-@http.route(
-    '/api/get_categories_of_products_by_sala_planificada',
-    type='http', auth='user', methods=['GET'], csrf=False)
-def get_categories_of_products_by_sala_planificada(self, **params):
-    try:
-        id_sala_planificada = params["id_sala_planificada"]
-        categories = request.env['planning.salas'].search(
-            [('id', '=', int(id_sala_planificada)), ('state', '=', 'prepared')]).mapped(
-            'planning_products_ids').mapped(
-            'product_ids').mapped('categ_id')
+    @http.route(
+        '/api/get_categories_of_products_by_sala_planificada',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def get_categories_of_products_by_sala_planificada(self, **params):
         try:
-            categories_data = []
-            for cat in categories:
-                vals = {
-                    'id': cat.id,
-                    "name": cat.name
+            id_sala_planificada = params["id_sala_planificada"]
+            categories = request.env['planning.salas'].search(
+                [('id', '=', int(id_sala_planificada)), ('state', '=', 'prepared')]).mapped(
+                'planning_products_ids').mapped(
+                'product_ids').mapped('categ_id')
+            try:
+                categories_data = []
+                for cat in categories:
+                    vals = {
+                        'id': cat.id,
+                        "name": cat.name
+                    }
+                    categories_data.append(vals)
+                res = {
+                    "Id_Sala_planificada": id_sala_planificada,
+                    "categories": categories_data,  # Cantidad de salas para hoy
                 }
-                categories_data.append(vals)
-            res = {
-                "Id_Sala_planificada": id_sala_planificada,
-                "categories": categories_data,  # Cantidad de salas para hoy
-            }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
             return http.Response(
                 json.dumps(res),
                 status=200,
                 mimetype='application/json'
             )
-        except (SyntaxError, QueryFormatError) as e:
-            res = error_response(e, e.msg)
-            return http.Response(
-                json.dumps(res),
-                status=200,
-                mimetype='application/json'
-            )
-    except KeyError as e:
-        msg = "Wrong values"
-        res = error_response(e, msg)
-        return http.Response(
-            json.dumps(res),
-            status=200,
-            mimetype='application/json'
-        )
 
+    # TODOS LOS ESTUDIOS DEL LUNES AL VIERNES!
 
-# TODOS LOS ESTUDIOS DEL LUNES AL VIERNES!
+    @http.route(
+        '/api/update_planogramas/',
+        type='json', auth="user", methods=['PUT'], csrf=False)
+    def update_planogramas(self, **post):
+        try:
+            data = post['data']
+        except KeyError:
+            msg = "`data` parameter is not found on PUT request body"
+            raise exceptions.ValidationError(msg)
+        try:
+            for item in data:
+                planograma = request.env['planograma'].search([('id', '=', item.get('id'))])
+                planograma.update({
+                    'quebrado': item.get('quebrado'),
+                    'cartel': item.get('cartel'),
+                    'cautivo': item.get('cautivo'),
+                    'c_erroneo': item.get('c_erroneo'),
+                    'image': item.get('image'),
+                    'state': item.get('state'),
+                })
+                planograma.product_id.sudo().update({
+                    'lst_price': item.get('product_id').get('lst_price'),
+                    'pack': item.get('product_id').get('pack'),
+                })
 
-@http.route(
-    '/api/update_planogramas/',
-    type='json', auth="user", methods=['PUT'], csrf=False)
-def update_planogramas(self, **post):
-    try:
-        data = post['data']
-    except KeyError:
-        msg = "`data` parameter is not found on PUT request body"
-        raise exceptions.ValidationError(msg)
-    try:
-        for item in data:
-            planograma = request.env['planograma'].search([('id', '=', item.get('id'))])
-            planograma.update({
-                'quebrado': item.get('quebrado'),
-                'cartel': item.get('cartel'),
-                'cautivo': item.get('cautivo'),
-                'c_erroneo': item.get('c_erroneo'),
-                'image': item.get('image'),
-                'state': item.get('state'),
+            return "updated"
+        except Exception as e:
+            # TODO: Return error message(e.msg) on a response
+            return False
+
+    @http.route(
+        '/api/update_quizs/',
+        type='json', auth="user", methods=['PUT'], csrf=False)
+    def update_quizs(self, **post):
+        try:
+            data = post
+        except KeyError:
+            msg = "`params` parameter is not found on PUT request body"
+            raise exceptions.ValidationError(msg)
+        try:
+            planning_sala = request.env['planning.salas'].search([('id', '=', int(data.get('Id_SalaPlanificada')))])
+
+            planning_sala.write({
+                'answer_quiz_1': data.get('data')[0].get('respuesta_seleccionada_por_auditor'),
+                'answer_quiz_2': data.get('data')[1].get('respuesta_seleccionada_por_auditor'),
+                'answer_quiz_3': data.get('data')[2].get('respuesta_seleccionada_por_auditor'),
             })
-            planograma.product_id.sudo().update({
-                'lst_price': item.get('product_id').get('lst_price'),
-                'pack': item.get('product_id').get('pack'),
+            return "updated"
+        except Exception as e:
+            # TODO: Return error message(e.msg) on a response
+            return False
+
+    @http.route(
+        '/api/reject_study/',
+        type='json', auth="user", methods=['PUT'], csrf=False)
+    def reject_study(self, **post):
+        try:
+            data = post
+        except KeyError:
+            msg = "`params` parameter is not found on PUT request body"
+            raise exceptions.ValidationError(msg)
+        try:
+            planning_sala = request.env['planning.salas'].search([('id', '=', int(data.get('Id_SalaPlanificada')))])
+
+            planning_sala.write({
+                'state': data.get("state"),
+                'comment': data.get("comment"),
             })
-
-        return "updated"
-    except Exception as e:
-        # TODO: Return error message(e.msg) on a response
-        return False
-
-
-@http.route(
-    '/api/update_quizs/',
-    type='json', auth="user", methods=['PUT'], csrf=False)
-def update_quizs(self, **post):
-    try:
-        data = post
-    except KeyError:
-        msg = "`params` parameter is not found on PUT request body"
-        raise exceptions.ValidationError(msg)
-    try:
-        planning_sala = request.env['planning.salas'].search([('id', '=', int(data.get('Id_SalaPlanificada')))])
-
-        planning_sala.write({
-            'answer_quiz_1': data.get('data')[0].get('respuesta_seleccionada_por_auditor'),
-            'answer_quiz_2': data.get('data')[1].get('respuesta_seleccionada_por_auditor'),
-            'answer_quiz_3': data.get('data')[2].get('respuesta_seleccionada_por_auditor'),
-        })
-        return "updated"
-    except Exception as e:
-        # TODO: Return error message(e.msg) on a response
-        return False
-
-
-@http.route(
-    '/api/reject_study/',
-    type='json', auth="user", methods=['PUT'], csrf=False)
-def reject_study(self, **post):
-    try:
-        data = post
-    except KeyError:
-        msg = "`params` parameter is not found on PUT request body"
-        raise exceptions.ValidationError(msg)
-    try:
-        planning_sala = request.env['planning.salas'].search([('id', '=', int(data.get('Id_SalaPlanificada')))])
-
-        planning_sala.write({
-            'state': data.get("state"),
-            'comment': data.get("comment"),
-        })
-        return "updated"
-    except Exception as e:
-        # TODO: Return error message(e.msg) on a response
-        return False
+            return "updated"
+        except Exception as e:
+            # TODO: Return error message(e.msg) on a response
+            return False
