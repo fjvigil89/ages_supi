@@ -778,6 +778,7 @@ class AuthRegisterHome(Home):
                             "Categoria": product.categ_id.name,
                             "es_mueble": product.can_be_mueble,
                             "ícono": product.url_icon,
+                            "id_estudio": planning_products_ids.planning_salas_id.planning_id.planograma_id.study_id.id,
                             "Variables": variables,
                             "Fotos medidas": []
                         }
