@@ -10,6 +10,7 @@ from odoo.exceptions import UserError
 from odoo.http import request
 from datetime import datetime, date
 from odoo import http, _, exceptions
+from datetime import date, timedelta
 
 from .serializers import Serializer
 from .exceptions import QueryFormatError
@@ -318,13 +319,18 @@ class AuthRegisterHome(Home):
             user_id = params["user_id"]
             today = datetime.utcnow()
             today = self.get_date_by_tz(today)
+
+            start = today - timedelta(days=today.weekday())
+            end = start + timedelta(days=6)
+
             comunas_ids = request.env['planning'].search(
-                [('date_start', '=', today), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
 
             final_data = []
             comunas_final = []
             data_today = []
+            comunas_append = []
             for comuna in comunas_ids:
                 if comuna.id not in comunas_final:
                     comunas_final.append({'name': comuna.name})
@@ -339,7 +345,7 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '=', today), ('state', '=', 'ready')]).mapped(
+                    [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids')
 
                 for planning_salas in planning_salas_ids:
@@ -381,13 +387,15 @@ class AuthRegisterHome(Home):
                             "CARMELITA": brown,
                             "count_carmelita": count_brown,
                         }
-
-                data_today.append(comuna_data)
+                        if comuna.id not in comunas_append:
+                            comunas_append.append(comuna.id)
+                            data_today.append(comuna_data)
 
             comunas_ids = request.env['planning'].search(
-                [('date_start', '>', today), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>', end), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
             data_later = []
+            comunas_append_later = []
             for comuna in comunas_ids:
                 if comuna.id not in comunas_final:
                     comunas_final.append({'name': comuna.name})
@@ -402,7 +410,7 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '>', today), ('state', '=', 'ready')]).mapped(
+                    [('date_start', '>', end), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids')
 
                 for planning_salas in planning_salas_ids:
@@ -444,7 +452,10 @@ class AuthRegisterHome(Home):
                             "CARMELITA": brown,
                             "count_carmelita": count_brown,
                         }
-                data_later.append(comuna_data)
+
+                        if comuna.id not in comunas_append_later:
+                            comunas_append_later.append(comuna.id)
+                            data_later.append(comuna_data)
 
             try:
                 final_data.append({'comunas': comunas_final})
@@ -485,9 +496,10 @@ class AuthRegisterHome(Home):
             today = datetime.utcnow()
 
             today = self.get_date_by_tz(today)
-
+            start = today - timedelta(days=today.weekday())
+            end = start + timedelta(days=6)
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '=', today), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids')
             data = []
             salas_append = []
@@ -510,7 +522,7 @@ class AuthRegisterHome(Home):
                                 data.append(sala_data)
 
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '>', today), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids')
             data_later = []
             salas_append_later = []
@@ -628,8 +640,11 @@ class AuthRegisterHome(Home):
             today = datetime.utcnow()
             today = self.get_date_by_tz(today)
 
+            start = today - timedelta(days=today.weekday())
+            end = start + timedelta(days=6)
+
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '=', today), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids')
             data = []
             for planning_salas in planning_salas_ids:

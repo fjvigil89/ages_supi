@@ -1007,11 +1007,11 @@
             </field>
         </record>
 
-        <menuitem id="menu_planning_product_supi"
-                  name="Productos planificados"
-                  action="action_planning_product"
-                  parent="supi_integration.planificaciones_supi"
-                  sequence="2"/>
+<!--        <menuitem id="menu_planning_product_supi"-->
+<!--                  name="Productos planificados"-->
+<!--                  action="action_planning_product"-->
+<!--                  parent="supi_integration.planificaciones_supi"-->
+<!--                  sequence="2"/>-->
 
 
         <!--        PLANNING STUDIES-->
@@ -1352,10 +1352,10 @@
             </field>
         </record>
 
-        <menuitem id="menu_studies_done_supi"
-                  name="Estudios hechos"
-                  action="action_studies_done"
-                  parent="supi_integration.auditoria_supi"
-                  sequence="1"/>
+<!--        <menuitem id="menu_studies_done_supi"-->
+<!--                  name="Estudios hechos"-->
+<!--                  action="action_studies_done"-->
+<!--                  parent="supi_integration.auditoria_supi"-->
+<!--                  sequence="1"/>-->
     </data>
 </odoo>

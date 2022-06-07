@@ -3,11 +3,25 @@ import json
 
 from odoo import models, fields, api
 
+from odoo import tools
+
 
 class PriceConsistence(models.Model):
     _name = 'price.consistence'
 
     name = fields.Char(string="Nombre")
+    #
+    # def _query(self, with_clause='', fields={}, groupby='', from_clause=''):
+    #     with_ = ("WITH %s" % with_clause) if with_clause else ""
+    #
+    #     select_ = """study_id"""
+    #     from_ = """ planograma """
+    #     return '%s (SELECT %s FROM %s)' % (with_, select_, from_)
+    #
+    # def init(self):
+    #     # self._table = sale_report
+    #     tools.drop_view_if_exists(self.env.cr, self._table)
+    #     self.env.cr.execute("""CREATE or REPLACE VIEW %s as (%s)""" % (self._table, self._query()))
 
     @api.model
     def retrieve_dashboard(self):
