@@ -8,8 +8,21 @@ from odoo import tools
 
 class PriceConsistence(models.Model):
     _name = 'price.consistence'
+    _auto = False
 
     name = fields.Char(string="Nombre")
+    study_id = fields.Many2one('study')
+
+    def init(self):
+        tools.drop_view_if_exists(self._cr, 'price_consistence')
+        self._cr.execute(""" 
+           CREATE OR REPLACE VIEW price_consistence AS ( 
+               SELECT            row_number() OVER () as id,
+                pl.study_id as study_id,  
+                pl.name as name
+                FROM planograma pl             )
+    """)
+
     #
     # def _query(self, with_clause='', fields={}, groupby='', from_clause=''):
     #     with_ = ("WITH %s" % with_clause) if with_clause else ""

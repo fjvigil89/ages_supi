@@ -1,17 +1,31 @@
 <?xml version="1.0"?>
 <odoo>
     <data>
+
+        <record model="ir.ui.view" id="price_consistence_tree">
+            <field name="name">Consistencia de precios</field>
+            <field name="model">price.consistence</field>
+            <field name="arch" type="xml">
+                <tree string="Consistencia de precios" create="false" delete="false" edit="false" duplicate="false"
+                      multi_edit="false" js_class="consistence_list_dashboard">
+                    <field name='name'/>
+                    <field name='study_id'/>
+                </tree>
+            </field>
+        </record>
+
         <!--        SECTION-->
         <record model="ir.ui.view" id="view_price_consistence_form">
             <field name="name">price.consistence.form</field>
             <field name="model">price.consistence</field>
             <field name="arch" type="xml">
-                <form string="Consitencia de precio">
+                <form string="Consitencia de precio" create="false" delete="false" duplicate="false"
+                      multi_edit="false">
                     <sheet>
                         <div class="oe_title">
                             <label for="name" class="oe_edit_only"/>
                             <h1>
-                                <field name="name" required="1"/>
+                                <field name="name" readonly="1"/>
                             </h1>
                         </div>
                     </sheet>
@@ -19,44 +33,19 @@
             </field>
         </record>
 
-        <record model="ir.ui.view" id="view_price_consistence_tree">
-            <field name="name">price.consistence.tree</field>
-            <field name="model">price.consistence</field>
-            <field name="arch" type="xml">
-                <tree string="Consistencia de precio" js_class="consistence_list_dashboard">
-                    <field name="name"/>
-                </tree>
-            </field>
-        </record>
-
-        <record id="view_price_consistence_search" model="ir.ui.view">
-            <field name="name">price.consistence.search</field>
-            <field name="model">price.consistence</field>
-            <field name="arch" type="xml">
-                <search string="Consistencia de precios">
-                    <field name="name"/>
-                </search>
-            </field>
-        </record>
-
         <record id="action_price_consistence" model="ir.actions.act_window">
-            <field name="name">Consistencia de precios</field>
+            <field name="name">Consistencia precios</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">price.consistence</field>
             <field name="view_mode">tree,form</field>
-            <field name="search_view_id" ref="view_price_consistence_search"/>
-            <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Create a new price consistence in your system
-                </p>
-            </field>
+            <field name="view_id" eval="False"/>
         </record>
 
         <menuitem id="menu_price_consistence_main"
                   name="Consistencia de precios"
-                  action="action_price_consistence"
                   parent="supi_integration.auditoria_supi"
                   sequence="2"/>
+
 
         <menuitem id="menu_price_consistence"
                   name="Consistencia de precios"
