@@ -14,7 +14,6 @@
             </field>
         </record>
 
-        <!--        SECTION-->
         <record model="ir.ui.view" id="view_price_consistence_form">
             <field name="name">price.consistence.form</field>
             <field name="model">price.consistence</field>
@@ -33,11 +32,22 @@
             </field>
         </record>
 
+        <record id="view_price_consistence_pivot" model="ir.ui.view">
+            <field name="name">price.consistence.pivot</field>
+            <field name="model">price.consistence</field>
+            <field name="arch" type="xml">
+                <pivot string="Consistencia de precios">
+                    <field name="study_id" type="col"/>
+                    <field name="name" interval="month" type="row"/>
+                </pivot>
+            </field>
+        </record>
+
         <record id="action_price_consistence" model="ir.actions.act_window">
             <field name="name">Consistencia precios</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">price.consistence</field>
-            <field name="view_mode">tree,form</field>
+            <field name="view_mode">tree,form,pivot</field>
             <field name="view_id" eval="False"/>
         </record>
 
