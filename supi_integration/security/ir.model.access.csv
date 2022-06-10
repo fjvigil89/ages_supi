@@ -25,3 +25,6 @@ access_supi_study_frecuency,supi_integration.study.frecuency,model_study_frecuen
 access_supi_variables_studies,supi_integration.variables.studies,model_variables_studies,,1,1,1,1
 access_supi_salas_planograma,supi_integration.salas.planograma,model_salas_planograma,,1,1,1,1
 access_supi_product_partner_category,supi_integration.product.partner.category,model_product_partner_category,,1,1,1,1
+access_product_product_public,product.product.public,product.model_product_product,,1,1,1,1
+access_product_template_public,product.template.public,product.model_product_template,,1,1,1,1
+access_product_category_public,product.category.public,product.model_product_category,,1,1,1,1
