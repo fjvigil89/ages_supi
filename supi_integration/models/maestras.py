@@ -382,7 +382,7 @@ class Planograma(models.Model):
             "date_end": self.date_end,
             "user_id": self.env.user.id,
             "planograma_id": self.id,
-            "name": self.partner_id.name,
+            "name": self.name,
             "description": self.description,
         }
         planning_id = self.env['planning'].create(vals)
