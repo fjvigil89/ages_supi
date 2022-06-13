@@ -760,6 +760,7 @@
                                         <field name="coordinator_id" required="1"/>
                                         <field name="specifications" required="1"/>
                                         <field name="comment" required="1"/>
+                                        <field name="categories_ids"/>
                                         <field name="planning_products_ids" widget="many2many_tags" required="1"/>
                                         <!--                                        <field name="quizs_ids" widget="many2many_tags"/>-->
                                         <field name="state"/>
@@ -847,6 +848,8 @@
                             </group>
                             <group>
                                 <field name="auditor_id" required="1"/>
+                                <field name="categories_ids" required="1" widget="many2many_tags"
+                                       string="Categoria de productos"/>
                                 <field name="coordinator_id" required="1"/>
                             </group>
                         </group>
@@ -1007,11 +1010,11 @@
             </field>
         </record>
 
-<!--        <menuitem id="menu_planning_product_supi"-->
-<!--                  name="Productos planificados"-->
-<!--                  action="action_planning_product"-->
-<!--                  parent="supi_integration.planificaciones_supi"-->
-<!--                  sequence="2"/>-->
+        <menuitem id="menu_planning_product_supi"
+                  name="Productos planificados"
+                  action="action_planning_product"
+                  parent="supi_integration.planificaciones_supi"
+                  sequence="2"/>
 
 
         <!--        PLANNING STUDIES-->
@@ -1021,34 +1024,26 @@
             <field name="arch" type="xml">
                 <form string="Resultados de las mediciones">
                     <sheet>
-
                         <group>
                             <group>
                                 <field name="study_id" required="1"/>
                                 <field name="product_id" required="1"/>
-                                <field name="variable_id" required="1"/>
-
-                                <field name="valor_por_defecto" required="1"/>
-                                <field name="respuesta" required="1"/>
-                                <field name="comment" required="1"/>
-                                <field name="posicion_x" required="1"/>
-                                <field name="date_start" required="1"/>
-
-
                             </group>
                             <group>
                                 <field name="planning_id" required="1"/>
                                 <field name="auditor" required="1"/>
-
-
-                                <field name="validation_perc" required="1"/>
-                                <field name="disponibilidad" required="1"/>
-                                <field name="product_padre_id" required="1"/>
-                                <field name="posicion_y" required="1"/>
-
-
                             </group>
                         </group>
+                        <notebook>
+                            <page string="Imagenes">
+                                <field name="images_ids">
+                                    <tree editable="bottom">
+                                        <field name="planning_study_id" invisible="1"/>
+                                        <field name="image" widget="image"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
                     </sheet>
                 </form>
             </field>
@@ -1063,15 +1058,18 @@
                     <field name="product_id"/>
                     <field name="planning_id"/>
                     <field name="auditor" optional="hide"/>
-                    <field name="valor_por_defecto" optional="hide"/>
-                    <field name="validation_perc" optional="hide"/>
-                    <field name="disponibilidad" optional="hide"/>
-                    <field name="respuesta" optional="hide"/>
-                    <field name="comment" optional="hide"/>
+                    <field name="valor_por_defecto"/>
+                    <field name="validation_perc"/>
+                    <field name="disponibilidad"/>
+                    <field name="respuesta"/>
+                    <field name="comment"/>
                     <field name="posicion_x" optional="hide"/>
                     <field name="posicion_y" optional="hide"/>
                     <field name="date_start" optional="hide"/>
                     <field name="product_padre_id" optional="hide"/>
+                    <button name="%(supi_integration.open_gallery)d" type="action" string="  "
+                            class="fa fa-picture-o"/>
+
                 </tree>
             </field>
         </record>
@@ -1146,10 +1144,15 @@
                                     <tree editable="bottom">
                                         <field name="place_id" required="1"/>
                                         <field name="product_id_domain" invisible="1"/>
+                                        <field name="categories_ids" widget="many2many_tags"
+                                               string="Categorias de productos"
+                                               attrs="{'invisible':[('parent.study_id_naturaleza','=','3')]}"/>
                                         <field name="muebles_ids" widget="many2many_tags"
                                                domain="product_id_domain"
                                                string="Productos"
                                                attrs="{'invisible':[('parent.study_id_naturaleza','=','3')]}"/>
+
+
                                         <field name="planograma_id" invisible="1"/>
                                     </tree>
                                 </field>
@@ -1352,10 +1355,10 @@
             </field>
         </record>
 
-<!--        <menuitem id="menu_studies_done_supi"-->
-<!--                  name="Estudios hechos"-->
-<!--                  action="action_studies_done"-->
-<!--                  parent="supi_integration.auditoria_supi"-->
-<!--                  sequence="1"/>-->
+        <!--        <menuitem id="menu_studies_done_supi"-->
+        <!--                  name="Estudios hechos"-->
+        <!--                  action="action_studies_done"-->
+        <!--                  parent="supi_integration.auditoria_supi"-->
+        <!--                  sequence="1"/>-->
     </data>
 </odoo>

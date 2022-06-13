@@ -20,6 +20,7 @@
     'data': [
         'security/ir.model.access.csv',
         'views/res_users_view.xml',
+        'wizard/wizard_gallery_picture.xml',
         'data/data_secuences.xml',
         'views/res_partner_views.xml',
         'views/product_product_view.xml',

@@ -232,6 +232,7 @@ class PlanningSalas(models.Model):
     id_quiz_3 = fields.Many2one('quiz', string="Id Quiz 3")
     answer_quiz_3 = fields.Char("Respuesta 3")
     # quizs_ids = fields.One2many('quiz.result', 'planning_salas_id', string='Quizs', copy=True)
+    categories_ids = fields.Many2many('product.category')
     state = fields.Selection([
 
         ('prepared', 'Preparado'),
@@ -313,6 +314,21 @@ class PlanningStudies(models.Model):
     posicion_y = fields.Char("Posicion Y del producto")
     date_start = fields.Date(string='Momento de medicion')
     product_padre_id = fields.Many2one('product.product', string="Producto padre")
+    images_ids = fields.One2many('photo.medition', 'planning_study_id')
+
+    def name_get(self):
+        result = []
+        for studies in self:
+            result.append((studies.id,
+                           '%s - %s' % (studies.study_id.name, studies.product_id.name)))
+        return result
+
+
+class PhotosMedition(models.Model):
+    _name = "photo.medition"
+
+    planning_study_id = fields.Many2one('planning.studies', string="Estudio")
+    image = fields.Binary(string="Imagen")
 
 
 class Planograma(models.Model):
@@ -403,6 +419,7 @@ class Planograma(models.Model):
                 "id_quiz_1": id_quiz_1,
                 "id_quiz_2": id_quiz_2,
                 "id_quiz_3": id_quiz_3,
+                "categories_ids": [(6, 0, line.categories_ids.ids)],
             }
             planning_sala_id = self.env['planning.salas'].create(vals)
 
@@ -443,6 +460,7 @@ class SalasPlanograma(models.Model):
         store=False,
     )
     muebles_ids = fields.Many2many('product.product')
+    categories_ids = fields.Many2many('product.category')
 
     @api.onchange('place_id', 'planograma_id')
     def _compute_product_id_domain(self):

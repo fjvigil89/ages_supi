@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="seq_planograma" model="ir.sequence">
+            <field name="name">Variable estado</field>
+            <field name="label_visual">Variable estado</field>
+            <field name="tipo_estudio">price</field>
+        </record>
+    </data>
+</odoo>

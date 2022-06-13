@@ -321,19 +321,17 @@ class AuthRegisterHome(Home):
             today = self.get_date_by_tz(today)
 
             start = today - timedelta(days=today.weekday())
-            end = start + timedelta(days=6)
+            end = today + timedelta(days=6)
 
             comunas_ids = request.env['planning'].search(
-                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
+                [('date_start', '<=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
 
             final_data = []
-            comunas_final = []
             data_today = []
             comunas_append = []
             for comuna in comunas_ids:
-                if comuna.id not in comunas_final:
-                    comunas_final.append({'name': comuna.name})
+
                 red = False
                 count_red = 0
                 blue = False
@@ -345,7 +343,7 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
+                    [('date_start', '<=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids')
 
                 for planning_salas in planning_salas_ids:
@@ -391,14 +389,14 @@ class AuthRegisterHome(Home):
                             comunas_append.append(comuna.id)
                             data_today.append(comuna_data)
 
+            end_final = end + timedelta(days=6)
             comunas_ids = request.env['planning'].search(
-                [('date_start', '>', end), ('state', '=', 'ready')]).mapped(
+                [('date_start', '<=', today), ('date_end', '>=', end_final), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
             data_later = []
             comunas_append_later = []
             for comuna in comunas_ids:
-                if comuna.id not in comunas_final:
-                    comunas_final.append({'name': comuna.name})
+
                 red = False
                 count_red = 0
                 blue = False
@@ -410,7 +408,7 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '>', end), ('state', '=', 'ready')]).mapped(
+                    [('date_start', '<=', today), ('date_end', '>=', end_final), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids')
 
                 for planning_salas in planning_salas_ids:
@@ -458,7 +456,6 @@ class AuthRegisterHome(Home):
                             data_later.append(comuna_data)
 
             try:
-                final_data.append({'comunas': comunas_final})
                 res = {
                     "Comunas de hoy": data_today,  # Cantidad de salas para hoy
                     "Comunas de Semana Próxima": data_later,  # Cantidad de salas para hoy
@@ -499,7 +496,7 @@ class AuthRegisterHome(Home):
             start = today - timedelta(days=today.weekday())
             end = start + timedelta(days=6)
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
+                [('date_start', '<=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids')
             data = []
             salas_append = []
@@ -511,6 +508,7 @@ class AuthRegisterHome(Home):
                             sala_data = {
                                 'id': planning_salas.place_id.id,
                                 'folio': planning_salas.place_id.folio or '',
+                                'planning_sala_id': planning_salas.id,
                                 'name': planning_salas.place_id.name or '',
                                 'lat': planning_salas.place_id.lat or '',
                                 'long': planning_salas.place_id.long or '',
@@ -521,8 +519,9 @@ class AuthRegisterHome(Home):
                                 salas_append.append(planning_salas.place_id.id)
                                 data.append(sala_data)
 
+            end_final = end + timedelta(days=6)
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>=', start), ('date_start', '<=', end_final), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids')
             data_later = []
             salas_append_later = []
@@ -533,6 +532,7 @@ class AuthRegisterHome(Home):
                         if variable.tipo_estudio == type:
                             sala_data = {
                                 'id': planning_salas.place_id.id,
+                                'planning_sala_id': planning_salas.id,
                                 'folio': planning_salas.place_id.folio or '',
                                 'name': planning_salas.place_id.name or '',
                                 'lat': planning_salas.place_id.lat or '',
@@ -644,7 +644,7 @@ class AuthRegisterHome(Home):
             end = start + timedelta(days=6)
 
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
+                [('date_start', '<=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids')
             data = []
             for planning_salas in planning_salas_ids:
@@ -802,6 +802,8 @@ class AuthRegisterHome(Home):
                             "id_producto": product.id,
                             "EAN": product.default_code,
                             "name_prod": product.name,
+                            "user_id": planning_products_ids.planning_salas_id.auditor_id.id,
+                            "planning_place": planning_products_ids.planning_salas_id.id,
                             "Categoria": product.categ_id.name,
                             "es_mueble": product.can_be_mueble,
                             "ícono": product.url_icon,
@@ -842,9 +844,8 @@ class AuthRegisterHome(Home):
         try:
             id_sala_planificada = params["id_sala_planificada"]
             categories = request.env['planning.salas'].search(
-                [('id', '=', int(id_sala_planificada)), ('state', '=', 'prepared')]).mapped(
-                'planning_products_ids').mapped(
-                'product_ids').mapped('categ_id')
+                [('id', '=', int(id_sala_planificada))]).mapped(
+                'categories_ids')
             try:
                 categories_data = []
                 for cat in categories:
@@ -904,6 +905,51 @@ class AuthRegisterHome(Home):
                     'lst_price': item.get('product_id').get('lst_price'),
                     'pack': item.get('product_id').get('pack'),
                 })
+
+            return "updated"
+        except Exception as e:
+            # TODO: Return error message(e.msg) on a response
+            return False
+
+    @http.route(
+        '/api/register_medicions/',
+        type='json', auth="user", methods=['POST'], csrf=False)
+    def register_medicions(self, **post):
+        try:
+            productos = post['Productos']
+        except KeyError:
+            msg = "`data` parameter is not found on PUT request body"
+            raise exceptions.ValidationError(msg)
+        try:
+            for data in productos:
+                id_study = data.get('id_estudio')
+                product_id = data.get('id_producto')
+                planning_sala = data.get('planning_place')
+                auditor = data.get('user_id')
+                for var in data.get('Variables'):
+                    vals = {
+                        "study_id": int(id_study),
+                        "product_id": int(product_id),
+                        "planning_id": int(planning_sala),
+                        "auditor": int(auditor),
+                        "variable_id": int(var.get('id_variable')),
+                        "valor_por_defecto": var.get('Valor_x_Defecto_target'),
+                        "validation_perc": var.get('Porc_Validación'),
+                        "disponibilidad": var.get('Disponibilidad'),
+                        "respuesta": var.get('Respuesta'),
+                        "comment": var.get('Comentario'),
+                        # "date_start": var.get('Momento_medición'),
+                    }
+
+                    study_id = request.env['planning.studies'].create(vals)
+
+                    images = data.get('Fotos medidas')
+                    for image in images:
+                        vals = {
+                            'planning_study_id': study_id.id,
+                            "image": image
+                        }
+                        request.env['photo.medition'].create(vals)
 
             return "updated"
         except Exception as e:

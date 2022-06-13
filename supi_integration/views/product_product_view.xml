@@ -1,11 +1,21 @@
 <?xml version="1.0"?>
 <odoo>
     <data>
+        <menuitem id="products_supi"
+                  name="Productos"
+                  parent="supi_integration.main_data_supi"
+                  sequence="5"/>
         <menuitem id="menu_products_supi"
                   name="Productos"
                   action="product.product_normal_action"
-                  parent="supi_integration.main_data_supi"
+                  parent="products_supi"
                   sequence="5"/>
+
+        <menuitem id="menu_categoria_supi"
+                  name="Categorias de productos"
+                  action="product.product_category_action_form"
+                  parent="products_supi"
+                  sequence="6"/>
 
         <!-- Res users extension !-->
         <record id="product_normal_form_view_pack" model="ir.ui.view">

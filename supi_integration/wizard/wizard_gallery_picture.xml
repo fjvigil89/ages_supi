@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="wizard_gallery" model="ir.ui.view">
+            <field name="name">planning.studies.gallery</field>
+            <field name="model">show.planning.studies</field>
+            <field name="arch" type="xml">
+                <form string="Galeria">
+
+                    <field name="images_ids" widget="image"/>
+                    <field name="auditor" />
+                    <footer>
+
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="open_gallery" model="ir.actions.act_window">
+            <field name="name">Galeria</field>
+            <field name="res_model">planning.studies</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="wizard_gallery"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</openerp>
