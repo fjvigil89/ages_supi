@@ -462,13 +462,14 @@ class SalasPlanograma(models.Model):
     muebles_ids = fields.Many2many('product.product')
     categories_ids = fields.Many2many('product.category')
 
-    @api.onchange('place_id', 'planograma_id')
+    @api.onchange('place_id', 'planograma_id', 'categories_ids')
     def _compute_product_id_domain(self):
         for rec in self:
             print(rec.planograma_id.study_id_naturaleza)
             if rec.planograma_id.study_id_naturaleza == '0':
+                products = self.env['product.product'].search([('categ_id', 'in', self.categories_ids.ids)]).ids
                 rec.product_id_domain = json.dumps(
-                    [('can_be_mueble', '=', False)]
+                    [('id', 'in', products)]
                 )
             if rec.planograma_id.study_id_naturaleza == '1':
                 rec.product_id_domain = json.dumps(
