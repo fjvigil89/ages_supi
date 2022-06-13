@@ -389,10 +389,10 @@ class Planograma(models.Model):
 
         for line in self.salas_planograma_ids:
             study_type = self.study_id.type
-            partner_id = self.partner_id.id
+            partner_id = self.partner_id.ids
 
             quiz = self.env['quiz'].search(
-                [('study_type', '=', int(study_type)), ('partner_id', '=', int(partner_id))]).ids
+                [('study_type', '=', int(study_type)), ('partner_id', 'in', partner_id)]).ids
             if len(quiz) < 3:
                 selected = random.sample(quiz, k=len(quiz))
             else:
