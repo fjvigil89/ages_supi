@@ -684,15 +684,15 @@ class AuthRegisterHome(Home):
                         for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
                             tipo_dato = ''
                             if variable.tipo_dato == '1':
-                                tipo_dato = "Texto"
+                                tipo_dato = "text"
                             if variable.tipo_dato == '2':
-                                tipo_dato = "Int"
+                                tipo_dato = "int"
                             if variable.tipo_dato == '3':
-                                tipo_dato = "Double"
+                                tipo_dato = "double"
                             if variable.tipo_dato == '4':
                                 tipo_dato = "Boolean"
                             if variable.tipo_dato == '5':
-                                tipo_dato = "Select"
+                                tipo_dato = "select"
                             if variable.tipo_dato == '6':
                                 tipo_dato = "Precio"
                             vals_val = {
@@ -764,15 +764,15 @@ class AuthRegisterHome(Home):
                     for variable in planning_products_ids.variable_ids:
                         tipo_dato = ''
                         if variable.tipo_dato == '1':
-                            tipo_dato = "Texto"
+                            tipo_dato = "text"
                         if variable.tipo_dato == '2':
-                            tipo_dato = "Int"
+                            tipo_dato = "int"
                         if variable.tipo_dato == '3':
-                            tipo_dato = "Double"
+                            tipo_dato = "double"
                         if variable.tipo_dato == '4':
                             tipo_dato = "Boolean"
                         if variable.tipo_dato == '5':
-                            tipo_dato = "Select"
+                            tipo_dato = "select"
                         if variable.tipo_dato == '6':
                             tipo_dato = "Precio"
 
