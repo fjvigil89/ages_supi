@@ -389,9 +389,9 @@ class AuthRegisterHome(Home):
                             comunas_append.append(comuna.id)
                             data_today.append(comuna_data)
 
-            end_final = end + timedelta(days=6)
+            end_final = end + timedelta(days=7)
             comunas_ids = request.env['planning'].search(
-                [('date_start', '<=', today), ('date_end', '>=', end_final), ('state', '=', 'ready')]).mapped(
+                [('date_start', '<=', end_final), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
             data_later = []
             comunas_append_later = []
@@ -408,7 +408,7 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '<=', today), ('date_end', '>=', end_final), ('state', '=', 'ready')]).mapped(
+                    [('date_start', '<=', end_final), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids')
 
                 for planning_salas in planning_salas_ids:
@@ -701,7 +701,7 @@ class AuthRegisterHome(Home):
                                 'name_variable': variable.name or '',
                                 'label_visual': variable.label_visual or '',
                                 'Tipo_Dato': tipo_dato or '',
-                                'valores_combo': [],
+                                'valores_combo': variable.valores_combobox or '',
                                 'icono': variable.url_icon,
                             }
                             variables.append(vals_val)
@@ -781,7 +781,7 @@ class AuthRegisterHome(Home):
                             "name_variable": variable.name,
                             "label_visual": variable.label_visual,
                             "Tipo_Dato": tipo_dato,
-                            "valores_combo": [],
+                            'valores_combo': variable.valores_combobox,
                             "ícono": variable.url_icon,
                             "xN1": "",
                             "xN2": "",
