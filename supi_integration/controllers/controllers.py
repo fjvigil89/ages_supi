@@ -695,13 +695,12 @@ class AuthRegisterHome(Home):
                                 tipo_dato = "Select"
                             if variable.tipo_dato == '6':
                                 tipo_dato = "Precio"
-
                             vals_val = {
                                 'id_variable': variable.id,
                                 'name_variable': variable.name or '',
                                 'label_visual': variable.label_visual or '',
                                 'Tipo_Dato': tipo_dato or '',
-                                'valores_combo': variable.valores_combobox or '',
+                                'valores_combo': variable.valores_combobox.split(',') if variable.valores_combobox else [],
                                 'icono': variable.url_icon,
                             }
                             variables.append(vals_val)
@@ -776,12 +775,13 @@ class AuthRegisterHome(Home):
                             tipo_dato = "Select"
                         if variable.tipo_dato == '6':
                             tipo_dato = "Precio"
+
                         vals_var = {
                             "id_variable": variable.id,
                             "name_variable": variable.name,
                             "label_visual": variable.label_visual,
                             "Tipo_Dato": tipo_dato,
-                            'valores_combo': variable.valores_combobox,
+                            'valores_combo': variable.valores_combobox.split(',') if variable.valores_combobox else [],
                             "ícono": variable.url_icon,
                             "xN1": "",
                             "xN2": "",
