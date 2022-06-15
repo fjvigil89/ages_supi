@@ -272,18 +272,14 @@ class PlanningProducts(models.Model):
     posicion_x = fields.Char("Posicion X del producto")
     posicion_y = fields.Char("Posicion Y del producto")
     date_start = fields.Date(string='Momento de medicion')
+    planogramado = fields.Boolean(string="Planogramado ó añadido", default=True)
     product_padre_id = fields.Many2one('product.product', string="Producto padre")
 
     def name_get(self):
         result = []
-        for product in self:
-            name = ''
-            for prod in product.product_ids:
-                name += str(prod.name)
-            if product.variable_id.label_visual and name != '':
-                result.append((product.id, '%s - %s' % (name, product.variable_id.label_visual)))
-            else:
-                result.append((product.id, '%s ' % "Producto"))
+        for product_planning in self:
+            result.append((product_planning.id,
+                           '%s - %s' % (product_planning.product_id.name, product_planning.variable_id.name)))
         return result
 
 
@@ -428,15 +424,15 @@ class Planograma(models.Model):
                 for var in variable.variable_id:
                     if var.id not in variables_list:
                         variables_list.append(var.id)
-            products = []
             if line.muebles_ids:
-                products = line.muebles_ids.ids
-            vals = {
-                "planning_salas_id": planning_sala_id.id,
-                "product_ids": [(6, 0, products)],
-                "variable_ids": [(6, 0, variables_list)],
-            }
-            self.env['planning.product'].create(vals)
+                for mueble in line.muebles_ids:
+                    for var in variables_list:
+                        vals = {
+                            "planning_salas_id": planning_sala_id.id,
+                            "product_id": mueble.id,
+                            "variable_id": var,
+                        }
+                        self.env['planning.product'].create(vals)
 
 
 class VariablesEstudios(models.Model):
