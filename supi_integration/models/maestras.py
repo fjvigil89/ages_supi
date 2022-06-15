@@ -234,7 +234,6 @@ class PlanningSalas(models.Model):
     # quizs_ids = fields.One2many('quiz.result', 'planning_salas_id', string='Quizs', copy=True)
     categories_ids = fields.Many2many('product.category')
     state = fields.Selection([
-
         ('prepared', 'Preparado'),
         ('done', 'Realizado'),
         ('no_done', 'No realizado'),
@@ -273,6 +272,15 @@ class PlanningProducts(models.Model):
     posicion_y = fields.Char("Posicion Y del producto")
     date_start = fields.Date(string='Momento de medicion')
     planogramado = fields.Boolean(string="Planogramado ó añadido", default=True)
+    is_audited = fields.Boolean(string="Auditada?", default=False)
+    estado = fields.Selection(
+        [('quebrado', 'Quebrado'),
+         ('cautivo', 'Cautivo'),
+         ('erroneo', 'Erróneo'),
+         ('present', 'Presente'),
+         ('por_evaluar', 'Por evaluar'),
+         ('no_aplica', 'No Aplica')],
+        string='Estado', default='por_evaluar')
     product_padre_id = fields.Many2one('product.product', string="Producto padre")
 
     def name_get(self):
