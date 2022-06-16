@@ -347,7 +347,7 @@ class AuthRegisterHome(Home):
             for planning_salas in planning_salas_ids:
                 if planning_salas.place_id.comuna_id.id == int(comuna_id) and planning_salas.state == 'prepared' \
                         and planning_salas.auditor_id.id == int(user_id):
-                    for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
+                    for variable in planning_salas.mapped('planning_products_ids').mapped('variable_id'):
                         if variable.tipo_estudio == type:
                             sala_data = {
                                 'id': planning_salas.place_id.id,
@@ -372,7 +372,7 @@ class AuthRegisterHome(Home):
             for planning_salas in planning_salas_ids:
                 if planning_salas.place_id.comuna_id.id == int(comuna_id) and planning_salas.state == 'prepared' \
                         and planning_salas.auditor_id.id == int(user_id):
-                    for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
+                    for variable in planning_salas.mapped('planning_products_ids').mapped('variable_id'):
                         if variable.tipo_estudio == type:
                             sala_data = {
                                 'id': planning_salas.place_id.id,
@@ -525,7 +525,7 @@ class AuthRegisterHome(Home):
 
                         variables = []
 
-                        for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
+                        for variable in planning_salas.mapped('planning_products_ids').mapped('variable_id'):
                             tipo_dato = ''
                             if variable.tipo_dato == '1':
                                 tipo_dato = "text"
@@ -603,56 +603,59 @@ class AuthRegisterHome(Home):
                 planning_products_ids = request.env['planning.salas'].search(
                     [('id', '=', int(id_sala_planogramada))]).mapped('planning_products_ids')
 
-                products = []
-                for product in planning_products_ids.product_ids:
-                    variables = []
-                    for variable in planning_products_ids.variable_ids:
-                        tipo_dato = ''
-                        if variable.tipo_dato == '1':
-                            tipo_dato = "text"
-                        if variable.tipo_dato == '2':
-                            tipo_dato = "int"
-                        if variable.tipo_dato == '3':
-                            tipo_dato = "double"
-                        if variable.tipo_dato == '4':
-                            tipo_dato = "Boolean"
-                        if variable.tipo_dato == '5':
-                            tipo_dato = "select"
-                        if variable.tipo_dato == '6':
-                            tipo_dato = "Precio"
+                planning_products = request.env['planning.product'].search(
+                    [('planning_salas_id', '=', int(id_sala_planogramada))])
 
-                        vals_var = {
-                            "id_variable": variable.id,
-                            "name_variable": variable.name,
-                            "label_visual": variable.label_visual,
-                            "Tipo_Dato": tipo_dato,
-                            'valores_combo': variable.valores_combobox.split(',') if variable.valores_combobox else [],
-                            "ícono": variable.url_icon,
-                            "xN1": "",
-                            "xN2": "",
-                            "Valor_x_Defecto_target": "",
-                            "Porc_Validación": "",
-                            "Disponibilidad": "",
-                            "Respuesta": "",
-                            "Comentario": "",
-                            "Momento_medición": "",
-                            "Id_Producto_Planificado_Padre": "",
-                            "Posicion_X_del_producto": "",
-                            "Posicion_Y_del_producto": "",
-                        }
-                        variables.append(vals_var)
-                    print(product.categ_id.id)
-                    if product.categ_id.id == int(categ_id):
+                products = []
+                for product in planning_products:
+                    variables = []
+                    tipo_dato = ''
+                    if product.variable_id.tipo_dato == '1':
+                        tipo_dato = "text"
+                    if product.variable_id.tipo_dato == '2':
+                        tipo_dato = "int"
+                    if product.variable_id.tipo_dato == '3':
+                        tipo_dato = "double"
+                    if product.variable_id.tipo_dato == '4':
+                        tipo_dato = "Boolean"
+                    if product.variable_id.tipo_dato == '5':
+                        tipo_dato = "select"
+                    if product.variable_id.tipo_dato == '6':
+                        tipo_dato = "Precio"
+
+                    vals_var = {
+                        "id_variable": product.variable_id.id,
+                        "name_variable": product.variable_id.name,
+                        "label_visual": product.variable_id.label_visual,
+                        "Tipo_Dato": tipo_dato,
+                        'valores_combo': product.variable_id.valores_combobox.split(
+                            ',') if product.variable_id.valores_combobox else [],
+                        "ícono": product.variable_id.url_icon,
+                        "xN1": "",
+                        "xN2": "",
+                        "Valor_x_Defecto_target": "",
+                        "Porc_Validación": "",
+                        "Disponibilidad": "",
+                        "Respuesta": "",
+                        "Comentario": "",
+                        "Momento_medición": "",
+                        "Id_Producto_Planificado_Padre": "",
+                        "Posicion_X_del_producto": "",
+                        "Posicion_Y_del_producto": "",
+                    }
+                    variables.append(vals_var)
+                    print(product.product_id.categ_id.name)
+                    if product.product_id.categ_id.id == int(categ_id):
                         vals_prod = {
-                            "id_producto": product.id,
-                            "EAN": product.default_code,
-                            "name_prod": product.name,
-                            "user_id": planning_products_ids.planning_salas_id.auditor_id.id,
-                            "planning_place": planning_products_ids.planning_salas_id.id,
-                            "Categoria": product.categ_id.name,
-                            "es_mueble": product.can_be_mueble,
-                            "ícono": product.url_icon,
-                            "id_estudio": planning_products_ids.planning_salas_id.planning_id.planograma_id.study_id.id,
+                            "id_producto": product.product_id.id,
+                            "EAN": product.product_id.default_code,
+                            "name_prod": product.product_id.name,
+                            "user_id": product.planning_salas_id.auditor_id.id,
+                            "planning_place": product.planning_salas_id.id,
+                            "Categoria": product.product_id.categ_id.name,
+                            "es_mueble": product.product_id.can_be_mueble,
+                            "ícono": product.product_id.url_icon,
+                            "id_estudio": product.planning_salas_id.planning_id.planograma_id.study_id.id,
                             "Variables": variables,
                             "Fotos medidas": []
                         }
