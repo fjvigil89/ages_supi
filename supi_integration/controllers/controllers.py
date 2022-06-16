@@ -166,6 +166,7 @@ class AuthRegisterHome(Home):
             start = today - timedelta(days=today.weekday())
             end = today + timedelta(days=6)
 
+            # PARA HOY
             comunas_ids = request.env['planning'].search(
                 [('date_start', '=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
@@ -254,10 +255,96 @@ class AuthRegisterHome(Home):
                     comunas_append.append(comuna.id)
                     data_today.append(comuna_data)
 
+            end_final = end + timedelta(days=7)
+            comunas_ids = request.env['planning'].search(
+                [('date_start', '>=', end_final), ('state', '=', 'ready')]).mapped(
+                'planning_salas_ids').mapped('place_id').mapped('comuna_id')
+            data_later = []
+            comunas_append_later = []
+            for comuna in comunas_ids:
+
+                red = False
+                count_red = 0
+                blue = False
+                count_blue = 0
+                yellow = False
+                count_yellow = 0
+                green = False
+                count_green = 0
+                brown = False
+                count_brown = 0
+                planning_salas_ids = request.env['planning'].search(
+                    [('date_start', '>=', end_final), ('state', '=', 'ready')]).mapped(
+                    'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == comuna.id).filtered(
+                    lambda x: x.auditor_id.id == int(user_id)).filtered(lambda x: x.state == 'prepared')
+
+                for planning_sala in planning_salas_ids:
+                    # SI LA NATURALEZA ES 0 (O sea de productos)
+                    if planning_sala.planning_id.planograma_id.study_id_naturaleza == '0':
+                        for planning_product in planning_sala.planning_products_ids:
+                            if planning_product.variable_id.tipo_estudio == '4':
+                                # cold_equipment
+                                red = True
+                                count_red += 1
+                            if planning_product.variable_id.tipo_estudio == '5':
+                                # exhibitions
+                                blue = True
+                                count_blue += 1
+                            if planning_product.variable_id.tipo_estudio == '2':
+                                # price
+                                yellow = True
+                                count_yellow += 1
+                            if planning_product.variable_id.tipo_estudio == '1':
+                                # osa
+                                green = True
+                                count_green += 1
+                            if planning_product.variable_id.tipo_estudio == '3':
+                                # facing
+                                brown = True
+                                count_brown += 1
+                    else:
+                        for variable in planning_sala.planning_id.planograma_id.variables_estudios_ids:
+                            if variable.variable_id.tipo_estudio == '4':
+                                # cold_equipment
+                                red = True
+                                count_red += 1
+                            if variable.variable_id.tipo_estudio == '5':
+                                # exhibitions
+                                blue = True
+                                count_blue += 1
+                            if variable.variable_id.tipo_estudio == '2':
+                                # price
+                                yellow = True
+                                count_yellow += 1
+                            if variable.variable_id.tipo_estudio == '1':
+                                # osa
+                                green = True
+                                count_green += 1
+                            if variable.variable_id.tipo_estudio == '3':
+                                # facing
+                                brown = True
+                                count_brown += 1
+                comuna_data = {
+                    'comuna_id': comuna.id,
+                    "nombre_comuna": comuna.name,
+                    "ROJO": red,
+                    "count_rojo": count_red,
+                    "AZUL": blue,
+                    "count_azul": count_blue,
+                    "AMARILLO": yellow,
+                    "count_amarillo": count_yellow,
+                    "VERDE": green,
+                    "count_verde": count_green,
+                    "CARMELITA": brown,
+                    "count_carmelita": count_brown,
+                }
+                if comuna.id not in comunas_append_later:
+                    comunas_append_later.append(comuna.id)
+                    data_later.append(comuna_data)
             try:
                 res = {
                     "Comunas de hoy": data_today,  # Cantidad de salas para hoy
-                    # "Comunas de Semana Próxima": data_later,  # Cantidad de salas para hoy
+                    "Comunas de Semana Próxima": data_later,  # Cantidad de salas para hoy
 
                 }
                 return http.Response(
