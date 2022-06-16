@@ -765,6 +765,116 @@ class AuthRegisterHome(Home):
             )
 
     @http.route(
+        '/api/producto_escaneado',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def producto_escaneado(self, **params):
+        try:
+            sala_planificada = params["sala_planificada"]
+            ean = params["ean"]
+
+            data = []
+            product = request.env['product.product'].search([('default_code', '=', ean)], limit=1)
+            if not product:
+                res = {
+                    "message": 'El EAN escaneado no existe en el sistema',
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+
+            planning_sala = request.env['planning.salas'].search([('id', '=', int(sala_planificada))], limit=1)
+
+            variables = []
+            for variable in planning_sala.planning_id.planograma_id.variables_estudios_ids:
+                variables.append(variable.variable_id)
+            for var_product in variables:
+                vals = {
+                    "product_id": product.id,
+                    "variable_id": var_product.id,
+                    "planning_salas_id": int(sala_planificada),
+                    "planogramado": False,
+                    "name": planning_sala.name,
+                }
+                request.env['planning.product'].create(vals)
+
+            planning_products_variables = request.env['planning.product'].search(
+                [('product_id', '=', product.id), ('planning_salas_id', '=', int(sala_planificada))]).mapped(
+                'variable_id')
+            variables_data = []
+            for planning_products_variable in planning_products_variables:
+                tipo_dato = ''
+                if planning_products_variable.tipo_dato == '1':
+                    tipo_dato = "text"
+                if planning_products_variable.tipo_dato == '2':
+                    tipo_dato = "int"
+                if planning_products_variable.tipo_dato == '3':
+                    tipo_dato = "double"
+                if planning_products_variable.tipo_dato == '4':
+                    tipo_dato = "Boolean"
+                if planning_products_variable.tipo_dato == '5':
+                    tipo_dato = "select"
+                if planning_products_variable.tipo_dato == '6':
+                    tipo_dato = "Precio"
+                var_vals = {
+                    "id_variable": planning_products_variable.id,
+                    "name_variable": planning_products_variable.name,
+                    "label_visual": planning_products_variable.label_visual,
+                    "Tipo_Dato": tipo_dato,
+                    "valores_combo": planning_products_variable.valores_combobox,
+                    "ícono": planning_products_variable.url_icon,
+                    "xN1": "",
+                    "xN2": "",
+                    "Valor_x_Defecto_target": "",
+                    "Porc_Validación": "",
+                    "Disponibilidad": "",
+                    "Respuesta": "",
+                    "Comentario": "",
+                    "Momento_medición": "",
+                    "Id_Producto_Planificado_Padre": "",
+                    "Posicion_X_del_producto": "",
+                    "Posicion_Y_del_producto": ""
+                }
+                variables_data.append(var_vals)
+            vals_product = {
+                "id_producto": product.id,
+                "EAN": product.default_code,
+                "name_prod": product.name,
+                "Categoria": product.categ_id.name,
+                "es_mueble": product.can_be_mueble,
+                "ícono": product.url_icon,
+                "planogramado": False,
+                "Variables": variables_data,
+                "Fotos medidas": []
+
+            }
+            try:
+                res = {
+                    "Product": vals_product,
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+    @http.route(
         '/api/get_products_by_categ_id',
         type='http', auth='user', methods=['GET'], csrf=False)
     def get_products_by_categ_id(self, **params):

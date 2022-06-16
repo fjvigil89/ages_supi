@@ -34,7 +34,6 @@ class ProductTemplate(models.Model):
             rec.url_icon = image_url_1920
 
 
-
 class ProductPartnerCategories(models.Model):
     _name = "product.partner.category"
 
