@@ -383,14 +383,31 @@ class AuthRegisterHome(Home):
             end = start + timedelta(days=6)
             planning_salas_ids = request.env['planning'].search(
                 [('date_start', '=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
-                'planning_salas_ids')
+                'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == int(comuna_id)).filtered(
+                lambda x: x.state == 'prepared').filtered(
+                lambda x: x.auditor_id.id == int(user_id))
             data = []
             salas_append = []
             for planning_salas in planning_salas_ids:
-                if planning_salas.place_id.comuna_id.id == int(comuna_id) and planning_salas.state == 'prepared' \
-                        and planning_salas.auditor_id.id == int(user_id):
+                if planning_salas.planning_id.planograma_id.study_id_naturaleza == '0':
                     for variable in planning_salas.mapped('planning_products_ids').mapped('variable_id'):
                         if variable.tipo_estudio == type:
+                            sala_data = {
+                                'id': planning_salas.place_id.id,
+                                'folio': planning_salas.place_id.folio or '',
+                                'planning_sala_id': planning_salas.id,
+                                'name': planning_salas.place_id.name or '',
+                                'lat': planning_salas.place_id.lat or '',
+                                'long': planning_salas.place_id.long or '',
+                                'address': planning_salas.place_id.address or '',
+                                'image': planning_salas.place_id.url_image or '',
+                            }
+                            if planning_salas.place_id.id not in salas_append:
+                                salas_append.append(planning_salas.place_id.id)
+                                data.append(sala_data)
+                else:
+                    for variable in planning_salas.planning_id.planograma_id.variables_estudios_ids:
+                        if variable.variable_id.tipo_estudio == type:
                             sala_data = {
                                 'id': planning_salas.place_id.id,
                                 'folio': planning_salas.place_id.folio or '',
@@ -408,26 +425,44 @@ class AuthRegisterHome(Home):
             end_final = end + timedelta(days=6)
             planning_salas_ids = request.env['planning'].search(
                 [('date_start', '>=', end_final), ('state', '=', 'ready')]).mapped(
-                'planning_salas_ids')
+                'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == int(comuna_id)).filtered(
+                lambda x: x.state == 'prepared').filtered(
+                lambda x: x.auditor_id.id == int(user_id))
             data_later = []
             salas_append_later = []
+
             for planning_salas in planning_salas_ids:
-                if planning_salas.place_id.comuna_id.id == int(comuna_id) and planning_salas.state == 'prepared' \
-                        and planning_salas.auditor_id.id == int(user_id):
+                if planning_salas.planning_id.planograma_id.study_id_naturaleza == '0':
                     for variable in planning_salas.mapped('planning_products_ids').mapped('variable_id'):
                         if variable.tipo_estudio == type:
                             sala_data = {
                                 'id': planning_salas.place_id.id,
-                                'planning_sala_id': planning_salas.id,
                                 'folio': planning_salas.place_id.folio or '',
+                                'planning_sala_id': planning_salas.id,
                                 'name': planning_salas.place_id.name or '',
                                 'lat': planning_salas.place_id.lat or '',
                                 'long': planning_salas.place_id.long or '',
                                 'address': planning_salas.place_id.address or '',
                                 'image': planning_salas.place_id.url_image or '',
                             }
-                            if planning_salas.place_id.id not in salas_append_later:
-                                salas_append_later.append(planning_salas.place_id.id)
+                            if planning_salas.place_id.id not in salas_append:
+                                salas_append.append(planning_salas.place_id.id)
+                                data.append(sala_data)
+                else:
+                    for variable in planning_salas.planning_id.planograma_id.variables_estudios_ids:
+                        if variable.variable_id.tipo_estudio == type:
+                            sala_data = {
+                                'id': planning_salas.place_id.id,
+                                'folio': planning_salas.place_id.folio or '',
+                                'planning_sala_id': planning_salas.id,
+                                'name': planning_salas.place_id.name or '',
+                                'lat': planning_salas.place_id.lat or '',
+                                'long': planning_salas.place_id.long or '',
+                                'address': planning_salas.place_id.address or '',
+                                'image': planning_salas.place_id.url_image or '',
+                            }
+                            if planning_salas.place_id.id not in salas_append:
+                                salas_append.append(planning_salas.place_id.id)
                                 data_later.append(sala_data)
             try:
                 res = {'hoy': data, 'next': data_later}
