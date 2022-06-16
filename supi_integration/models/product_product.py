@@ -1,12 +1,18 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
+from odoo.exceptions import UserError
 
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
 
     pack = fields.Integer(string="Paquete")
+
+    def unlink(self):
+        if self.id == self.env.ref('supi_integration.product_sala').id:
+            raise UserError("El producto %s no puede ser eliminado porque es una variable del sistema" % self.name)
+        return super(ProductProduct, self).unlink()
 
 
 class ProductTemplate(models.Model):
@@ -26,6 +32,7 @@ class ProductTemplate(models.Model):
         for rec in self:
             image_url_1920 = base_url + '/web/image?' + 'model=product.product&id=' + str(rec.id) + '&field=image_1920'
             rec.url_icon = image_url_1920
+
 
 
 class ProductPartnerCategories(models.Model):

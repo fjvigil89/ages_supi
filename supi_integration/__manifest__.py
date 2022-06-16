@@ -22,6 +22,7 @@
         'views/res_users_view.xml',
         'wizard/wizard_gallery_picture.xml',
         'data/data_secuences.xml',
+        'data/product_product_data.xml',
         'views/res_partner_views.xml',
         'views/product_product_view.xml',
         'views/training_consult_view.xml',
