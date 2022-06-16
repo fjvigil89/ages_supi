@@ -471,6 +471,10 @@ class SalasPlanograma(models.Model):
     def _compute_product_id_domain(self):
         for rec in self:
             print(rec.planograma_id.study_id_naturaleza)
+            if rec.planograma_id.study_id_naturaleza == '3':
+                rec.product_id_domain = json.dumps(
+                    []
+                )
             if rec.planograma_id.study_id_naturaleza == '0':
                 products = self.env['product.product'].search([('categ_id', 'in', self.categories_ids.ids)]).ids
                 rec.product_id_domain = json.dumps(
