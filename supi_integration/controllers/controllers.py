@@ -697,6 +697,74 @@ class AuthRegisterHome(Home):
             )
 
     @http.route(
+        '/api/get_variables_de_salas',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def get_variables_de_salas(self, **params):
+        try:
+            id_sala_planificada = params["id_sala_planificada"]
+            data = []
+
+            sala_planificada = request.env['planning.salas'].search([('id', '=', id_sala_planificada)])
+
+            for variable_estudios in sala_planificada.planning_id.planograma_id.variables_estudios_ids:
+                tipo_dato = ''
+                if variable_estudios.variable_id.tipo_dato == '1':
+                    tipo_dato = "text"
+                if variable_estudios.variable_id.tipo_dato == '2':
+                    tipo_dato = "int"
+                if variable_estudios.variable_id.tipo_dato == '3':
+                    tipo_dato = "double"
+                if variable_estudios.variable_id.tipo_dato == '4':
+                    tipo_dato = "Boolean"
+                if variable_estudios.variable_id.tipo_dato == '5':
+                    tipo_dato = "select"
+                if variable_estudios.variable_id.tipo_dato == '6':
+                    tipo_dato = "Precio"
+                vals = {
+                    "id_variable": variable_estudios.variable_id.id,
+                    "name_variable": variable_estudios.variable_id.name,
+                    "label_visual": variable_estudios.variable_id.label_visual,
+                    "Tipo_Dato": tipo_dato,
+                    "valores_combo": variable_estudios.variable_id.valores_combobox.split(
+                        ',') if variable_estudios.variable_id.valores_combobox else [],
+                    'icono': variable_estudios.variable_id.url_icon,
+                    "xN1": "",
+                    "xN2": "",
+                    "Valor_x_Defecto_target": False,
+                    "Porc_Validación": "",
+                    "Disponibilidad": "",
+                    "Respuesta": "",
+                    "Comentario": "",
+                    "Momento_medición": ""
+                }
+                data.append(vals)
+
+            try:
+                res = {
+                    "variables_de_la_sala": data,
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+    @http.route(
         '/api/get_products_by_categ_id',
         type='http', auth='user', methods=['GET'], csrf=False)
     def get_products_by_categ_id(self, **params):
