@@ -566,84 +566,111 @@ class AuthRegisterHome(Home):
 
             planning_salas_ids = request.env['planning'].search(
                 [('date_start', '<=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
-                'planning_salas_ids')
+                'planning_salas_ids').filtered(lambda x: x.place_id.id == int(place_id)).filtered(
+                lambda x: x.state == 'prepared').filtered(
+                lambda x: x.auditor_id.id == int(user_id))
             data = []
             for planning_salas in planning_salas_ids:
-                if planning_salas.place_id.id == int(place_id) and planning_salas.state == 'prepared' \
-                        and planning_salas.auditor_id.id == int(user_id):
-                    if planning_salas.planning_id.planograma_id.study_id.type == type:
-                        Tipo_estudio = ''
-                        if planning_salas.planning_id.planograma_id.study_id.type == '2':
-                            Tipo_estudio = "Precio"
-                        if planning_salas.planning_id.planograma_id.study_id.type == '3':
-                            Tipo_estudio = "Facing"
-                        if planning_salas.planning_id.planograma_id.study_id.type == '1':
-                            Tipo_estudio = "OSA"
 
-                        if planning_salas.planning_id.planograma_id.study_id.type == '4':
-                            Tipo_estudio = "Equipos de frio"
+                if planning_salas.planning_id.planograma_id.study_id.type == type:
+                    Tipo_estudio = ''
+                    if planning_salas.planning_id.planograma_id.study_id.type == '2':
+                        Tipo_estudio = "Precio"
+                    if planning_salas.planning_id.planograma_id.study_id.type == '3':
+                        Tipo_estudio = "Facing"
+                    if planning_salas.planning_id.planograma_id.study_id.type == '1':
+                        Tipo_estudio = "OSA"
 
-                        if planning_salas.planning_id.planograma_id.study_id.type == '5':
-                            Tipo_estudio = "Exhibitions"
+                    if planning_salas.planning_id.planograma_id.study_id.type == '4':
+                        Tipo_estudio = "Equipos de frio"
 
-                        Naturaleza = ''
+                    if planning_salas.planning_id.planograma_id.study_id.type == '5':
+                        Tipo_estudio = "Exhibitions"
 
-                        if planning_salas.planning_id.planograma_id.study_id.naturaleza == '0':
-                            Naturaleza = "Productos"
+                    Naturaleza = ''
 
-                        if planning_salas.planning_id.planograma_id.study_id.naturaleza == '1':
-                            Naturaleza = "Muebles sin productos"
+                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '0':
+                        Naturaleza = "Productos"
 
-                        if planning_salas.planning_id.planograma_id.study_id.naturaleza == '2':
-                            Naturaleza = "Muebles con productos"
+                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '1':
+                        Naturaleza = "Muebles sin productos"
 
-                        if planning_salas.planning_id.planograma_id.study_id.naturaleza == '3':
-                            Naturaleza = "Salas"
+                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '2':
+                        Naturaleza = "Muebles con productos"
 
-                        variables = []
+                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '3':
+                        Naturaleza = "Salas"
 
+                    variables = []
+
+                    if planning_salas.planning_id.planograma_id.study_id.naturaleza == '0':
                         for variable in planning_salas.mapped('planning_products_ids').mapped('variable_id'):
                             tipo_dato = ''
-                            if variable.tipo_dato == '1':
+                            if variable.variable_id.tipo_dato == '1':
                                 tipo_dato = "text"
-                            if variable.tipo_dato == '2':
+                            if variable.variable_id.tipo_dato == '2':
                                 tipo_dato = "int"
-                            if variable.tipo_dato == '3':
+                            if variable.variable_id.tipo_dato == '3':
                                 tipo_dato = "double"
-                            if variable.tipo_dato == '4':
+                            if variable.variable_id.tipo_dato == '4':
                                 tipo_dato = "Boolean"
-                            if variable.tipo_dato == '5':
+                            if variable.variable_id.tipo_dato == '5':
                                 tipo_dato = "select"
-                            if variable.tipo_dato == '6':
+                            if variable.variable_id.tipo_dato == '6':
                                 tipo_dato = "Precio"
                             vals_val = {
-                                'id_variable': variable.id,
-                                'name_variable': variable.name or '',
-                                'label_visual': variable.label_visual or '',
+                                'id_variable': variable.variable_id.id,
+                                'name_variable': variable.variable_id.name or '',
+                                'label_visual': variable.variable_id.label_visual or '',
                                 'Tipo_Dato': tipo_dato or '',
-                                'valores_combo': variable.valores_combobox.split(
-                                    ',') if variable.valores_combobox else [],
-                                'icono': variable.url_icon,
+                                'valores_combo': variable.variable_id.valores_combobox.split(
+                                    ',') if variable.variable_id.valores_combobox else [],
+                                'icono': variable.variable_id.url_icon,
                             }
                             variables.append(vals_val)
-                        clientes = request.env['res.partner'].search(
-                            [('id', 'in', planning_salas.planning_id.planograma_id.partner_id.ids)])
-                        clientes_name = ''
-                        for client in clientes:
-                            clientes_name += '%s ' % client.name
+                    else:
+                        for variable in planning_salas.planning_id.planograma_id.variables_estudios_ids:
+                            tipo_dato = ''
+                            if variable.variable_id.tipo_dato == '1':
+                                tipo_dato = "text"
+                            if variable.variable_id.tipo_dato == '2':
+                                tipo_dato = "int"
+                            if variable.variable_id.tipo_dato == '3':
+                                tipo_dato = "double"
+                            if variable.variable_id.tipo_dato == '4':
+                                tipo_dato = "Boolean"
+                            if variable.variable_id.tipo_dato == '5':
+                                tipo_dato = "select"
+                            if variable.variable_id.tipo_dato == '6':
+                                tipo_dato = "Precio"
+                            vals_val = {
+                                'id_variable': variable.variable_id.id,
+                                'name_variable': variable.variable_id.name or '',
+                                'label_visual': variable.variable_id.label_visual or '',
+                                'Tipo_Dato': tipo_dato or '',
+                                'valores_combo': variable.variable_id.valores_combobox.split(
+                                    ',') if variable.variable_id.valores_combobox else [],
+                                'icono': variable.variable_id.url_icon,
+                            }
+                            variables.append(vals_val)
+                    clientes = request.env['res.partner'].search(
+                        [('id', 'in', planning_salas.planning_id.planograma_id.partner_id.ids)])
+                    clientes_name = ''
+                    for client in clientes:
+                        clientes_name += '%s ' % client.name
 
-                        vals = {
-                            "estudio_Id": planning_salas.planning_id.planograma_id.study_id.id,
-                            "consecutivo": planning_salas.name,
-                            "Sala_Planificada": planning_salas.id,
-                            "Nombre_Estudio": planning_salas.planning_id.planograma_id.study_id.name,
-                            "Clientes": clientes_name,
-                            "Tipo_estudio": "%s- %s" % (
-                                planning_salas.planning_id.planograma_id.study_id.type, Tipo_estudio),
-                            "Naturaleza_Estudio": Naturaleza,
-                            "Variables": variables
-                        }
-                        data.append(vals)
+                    vals = {
+                        "estudio_Id": planning_salas.planning_id.planograma_id.study_id.id,
+                        "consecutivo": planning_salas.name,
+                        "Sala_Planificada": planning_salas.id,
+                        "Nombre_Estudio": planning_salas.planning_id.planograma_id.study_id.name,
+                        "Clientes": clientes_name,
+                        "Tipo_estudio": "%s- %s" % (
+                            planning_salas.planning_id.planograma_id.study_id.type, Tipo_estudio),
+                        "Naturaleza_Estudio": Naturaleza,
+                        "Variables": variables
+                    }
+                    data.append(vals)
             try:
                 res = {
                     "Lista de Estudios dados la selección": data,  # Cantidad de salas para hoy
