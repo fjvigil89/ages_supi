@@ -164,11 +164,11 @@ class AuthRegisterHome(Home):
             today = self.get_date_by_tz(today)
 
             start = today - timedelta(days=today.weekday())
-            end = today + timedelta(days=6)
+            end = start + timedelta(days=6)
 
             # PARA HOY
             comunas_ids = request.env['planning'].search(
-                [('date_start', '=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
 
             final_data = []
@@ -187,7 +187,7 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
+                    [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == comuna.id).filtered(
                     lambda x: x.auditor_id.id == int(user_id)).filtered(lambda x: x.state == 'prepared')
 
@@ -255,9 +255,9 @@ class AuthRegisterHome(Home):
                     comunas_append.append(comuna.id)
                     data_today.append(comuna_data)
 
-            end_final = end + timedelta(days=7)
+            # end_final = end + timedelta(days=7)
             comunas_ids = request.env['planning'].search(
-                [('date_start', '>=', end_final), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>=', end), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
             data_later = []
             comunas_append_later = []
@@ -274,7 +274,7 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '>=', end_final), ('state', '=', 'ready')]).mapped(
+                    [('date_start', '>=', end), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == comuna.id).filtered(
                     lambda x: x.auditor_id.id == int(user_id)).filtered(lambda x: x.state == 'prepared')
 
@@ -382,7 +382,7 @@ class AuthRegisterHome(Home):
             start = today - timedelta(days=today.weekday())
             end = start + timedelta(days=6)
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == int(comuna_id)).filtered(
                 lambda x: x.state == 'prepared').filtered(
                 lambda x: x.auditor_id.id == int(user_id))
@@ -422,14 +422,12 @@ class AuthRegisterHome(Home):
                                 salas_append.append(planning_salas.place_id.id)
                                 data.append(sala_data)
 
-            end_final = end + timedelta(days=6)
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '>=', end_final), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>=', end), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == int(comuna_id)).filtered(
                 lambda x: x.state == 'prepared').filtered(
                 lambda x: x.auditor_id.id == int(user_id))
             data_later = []
-            salas_append_later = []
 
             for planning_salas in planning_salas_ids:
                 if planning_salas.planning_id.planograma_id.study_id_naturaleza == '0':
