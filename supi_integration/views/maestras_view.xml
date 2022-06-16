@@ -568,8 +568,8 @@
                         </div>
                         <group>
                             <group>
-                                <field name="tipo_estudio" required="0"
-                                       help="Tipo de estudio importado de los excel de maestras, pero NO se usara en el sistema para las peticiones de la aplicacion movil"/>
+<!--                                <field name="tipo_estudio" required="0"-->
+<!--                                       help="Tipo de estudio importado de los excel de maestras, pero NO se usara en el sistema para las peticiones de la aplicacion movil"/>-->
                                 <field name="type" required="1"/>
                                 <field name="frecuency" required="1"/>
                                 <field name="naturaleza" required="1"/>
@@ -586,7 +586,7 @@
             <field name="arch" type="xml">
                 <tree string="Studies">
                     <field name="name"/>
-                    <field name="tipo_estudio"/>
+<!--                    <field name="tipo_estudio"/>-->
                     <field name="frecuency"/>
                     <field name="naturaleza"/>
                 </tree>
@@ -599,7 +599,7 @@
             <field name="arch" type="xml">
                 <search string="Studies">
                     <field name="name"/>
-                    <field name="tipo_estudio"/>
+<!--                    <field name="tipo_estudio"/>-->
                     <field name="frecuency"/>
                     <field name="naturaleza"/>
                 </search>

@@ -324,7 +324,7 @@ class AuthRegisterHome(Home):
             end = today + timedelta(days=6)
 
             comunas_ids = request.env['planning'].search(
-                [('date_start', '<=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
+                [('date_start', '=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
 
             final_data = []
@@ -343,55 +343,56 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '<=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
-                    'planning_salas_ids')
+                    [('date_start', '=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
+                    'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == comuna.id).filtered(
+                    lambda x: x.auditor_id.id == int(user_id)).filtered(lambda x: x.state == 'prepared')
 
-                for planning_salas in planning_salas_ids:
-                    if planning_salas.place_id.comuna_id.id == comuna.id and planning_salas.state == 'prepared' \
-                            and planning_salas.auditor_id.id == int(user_id):
-                        for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
-                            if variable.tipo_estudio == '4':
-                                # cold_equipment
-                                red = True
-                                count_red += 1
-                            if variable.tipo_estudio == '5':
-                                # exhibitions
-                                blue = True
-                                count_blue += 1
-                            if variable.tipo_estudio == '2':
-                                # price
-                                yellow = True
-                                count_yellow += 1
-                            if variable.tipo_estudio == '1':
-                                # osa
-                                green = True
-                                count_green += 1
-                            if variable.tipo_estudio == '3':
-                                # facing
-                                brown = True
-                                count_brown += 1
+                planning_products = request.env['planning.product'].search(
+                    [('planning_salas_id', 'in', planning_salas_ids.ids)])
 
-                        comuna_data = {
-                            'comuna_id': comuna.id,
-                            "nombre_comuna": comuna.name,
-                            "ROJO": red,
-                            "count_rojo": count_red,
-                            "AZUL": blue,
-                            "count_azul": count_blue,
-                            "AMARILLO": yellow,
-                            "count_amarillo": count_yellow,
-                            "VERDE": green,
-                            "count_verde": count_green,
-                            "CARMELITA": brown,
-                            "count_carmelita": count_brown,
-                        }
-                        if comuna.id not in comunas_append:
-                            comunas_append.append(comuna.id)
-                            data_today.append(comuna_data)
+                for planning_product in planning_products:
+                    if planning_product.variable_id.tipo_estudio == '4':
+                        # cold_equipment
+                        red = True
+                        count_red += 1
+                    if planning_product.variable_id.tipo_estudio == '5':
+                        # exhibitions
+                        blue = True
+                        count_blue += 1
+                    if planning_product.variable_id.tipo_estudio == '2':
+                        # price
+                        yellow = True
+                        count_yellow += 1
+                    if planning_product.variable_id.tipo_estudio == '1':
+                        # osa
+                        green = True
+                        count_green += 1
+                    if planning_product.variable_id.tipo_estudio == '3':
+                        # facing
+                        brown = True
+                        count_brown += 1
+
+                comuna_data = {
+                    'comuna_id': comuna.id,
+                    "nombre_comuna": comuna.name,
+                    "ROJO": red,
+                    "count_rojo": count_red,
+                    "AZUL": blue,
+                    "count_azul": count_blue,
+                    "AMARILLO": yellow,
+                    "count_amarillo": count_yellow,
+                    "VERDE": green,
+                    "count_verde": count_green,
+                    "CARMELITA": brown,
+                    "count_carmelita": count_brown,
+                }
+                if comuna.id not in comunas_append:
+                    comunas_append.append(comuna.id)
+                    data_today.append(comuna_data)
 
             end_final = end + timedelta(days=7)
             comunas_ids = request.env['planning'].search(
-                [('date_start', '<=', end_final), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>=', end_final), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
             data_later = []
             comunas_append_later = []
@@ -408,52 +409,52 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '<=', end_final), ('state', '=', 'ready')]).mapped(
-                    'planning_salas_ids')
+                    [('date_start', '>=', end_final), ('state', '=', 'ready')]).mapped(
+                    'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == comuna.id).filtered(
+                    lambda x: x.auditor_id.id == int(user_id)).filtered(lambda x: x.state == 'prepared')
 
-                for planning_salas in planning_salas_ids:
-                    if planning_salas.place_id.comuna_id.id == comuna.id and planning_salas.state == 'prepared' \
-                            and planning_salas.auditor_id.id == int(user_id):
-                        for variable in planning_salas.mapped('planning_products_ids').mapped('variable_ids'):
-                            if variable.tipo_estudio == '0':
-                                # cold_equipment
-                                red = True
-                                count_red += 1
-                            if variable.tipo_estudio == '5':
-                                # exhibitions
-                                blue = True
-                                count_blue += 1
-                            if variable.tipo_estudio == '2':
-                                # price
-                                yellow = True
-                                count_yellow += 1
-                            if variable.tipo_estudio == '1':
-                                # osa
-                                green = True
-                                count_green += 1
-                            if variable.tipo_estudio == '3':
-                                # facing
-                                brown = True
-                                count_brown += 1
+                planning_products = request.env['planning.product'].search(
+                    [('planning_salas_id', 'in', planning_salas_ids.ids)])
 
-                        comuna_data = {
-                            'comuna_id': comuna.id,
-                            "nombre_comuna": comuna.name,
-                            "ROJO": red,
-                            "count_rojo": count_red,
-                            "AZUL": blue,
-                            "count_azul": count_blue,
-                            "AMARILLO": yellow,
-                            "count_amarillo": count_yellow,
-                            "VERDE": green,
-                            "count_verde": count_green,
-                            "CARMELITA": brown,
-                            "count_carmelita": count_brown,
-                        }
+                for planning_product in planning_products:
+                    if planning_product.variable_id.tipo_estudio == '4':
+                        # cold_equipment
+                        red = True
+                        count_red += 1
+                    if planning_product.variable_id.tipo_estudio == '5':
+                        # exhibitions
+                        blue = True
+                        count_blue += 1
+                    if planning_product.variable_id.tipo_estudio == '2':
+                        # price
+                        yellow = True
+                        count_yellow += 1
+                    if planning_product.variable_id.tipo_estudio == '1':
+                        # osa
+                        green = True
+                        count_green += 1
+                    if planning_product.variable_id.tipo_estudio == '3':
+                        # facing
+                        brown = True
+                        count_brown += 1
 
-                        if comuna.id not in comunas_append_later:
-                            comunas_append_later.append(comuna.id)
-                            data_later.append(comuna_data)
+                comuna_data = {
+                    'comuna_id': comuna.id,
+                    "nombre_comuna": comuna.name,
+                    "ROJO": red,
+                    "count_rojo": count_red,
+                    "AZUL": blue,
+                    "count_azul": count_blue,
+                    "AMARILLO": yellow,
+                    "count_amarillo": count_yellow,
+                    "VERDE": green,
+                    "count_verde": count_green,
+                    "CARMELITA": brown,
+                    "count_carmelita": count_brown,
+                }
+                if comuna.id not in comunas_append_later:
+                    comunas_append_later.append(comuna.id)
+                    data_later.append(comuna_data)
 
             try:
                 res = {
@@ -496,7 +497,7 @@ class AuthRegisterHome(Home):
             start = today - timedelta(days=today.weekday())
             end = start + timedelta(days=6)
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '<=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
+                [('date_start', '=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids')
             data = []
             salas_append = []
@@ -521,7 +522,7 @@ class AuthRegisterHome(Home):
 
             end_final = end + timedelta(days=6)
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '>=', start), ('date_start', '<=', end_final), ('state', '=', 'ready')]).mapped(
+                [('date_start', '>=', end_final), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids')
             data_later = []
             salas_append_later = []
@@ -700,7 +701,8 @@ class AuthRegisterHome(Home):
                                 'name_variable': variable.name or '',
                                 'label_visual': variable.label_visual or '',
                                 'Tipo_Dato': tipo_dato or '',
-                                'valores_combo': variable.valores_combobox.split(',') if variable.valores_combobox else [],
+                                'valores_combo': variable.valores_combobox.split(
+                                    ',') if variable.valores_combobox else [],
                                 'icono': variable.url_icon,
                             }
                             variables.append(vals_val)
