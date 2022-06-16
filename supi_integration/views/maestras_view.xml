@@ -568,8 +568,8 @@
                         </div>
                         <group>
                             <group>
-<!--                                <field name="tipo_estudio" required="0"-->
-<!--                                       help="Tipo de estudio importado de los excel de maestras, pero NO se usara en el sistema para las peticiones de la aplicacion movil"/>-->
+                                <!--                                <field name="tipo_estudio" required="0"-->
+                                <!--                                       help="Tipo de estudio importado de los excel de maestras, pero NO se usara en el sistema para las peticiones de la aplicacion movil"/>-->
                                 <field name="type" required="1"/>
                                 <field name="frecuency" required="1"/>
                                 <field name="naturaleza" required="1"/>
@@ -586,7 +586,7 @@
             <field name="arch" type="xml">
                 <tree string="Studies">
                     <field name="name"/>
-<!--                    <field name="tipo_estudio"/>-->
+                    <!--                    <field name="tipo_estudio"/>-->
                     <field name="frecuency"/>
                     <field name="naturaleza"/>
                 </tree>
@@ -599,7 +599,7 @@
             <field name="arch" type="xml">
                 <search string="Studies">
                     <field name="name"/>
-<!--                    <field name="tipo_estudio"/>-->
+                    <!--                    <field name="tipo_estudio"/>-->
                     <field name="frecuency"/>
                     <field name="naturaleza"/>
                 </search>
@@ -781,8 +781,8 @@
                     <field name="name"/>
                     <field name="user_id"/>
                     <field name="planograma_id" optional="hide"/>
-                    <field name="date_start"/>
-                    <field name="date_end"/>
+                    <field name="date_start" string="Fecha inicio"/>
+                    <field name="date_end" string="Fecha fin"/>
                     <field name="state"/>
                     <field name="name" optional="hide"/>
                     <field name="channel" optional="hide"/>
@@ -897,6 +897,7 @@
                 <tree string="Planning Studies" decoration-success="state == 'done'"
                       decoration-danger="state == 'no_done'"
                       decoration-info="state == 'prepared'">
+                    <field name="name" string="Visita"/>
                     <field name="place_id"/>
                     <field name="planning_id"/>
                     <field name="auditor_id"/>
@@ -919,7 +920,7 @@
             <field name="model">planning.salas</field>
             <field name="arch" type="xml">
                 <search string="Salas planificadas">
-                    <field name="name"/>
+                    <field name="name" string="Visita"/>
                     <field name="place_id"/>
                     <field name="planning_id"/>
                     <field name="auditor_id"/>
@@ -958,6 +959,7 @@
                         <group>
                             <group>
                                 <field name="planning_salas_id" required="1"/>
+                                <field name="name"/>
                                 <field name="product_id"/>
                                 <field name="estado" string="Estado"/>
                                 <field name="product_ids" widget="many2many_tags"/>

@@ -258,6 +258,7 @@ class PlanningProducts(models.Model):
     _name = "planning.product"
     _description = "Productos planificados"
 
+    name = fields.Char("Visita", related='planning_salas_id.name')
     planning_salas_id = fields.Many2one('planning.salas', string="Sala planificada")
     product_id = fields.Many2one('product.product', string="Producto")
     product_ids = fields.Many2many('product.product')
