@@ -403,7 +403,8 @@
                         </div>
                         <group>
                             <group>
-                                 <field name="tipo_estudio" required="1" help="Tipo de estudio utilizado para las peticiones de la app"/>
+                                <field name="tipo_estudio" required="1"
+                                       help="Tipo de estudio utilizado para las peticiones de la app"/>
                             </group>
                             <group>
                                 <field name="valores_combobox"/>
@@ -1208,6 +1209,10 @@
                     <field name="study_id"/>
                     <field name="partner_id"/>
                     <field name="user_id"/>
+                    <field name="name" optional="hide"/>
+                    <field name="description" optional="hide"/>
+                    <field name="study_id_naturaleza" optional="hide"/>
+                    <field name="study_id_type" optional="hide"/>
                 </tree>
             </field>
         </record>
