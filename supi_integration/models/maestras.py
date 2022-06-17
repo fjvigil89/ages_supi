@@ -196,7 +196,7 @@ class Planning(models.Model):
     _name = "planning"
     _description = "Planificacion"
 
-    name = fields.Char(string="Cadena")
+    name = fields.Char(string="Consecutivo")
     channel = fields.Char(string="Canal")
     planograma_id = fields.Many2one("planograma", string="Planograma")
     date_start = fields.Date('Date start')
