@@ -1009,6 +1009,93 @@ class AuthRegisterHome(Home):
             )
 
     # TODOS LOS ESTUDIOS DEL LUNES AL VIERNES!
+    @http.route(
+        '/api/muebles_variables',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def muebles_variables(self, **params):
+        try:
+            id_sala_planificada = params["id_sala_planificada"]
+            data_variables = []
+
+            sala_planificada = request.env['planning.salas'].search([('id', '=', id_sala_planificada)])
+
+            for variable_estudios in sala_planificada.planning_id.planograma_id.variables_estudios_ids:
+                tipo_dato = ''
+                if variable_estudios.variable_id.tipo_dato == '1':
+                    tipo_dato = "text"
+                if variable_estudios.variable_id.tipo_dato == '2':
+                    tipo_dato = "int"
+                if variable_estudios.variable_id.tipo_dato == '3':
+                    tipo_dato = "double"
+                if variable_estudios.variable_id.tipo_dato == '4':
+                    tipo_dato = "Boolean"
+                if variable_estudios.variable_id.tipo_dato == '5':
+                    tipo_dato = "select"
+                if variable_estudios.variable_id.tipo_dato == '6':
+                    tipo_dato = "Precio"
+                vals = {
+                    "id_variable": variable_estudios.variable_id.id,
+                    "name_variable": variable_estudios.variable_id.name,
+                    "label_visual": variable_estudios.variable_id.label_visual,
+                    "Tipo_Dato": tipo_dato,
+                    "valores_combo": variable_estudios.variable_id.valores_combobox.split(
+                        ',') if variable_estudios.variable_id.valores_combobox else [],
+                    'icono': variable_estudios.variable_id.url_icon,
+                    "xN1": "",
+                    "xN2": "",
+                    "Valor_x_Defecto_target": "",
+                    "Porc_Validación": "",
+                    "Disponibilidad": "",
+                    "Respuesta": "",
+                    "Comentario": "",
+                    "Momento_medición": ""
+                }
+                data_variables.append(vals)
+
+            muebles = request.env['product.product'].search([('can_be_mueble', '=', True)])
+
+            muebles_data = []
+
+            for mueble in muebles:
+                vals = {
+                    "Id_Producto": mueble.id,
+                    "Nombre": mueble.name,
+                    "Is_Mueble": mueble.can_be_mueble
+                }
+                muebles_data.append(vals)
+
+            try:
+
+                res = {
+                    "Nuevo_Mueble": {
+                        "Combo_Muebles": muebles_data,
+                        "Tipo_Nuevo_Mueble_escogido": "",
+                        "Cant_X": 2,
+                        "Cant Y": 1,
+                        "Result_Variables_del_nuevo_mueble": data_variables,
+                        "Fotos medidas": []
+                    }
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
 
     @http.route(
         '/api/update_planogramas/',

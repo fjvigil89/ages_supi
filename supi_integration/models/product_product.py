@@ -10,8 +10,14 @@ class ProductProduct(models.Model):
     pack = fields.Integer(string="Paquete")
 
     def unlink(self):
-        if self.id == self.env.ref('supi_integration.product_sala').id:
+        if self.id in [self.env.ref('supi_integration.product_sala').id,
+                       self.env.ref('supi_integration.CheckOUT').id,
+                       self.env.ref('supi_integration.Isla').id,
+                       self.env.ref('supi_integration.Gondola').id,
+                       self.env.ref('supi_integration.EQFRIO').id,
+                       ]:
             raise UserError("El producto %s no puede ser eliminado porque es una variable del sistema" % self.name)
+
         return super(ProductProduct, self).unlink()
 
 
