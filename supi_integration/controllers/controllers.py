@@ -1100,7 +1100,7 @@ class AuthRegisterHome(Home):
     @http.route(
         '/api/muebles_variables',
         type='json', auth='user', methods=['POST'], csrf=False)
-    def muebles_variables(self, **params):
+    def post_muebles_variables(self, **params):
         try:
 
             data = params.get("Nuevo_Mueble")
