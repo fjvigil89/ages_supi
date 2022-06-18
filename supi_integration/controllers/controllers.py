@@ -1008,7 +1008,6 @@ class AuthRegisterHome(Home):
                 mimetype='application/json'
             )
 
-    # TODOS LOS ESTUDIOS DEL LUNES AL VIERNES!
     @http.route(
         '/api/muebles_variables',
         type='http', auth='user', methods=['GET'], csrf=False)
@@ -1068,10 +1067,11 @@ class AuthRegisterHome(Home):
 
                 res = {
                     "Nuevo_Mueble": {
+                        "id_sala_planificada": int(id_sala_planificada),
                         "Combo_Muebles": muebles_data,
                         "Tipo_Nuevo_Mueble_escogido": "",
-                        "Cant_X": 2,
-                        "Cant Y": 1,
+                        "Cant_X": "",
+                        "Cant_Y": "",
                         "Result_Variables_del_nuevo_mueble": data_variables,
                         "Fotos medidas": []
                     }
@@ -1081,6 +1081,56 @@ class AuthRegisterHome(Home):
                     status=200,
                     mimetype='application/json'
                 )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+    @http.route(
+        '/api/muebles_variables',
+        type='json', auth='user', methods=['POST'], csrf=False)
+    def muebles_variables(self, **params):
+        try:
+
+            data = params.get("Nuevo_Mueble")
+            id_sala_planificada = data.get("id_sala_planificada")
+            product_id = data.get("Tipo_Nuevo_Mueble_escogido")
+            cantx = data.get("Cant_X")
+            canty = data.get("Cant_Y")
+            variables = data.get("Result_Variables_del_nuevo_mueble")
+            planning_product = False
+            for variable in variables:
+                vals = {
+                    'product_id': int(product_id),
+                    "variable_id": variable.get("id_variable"),
+                    "planning_salas_id": int(id_sala_planificada),
+                    "respuesta": variable.get("Respuesta"),
+                    "comment": variable.get("Comentario"),
+                    "disponibilidad": variable.get("Disponibilidad"),
+                    "validation_perc": variable.get("Porc_Validación"),
+                    # "date_start": variable.get("Momento_medición"),
+                    "posicion_x": cantx,
+                    "posicion_y": canty,
+                }
+                planning_product = request.env['planning.product'].create(vals)
+
+            try:
+
+                # res = {
+                #     "Medicion": Serializer(planning_product, '{id,product_id{id,name}}').data,
+                # }
+                return Serializer(planning_product, '{id,product_id{id,name}}').data
             except (SyntaxError, QueryFormatError) as e:
                 res = error_response(e, e.msg)
                 return http.Response(
