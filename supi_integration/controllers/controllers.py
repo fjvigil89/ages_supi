@@ -795,14 +795,20 @@ class AuthRegisterHome(Home):
             for variable in planning_sala.planning_id.planograma_id.variables_estudios_ids:
                 variables.append(variable.variable_id)
             for var_product in variables:
-                vals = {
-                    "product_id": product.id,
-                    "variable_id": var_product.id,
-                    "planning_salas_id": int(sala_planificada),
-                    "planogramado": False,
-                    "name": planning_sala.name,
-                }
-                request.env['planning.product'].create(vals)
+                medicion = request.env['planning.product'].search(
+                    [('product_id', '=', product.id), ('variable_id', '=', var_product.id),
+                     ('planning_salas_id', '=', int(sala_planificada))])
+                if medicion:
+                    pass
+                else:
+                    vals = {
+                        "product_id": product.id,
+                        "variable_id": var_product.id,
+                        "planning_salas_id": int(sala_planificada),
+                        "planogramado": False,
+                        "name": planning_sala.name,
+                    }
+                    request.env['planning.product'].create(vals)
 
             planning_products_variables = request.env['planning.product'].search(
                 [('product_id', '=', product.id), ('planning_salas_id', '=', int(sala_planificada))]).mapped(
@@ -1118,28 +1124,44 @@ class AuthRegisterHome(Home):
             variables = data.get("Result_Variables_del_nuevo_mueble")
             planning_product = False
             for variable in variables:
-                vals = {
-                    'product_id': int(product_id),
-                    "variable_id": variable.get("id_variable"),
-                    "planning_salas_id": int(id_sala_planificada),
-                    "respuesta": variable.get("Respuesta"),
-                    "comment": variable.get("Comentario"),
-                    "disponibilidad": variable.get("Disponibilidad"),
-                    "validation_perc": variable.get("Porc_Validación"),
-                    # "date_start": variable.get("Momento_medición"),
-                    "posicion_x": cantx,
-                    "xN1": variable.get("xN1"),
-                    "xN2": variable.get("xN2"),
-                    "posicion_y": canty,
-                }
-                planning_product = request.env['planning.product'].create(vals)
+                medicion = request.env['planning.product'].search(
+                    [('product_id', '=', int(product_id)), ('variable_id', '=', variable.get("id_variable")),
+                     ('planning_salas_id', '=', int(id_sala_planificada))])
+                if medicion:
+                    vals = {
+                        'product_id': int(product_id),
+                        "variable_id": variable.get("id_variable"),
+                        "planning_salas_id": int(id_sala_planificada),
+                        "respuesta": variable.get("Respuesta"),
+                        "comment": variable.get("Comentario"),
+                        "disponibilidad": variable.get("Disponibilidad"),
+                        "validation_perc": variable.get("Porc_Validación"),
+                        # "date_start": variable.get("Momento_medición"),
+                        "posicion_x": cantx,
+                        "xN1": variable.get("xN1"),
+                        "xN2": variable.get("xN2"),
+                        "posicion_y": canty,
+                    }
+                    medicion.write(vals)
+                else:
+                    vals = {
+                        'product_id': int(product_id),
+                        "variable_id": variable.get("id_variable"),
+                        "planning_salas_id": int(id_sala_planificada),
+                        "respuesta": variable.get("Respuesta"),
+                        "comment": variable.get("Comentario"),
+                        "disponibilidad": variable.get("Disponibilidad"),
+                        "validation_perc": variable.get("Porc_Validación"),
+                        # "date_start": variable.get("Momento_medición"),
+                        "posicion_x": cantx,
+                        "xN1": variable.get("xN1"),
+                        "xN2": variable.get("xN2"),
+                        "posicion_y": canty,
+                    }
+                    planning_product = request.env['planning.product'].create(vals)
 
             try:
-
-                # res = {
-                #     "Medicion": Serializer(planning_product, '{id,product_id{id,name}}').data,
-                # }
-                return Serializer(planning_product, '{id,product_id{id,name}}').data
+                return True
             except (SyntaxError, QueryFormatError) as e:
                 res = error_response(e, e.msg)
                 return http.Response(
@@ -1166,19 +1188,39 @@ class AuthRegisterHome(Home):
             for variable in data:
                 product = request.env['product.product'].search(
                     [('default_code', '=', 'SALA')], limit=1).id
-                vals = {
-                    'product_id': product,
-                    "variable_id": variable.get('id_variable'),
-                    "planning_salas_id": variable.get('id_sala_planificada'),
-                    "respuesta": variable.get("Respuesta"),
-                    "comment": variable.get("Comentario"),
-                    "disponibilidad": variable.get("Disponibilidad"),
-                    "validation_perc": variable.get("Porc_Validación"),
-                    "xN1": variable.get("xN1"),
-                    "xN2": variable.get("xN2"),
-                    # "date_start": variable.get("Momento_medición"),
-                }
-                planning_product = request.env['planning.product'].create(vals)
+
+                medicion = request.env['planning.product'].search(
+                    [('product_id', '=', product), ('variable_id', '=', variable.get('id_variable')),
+                     ('planning_salas_id', '=', variable.get('id_sala_planificada'))])
+
+                if medicion:
+                    vals = {
+                        'product_id': product,
+                        "variable_id": variable.get('id_variable'),
+                        "planning_salas_id": variable.get('id_sala_planificada'),
+                        "respuesta": variable.get("Respuesta"),
+                        "comment": variable.get("Comentario"),
+                        "disponibilidad": variable.get("Disponibilidad"),
+                        "validation_perc": variable.get("Porc_Validación"),
+                        "xN1": variable.get("xN1"),
+                        "xN2": variable.get("xN2"),
+                        # "date_start": variable.get("Momento_medición"),
+                    }
+                    medicion.write(vals)
+                else:
+                    vals = {
+                        'product_id': product,
+                        "variable_id": variable.get('id_variable'),
+                        "planning_salas_id": variable.get('id_sala_planificada'),
+                        "respuesta": variable.get("Respuesta"),
+                        "comment": variable.get("Comentario"),
+                        "disponibilidad": variable.get("Disponibilidad"),
+                        "validation_perc": variable.get("Porc_Validación"),
+                        "xN1": variable.get("xN1"),
+                        "xN2": variable.get("xN2"),
+                        # "date_start": variable.get("Momento_medición"),
+                    }
+                    request.env['planning.product'].create(vals)
             return True
         except KeyError as e:
             msg = "Wrong values"
@@ -1234,28 +1276,46 @@ class AuthRegisterHome(Home):
                 planning_sala = data.get('planning_place')
                 auditor = data.get('user_id')
                 for var in data.get('Variables'):
-                    vals = {
-                        'product_id': int(product_id),
-                        "variable_id": int(var.get('id_variable')),
-                        "planning_salas_id": int(planning_sala),
-                        "respuesta": var.get('Respuesta'),
-                        "comment": var.get('Respuesta'),
-                        "disponibilidad": var.get('Disponibilidad'),
-                        "validation_perc": var.get('Porc_Validación'),
-                        "xN1": var.get('xN1'),
-                        "xN2": var.get('xN2'),
-                        # "date_start": variable.get("Momento_medición"),
-                    }
-
-                    study_id = request.env['planning.product'].create(vals)
-
-                    images = data.get('Fotos medidas')
-                    for image in images:
+                    medicion = request.env['planning.product'].search(
+                        [('product_id', '=', int(product_id)), ('variable_id', '=', int(var.get('id_variable'))),
+                         ('planning_salas_id', '=', int(planning_sala))])
+                    if medicion:
                         vals = {
-                            'planning_product_id': study_id.id,
-                            "image": image
+                            'product_id': int(product_id),
+                            "variable_id": int(var.get('id_variable')),
+                            "planning_salas_id": int(planning_sala),
+                            "respuesta": var.get('Respuesta'),
+                            "comment": var.get('Respuesta'),
+                            "disponibilidad": var.get('Disponibilidad'),
+                            "validation_perc": var.get('Porc_Validación'),
+                            "xN1": var.get('xN1'),
+                            "xN2": var.get('xN2'),
+                            # "date_start": variable.get("Momento_medición"),
                         }
-                        request.env['photo.planning.product'].create(vals)
+                        medicion.write(vals)
+
+                    else:
+                        vals = {
+                            'product_id': int(product_id),
+                            "variable_id": int(var.get('id_variable')),
+                            "planning_salas_id": int(planning_sala),
+                            "respuesta": var.get('Respuesta'),
+                            "comment": var.get('Respuesta'),
+                            "disponibilidad": var.get('Disponibilidad'),
+                            "validation_perc": var.get('Porc_Validación'),
+                            "xN1": var.get('xN1'),
+                            "xN2": var.get('xN2'),
+                            # "date_start": variable.get("Momento_medición"),
+                        }
+                        study_id = request.env['planning.product'].create(vals)
+
+                        images = data.get('Fotos medidas')
+                        for image in images:
+                            vals = {
+                                'planning_product_id': study_id.id,
+                                "image": image
+                            }
+                            request.env['photo.planning.product'].create(vals)
 
             return "updated"
         except Exception as e:
