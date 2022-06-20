@@ -606,11 +606,11 @@ class AuthRegisterHome(Home):
                             tipo_dato = ''
                             if variable.tipo_dato == '1':
                                 tipo_dato = "text"
-                            if variable.tipo_dato  == '2':
+                            if variable.tipo_dato == '2':
                                 tipo_dato = "int"
                             if variable.tipo_dato == '3':
                                 tipo_dato = "double"
-                            if variable.tipo_dato  == '4':
+                            if variable.tipo_dato == '4':
                                 tipo_dato = "Boolean"
                             if variable.tipo_dato == '5':
                                 tipo_dato = "select"
@@ -624,6 +624,9 @@ class AuthRegisterHome(Home):
                                 'valores_combo': variable.valores_combobox.split(
                                     ',') if variable.valores_combobox else [],
                                 'icono': variable.url_icon,
+                                "xN1": variable.variable_id.xN1,
+                                "xN2": variable.variable_id.xN2,
+                                "valor_x_defecto": variable.variable_id.valor_x_defecto,
                             }
                             variables.append(vals_val)
                     else:
@@ -649,6 +652,9 @@ class AuthRegisterHome(Home):
                                 'valores_combo': variable.variable_id.valores_combobox.split(
                                     ',') if variable.variable_id.valores_combobox else [],
                                 'icono': variable.variable_id.url_icon,
+                                "xN1": variable.variable_id.xN1,
+                                "xN2": variable.variable_id.xN2,
+                                "valor_x_defecto": variable.variable_id.valor_x_defecto,
                             }
                             variables.append(vals_val)
                     clientes = request.env['res.partner'].search(
@@ -727,9 +733,9 @@ class AuthRegisterHome(Home):
                     "valores_combo": variable_estudios.variable_id.valores_combobox.split(
                         ',') if variable_estudios.variable_id.valores_combobox else [],
                     'icono': variable_estudios.variable_id.url_icon,
-                    "xN1": "",
-                    "xN2": "",
-                    "Valor_x_Defecto_target": False,
+                     "xN1": variable_estudios.variable_id.xN1,
+                    "xN2": variable_estudios.variable_id.xN2,
+                    "Valor_x_Defecto_target": variable_estudios.variable_id.valor_x_defecto,
                     "Porc_Validación": "",
                     "Disponibilidad": "",
                     "Respuesta": "",
@@ -823,9 +829,9 @@ class AuthRegisterHome(Home):
                     "Tipo_Dato": tipo_dato,
                     "valores_combo": planning_products_variable.valores_combobox,
                     "ícono": planning_products_variable.url_icon,
-                    "xN1": "",
-                    "xN2": "",
-                    "Valor_x_Defecto_target": "",
+                    "xN1": planning_products_variable.xN1,
+                    "xN2": planning_products_variable.xN2,
+                    "Valor_x_Defecto_target": planning_products_variable.valor_x_defecto,
                     "Porc_Validación": "",
                     "Disponibilidad": "",
                     "Respuesta": "",
@@ -912,9 +918,9 @@ class AuthRegisterHome(Home):
                         'valores_combo': product.variable_id.valores_combobox.split(
                             ',') if product.variable_id.valores_combobox else [],
                         "ícono": product.variable_id.url_icon,
-                        "xN1": "",
-                        "xN2": "",
-                        "Valor_x_Defecto_target": "",
+                        "xN1": product.variable_id.xN1,
+                        "xN2": product.variable_id.xN2,
+                        "Valor_x_Defecto_target": product.variable_id.valor_x_defecto,
                         "Porc_Validación": "",
                         "Disponibilidad": "",
                         "Respuesta": "",
@@ -1041,9 +1047,9 @@ class AuthRegisterHome(Home):
                     "valores_combo": variable_estudios.variable_id.valores_combobox.split(
                         ',') if variable_estudios.variable_id.valores_combobox else [],
                     'icono': variable_estudios.variable_id.url_icon,
-                    "xN1": "",
-                    "xN2": "",
-                    "Valor_x_Defecto_target": "",
+                    "xN1": variable_estudios.variable_id.xN1,
+                    "xN2": variable_estudios.variable_id.xN2,
+                    "Valor_x_Defecto_target": variable_estudios.variable_id.valor_x_defecto,
                     "Porc_Validación": "",
                     "Disponibilidad": "",
                     "Respuesta": "",

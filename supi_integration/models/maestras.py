@@ -106,6 +106,10 @@ class Variables(models.Model):
     icon = fields.Binary(string="Icono")
     study_id = fields.Many2one("study", string="Estudio")
     url_icon = fields.Char(string="Url icono", compute='compute_url_icon')
+    xN1 = fields.Integer(string="xN1")
+    xN2 = fields.Integer(string="xN2")
+    is_automatic = fields.Boolean(default=False, string="Es automatica?")
+    valor_x_defecto = fields.Char(string="Valor por defecto")
 
     @api.depends('icon')
     def compute_url_icon(self):
