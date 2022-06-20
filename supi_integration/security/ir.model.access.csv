@@ -28,4 +28,4 @@ access_supi_product_partner_category,supi_integration.product.partner.category,m
 access_product_product_public,product.product.public,product.model_product_product,,1,1,1,1
 access_product_template_public,product.template.public,product.model_product_template,,1,1,1,1
 access_product_category_public,product.category.public,product.model_product_category,,1,1,1,1
-access_photo_medition,photo.medition,supi_integration.model_photo_medition,,1,1,1,1
+access_photo_planning_product,photo.planning.product,supi_integration.model_photo_planning_product,,1,1,1,1

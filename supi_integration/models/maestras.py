@@ -263,6 +263,7 @@ class PlanningProducts(models.Model):
     _description = "Productos planificados"
 
     name = fields.Char("Visita", related='planning_salas_id.name')
+    auditor = fields.Many2one('res.users', string="Auditor")
     planning_salas_id = fields.Many2one('planning.salas', string="Sala planificada")
     product_id = fields.Many2one('product.product', string="Producto")
     product_ids = fields.Many2many('product.product')
@@ -289,6 +290,7 @@ class PlanningProducts(models.Model):
          ('no_aplica', 'No Aplica')],
         string='Estado', default='por_evaluar')
     product_padre_id = fields.Many2one('product.product', string="Producto padre")
+    images_ids = fields.One2many('photo.planning.product', 'planning_product_id')
 
     def name_get(self):
         result = []
@@ -325,7 +327,7 @@ class PlanningStudies(models.Model):
     posicion_y = fields.Char("Posicion Y del producto")
     date_start = fields.Date(string='Momento de medicion')
     product_padre_id = fields.Many2one('product.product', string="Producto padre")
-    images_ids = fields.One2many('photo.medition', 'planning_study_id')
+    # images_ids = fields.One2many('photo.medition', 'planning_study_id')
 
     def name_get(self):
         result = []
@@ -335,10 +337,10 @@ class PlanningStudies(models.Model):
         return result
 
 
-class PhotosMedition(models.Model):
-    _name = "photo.medition"
+class PhotosPlanningProduct(models.Model):
+    _name = "photo.planning.product"
 
-    planning_study_id = fields.Many2one('planning.studies', string="Estudio")
+    planning_product_id = fields.Many2one('planning.product', string="Estudio")
     image = fields.Binary(string="Imagen")
 
 

@@ -1230,34 +1230,32 @@ class AuthRegisterHome(Home):
             raise exceptions.ValidationError(msg)
         try:
             for data in productos:
-                id_study = data.get('id_estudio')
                 product_id = data.get('id_producto')
                 planning_sala = data.get('planning_place')
                 auditor = data.get('user_id')
                 for var in data.get('Variables'):
                     vals = {
-                        "study_id": int(id_study),
-                        "product_id": int(product_id),
-                        "planning_id": int(planning_sala),
-                        "auditor": int(auditor),
+                        'product_id': int(product_id),
                         "variable_id": int(var.get('id_variable')),
-                        "valor_por_defecto": var.get('Valor_x_Defecto_target'),
-                        "validation_perc": var.get('Porc_Validación'),
-                        "disponibilidad": var.get('Disponibilidad'),
+                        "planning_salas_id": int(planning_sala),
                         "respuesta": var.get('Respuesta'),
-                        "comment": var.get('Comentario'),
-                        # "date_start": var.get('Momento_medición'),
+                        "comment": var.get('Respuesta'),
+                        "disponibilidad": var.get('Disponibilidad'),
+                        "validation_perc": var.get('Porc_Validación'),
+                        "xN1": var.get('xN1'),
+                        "xN2": var.get('xN2'),
+                        # "date_start": variable.get("Momento_medición"),
                     }
 
-                    study_id = request.env['planning.studies'].create(vals)
+                    study_id = request.env['planning.product'].create(vals)
 
                     images = data.get('Fotos medidas')
                     for image in images:
                         vals = {
-                            'planning_study_id': study_id.id,
+                            'planning_product_id': study_id.id,
                             "image": image
                         }
-                        request.env['photo.medition'].create(vals)
+                        request.env['photo.planning.product'].create(vals)
 
             return "updated"
         except Exception as e:
