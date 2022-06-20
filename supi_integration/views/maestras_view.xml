@@ -991,6 +991,8 @@
                                 <field name="comment"/>
                                 <field name="posicion_y"/>
                                 <field name="product_padre_id"/>
+                                <field name="xN1"/>
+                                <field name="xN2"/>
 
                             </group>
                         </group>
@@ -1015,8 +1017,8 @@
                     <field name="comment"/>
                     <field name="posicion_x" optional="hide"/>
                     <field name="posicion_y" optional="hide"/>
-
-
+                    <field name="xN1" optional="hide"/>
+                    <field name="xN2" optional="hide"/>
                 </tree>
             </field>
         </record>

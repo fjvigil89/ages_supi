@@ -277,6 +277,8 @@ class PlanningProducts(models.Model):
     posicion_y = fields.Char("Posicion Y del producto")
     date_start = fields.Date(string='Momento de medicion')
     planogramado = fields.Boolean(string="Planogramado ó añadido", default=True)
+    xN1 = fields.Integer(string="xN1")
+    xN2 = fields.Integer(string="xN2")
     is_audited = fields.Boolean(string="Auditada?", default=False)
     estado = fields.Selection(
         [('quebrado', 'Quebrado'),
