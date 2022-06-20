@@ -720,6 +720,7 @@ class AuthRegisterHome(Home):
                     tipo_dato = "Precio"
                 vals = {
                     "id_variable": variable_estudios.variable_id.id,
+                    "id_sala_planificada": int(id_sala_planificada),
                     "name_variable": variable_estudios.variable_id.name,
                     "label_visual": variable_estudios.variable_id.label_visual,
                     "Tipo_Dato": tipo_dato,
@@ -1138,6 +1139,39 @@ class AuthRegisterHome(Home):
                     status=200,
                     mimetype='application/json'
                 )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+    @http.route(
+        '/api/set_medicion_variables_salas',
+        type='json', auth='user', methods=['POST'], csrf=False)
+    def set_medicion_variables_salas(self, **params):
+        try:
+            data = params.get("variables_de_la_sala")
+
+            for variable in data:
+                product = request.env['product.product'].search(
+                    [('default_code', '=', 'SALA')], limit=1).id
+                vals = {
+                    'product_id': product,
+                    "variable_id": variable.get('id_variable'),
+                    "planning_salas_id": variable.get('id_sala_planificada'),
+                    "respuesta": variable.get("Respuesta"),
+                    "comment": variable.get("Comentario"),
+                    "disponibilidad": variable.get("Disponibilidad"),
+                    "validation_perc": variable.get("Porc_Validación"),
+                    "posicion_y": variable.get("xN1"),
+                    "posicion_x": variable.get("xN2"),
+                    # "date_start": variable.get("Momento_medición"),
+                }
+                planning_product = request.env['planning.product'].create(vals)
+            return True
         except KeyError as e:
             msg = "Wrong values"
             res = error_response(e, msg)
