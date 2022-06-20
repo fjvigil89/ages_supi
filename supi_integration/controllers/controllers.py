@@ -604,26 +604,26 @@ class AuthRegisterHome(Home):
                     if planning_salas.planning_id.planograma_id.study_id.naturaleza == '0':
                         for variable in planning_salas.mapped('planning_products_ids').mapped('variable_id'):
                             tipo_dato = ''
-                            if variable.variable_id.tipo_dato == '1':
+                            if variable.tipo_dato == '1':
                                 tipo_dato = "text"
-                            if variable.variable_id.tipo_dato == '2':
+                            if variable.tipo_dato  == '2':
                                 tipo_dato = "int"
-                            if variable.variable_id.tipo_dato == '3':
+                            if variable.tipo_dato == '3':
                                 tipo_dato = "double"
-                            if variable.variable_id.tipo_dato == '4':
+                            if variable.tipo_dato  == '4':
                                 tipo_dato = "Boolean"
-                            if variable.variable_id.tipo_dato == '5':
+                            if variable.tipo_dato == '5':
                                 tipo_dato = "select"
-                            if variable.variable_id.tipo_dato == '6':
+                            if variable.tipo_dato == '6':
                                 tipo_dato = "Precio"
                             vals_val = {
-                                'id_variable': variable.variable_id.id,
-                                'name_variable': variable.variable_id.name or '',
-                                'label_visual': variable.variable_id.label_visual or '',
+                                'id_variable': variable.id,
+                                'name_variable': variable.name or '',
+                                'label_visual': variable.label_visual or '',
                                 'Tipo_Dato': tipo_dato or '',
-                                'valores_combo': variable.variable_id.valores_combobox.split(
-                                    ',') if variable.variable_id.valores_combobox else [],
-                                'icono': variable.variable_id.url_icon,
+                                'valores_combo': variable.valores_combobox.split(
+                                    ',') if variable.valores_combobox else [],
+                                'icono': variable.url_icon,
                             }
                             variables.append(vals_val)
                     else:
