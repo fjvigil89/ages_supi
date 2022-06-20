@@ -412,23 +412,26 @@
                         </group>
                         <group>
                             <group>
+                                <field name="xN1" string="Multiplicador 1 de variable"
+                                       help="Se usa en las variables de precio para multiplicar la respuesta por el valor aqui contenido"/>
+                                <field name="is_automatic"
+                                       help="Este parametro es para cuando se escanea el producto, esta variable se llene en automatico por su valor por defecto"/>
+                            </group>
+                            <group>
+                                <field name="xN2" string="Multiplicador 2 de variable"
+                                       help="Se usa en las variables de precio para multiplicar la respuesta por el valor aqui contenido"/>
+                                <field name="valor_x_defecto"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
                                 <field name="tipo_dato" required="1"/>
                             </group>
                             <group>
                                 <field name="icon" widget="image" required="0"/>
                             </group>
                         </group>
-                        <group>
-                            <group>
-                                <field name="xN1"/>
-                                <field name="is_automatic"
-                                       help="Es parametro es para cuando se escanea el producto, esta variable se llene en automatico por su valor por defecto"/>
-                            </group>
-                            <group>
-                                <field name="xN2"/>
-                                <field name="valor_x_defecto"/>
-                            </group>
-                        </group>
+
                     </sheet>
                 </form>
             </field>
@@ -445,8 +448,8 @@
                     <field name="tipo_estudio"/>
                     <field name="tipo_dato"/>
                     <field name="study_id" optional="hide"/>
-                    <field name="xN1" optional="hide"/>
-                    <field name="xN2" optional="hide"/>
+                    <field name="xN1" string="Multiplicador 1 de variable" optional="hide"/>
+                    <field name="xN2" string="Multiplicador 2 de variable" optional="hide"/>
                     <field name="valor_x_defecto" optional="hide"/>
                     <field name="is_automatic" optional="hide"/>
                 </tree>
@@ -991,8 +994,8 @@
                                 <field name="comment"/>
                                 <field name="posicion_y"/>
                                 <field name="product_padre_id"/>
-                                <field name="xN1"/>
-                                <field name="xN2"/>
+                                <field name="xN1" string="Multiplicador 1 de variable"/>
+                                <field name="xN2" string="Multiplicador 2 de variable"/>
 
                             </group>
                         </group>
@@ -1027,8 +1030,8 @@
                     <field name="comment"/>
                     <field name="posicion_x" optional="hide"/>
                     <field name="posicion_y" optional="hide"/>
-                    <field name="xN1" optional="hide"/>
-                    <field name="xN2" optional="hide"/>
+                    <field name="xN1" string="Multiplicador 1 de variable" optional="hide"/>
+                    <field name="xN2" string="Multiplicador 2 de variable" optional="hide"/>
                 </tree>
             </field>
         </record>
