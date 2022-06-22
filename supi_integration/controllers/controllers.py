@@ -1075,9 +1075,19 @@ class AuthRegisterHome(Home):
                     "Is_Mueble": mueble.can_be_mueble
                 }
                 muebles_data.append(vals)
+            id_sala_planificada = params["id_sala_planificada"]
+            categories = request.env['planning.salas'].search(
+                [('id', '=', int(id_sala_planificada))]).mapped(
+                'categories_ids')
+            categories_data = []
+            for cat in categories:
+                vals = {
+                    'id': cat.id,
+                    "name": cat.name
+                }
+                categories_data.append(vals)
 
             try:
-
                 res = {
                     "Nuevo_Mueble": {
                         "id_sala_planificada": int(id_sala_planificada),
@@ -1086,6 +1096,7 @@ class AuthRegisterHome(Home):
                         "Cant_X": "",
                         "Cant_Y": "",
                         "Result_Variables_del_nuevo_mueble": data_variables,
+                        "categorias": categories_data,
                         "Fotos medidas": []
                     }
                 }
