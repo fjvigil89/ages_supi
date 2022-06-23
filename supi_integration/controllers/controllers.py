@@ -1575,13 +1575,41 @@ class AuthRegisterHome(Home):
                             "Posicion_Y_del_producto": product_hijo.posicion_y,
                         }
                         products_hijos.append(vals_product_hijo)
+                    valores_x_cuadrado = []
+                    x = y = 0
+                    while x <= int(product.posicion_x):
+                        y = 0
+                        while y <= int(product.posicion_y):
+                            # print('%s,%s' % (x, y))
+                            products_hijos_medidos_posicion = request.env['planning.product'].search(
+                                [('planning_salas_id', '=', int(id_sala_planificada)),
+                                 ('product_padre_id', '=', product.product_id.id), ("posicion_x", '=', str(x)),
+                                 ("posicion_y", '=', str(y))])
+
+                            if products_hijos_medidos_posicion:
+                                val = {
+                                    "x": x,
+                                    "y": y,
+                                    "cant": len(products_hijos_medidos_posicion)
+                                }
+                            else:
+                                val = {
+                                    "x": x,
+                                    "y": y,
+                                    "cant": 0
+                                }
+                            valores_x_cuadrado.append(val)
+                            y += 1
+                        x += 1
+                    print(valores_x_cuadrado)
                     vals = {
                         "id_medicion": product.id,
                         'name': product.product_id.name,
                         "x": product.posicion_x,
                         "y": product.posicion_y,
                         "url_icon": product.product_id.url_icon,
-                        "productos": products_hijos
+                        "productos": products_hijos,
+                        "valores_por_cuadrado": valores_x_cuadrado
                     }
                     muebles.append(vals)
 
