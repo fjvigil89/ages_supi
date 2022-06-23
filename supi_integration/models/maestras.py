@@ -3,6 +3,10 @@ import json
 
 from odoo import models, fields, api
 import random
+# -*- coding: utf-8 -*-
+
+from odoo import models, fields, api
+from odoo.exceptions import UserError
 
 
 # https://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&key=YOUR_API_KEY
@@ -117,6 +121,14 @@ class Variables(models.Model):
         for rec in self:
             image_url_1920 = base_url + '/web/image?' + 'model=variables&id=' + str(rec.id) + '&field=icon'
             rec.url_icon = image_url_1920
+
+    def unlink(self):
+        if self.id in [self.env.ref('supi_integration.cuantas_veces_present_facing').id,
+                       self.env.ref('supi_integration.cuantas_veces_present_exhibitions').id
+                       ]:
+            raise UserError("La variable %s no puede ser eliminado porque es una variable del sistema" % self.name)
+
+        return super(Variables, self).unlink()
 
     def name_get(self):
         result = []
@@ -327,6 +339,7 @@ class PlanningStudies(models.Model):
     posicion_y = fields.Char("Posicion Y del producto")
     date_start = fields.Date(string='Momento de medicion')
     product_padre_id = fields.Many2one('product.product', string="Producto padre")
+
     # images_ids = fields.One2many('photo.medition', 'planning_study_id')
 
     def name_get(self):

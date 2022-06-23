@@ -23,6 +23,7 @@
         'wizard/wizard_gallery_picture.xml',
         'data/data_secuences.xml',
         'data/product_product_data.xml',
+        'data/data_variable_present_times.xml',
         'data/product_product_muebles_data.xml',
         'views/res_partner_views.xml',
         'views/product_product_view.xml',

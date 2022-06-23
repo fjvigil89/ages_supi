@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="cuantas_veces_present_facing" model="variables">
+            <field name="name">CUANTAS VECES PRESENTE</field>
+            <field name="label_visual">CUANTAS VECES PRESENTE</field>
+            <field name="tipo_estudio">3</field>
+            <field name="tipo_dato">2</field>
+            <field name="is_automatic" eval="True"/>
+            <field name="valor_x_defecto">1</field>
+        </record>
+        <record id="cuantas_veces_present_exhibitions" model="variables">
+            <field name="name">CUANTAS VECES PRESENTE</field>
+            <field name="label_visual">CUANTAS VECES PRESENTE</field>
+            <field name="tipo_estudio">5</field>
+            <field name="tipo_dato">2</field>
+            <field name="is_automatic" eval="True"/>
+            <field name="valor_x_defecto">1</field>
+        </record>
+    </data>
+</odoo>
