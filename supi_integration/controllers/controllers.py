@@ -1514,3 +1514,98 @@ class AuthRegisterHome(Home):
                 status=200,
                 mimetype='application/json'
             )
+
+    @http.route(
+        '/api/muebles_de_sala',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def muebles_de_sala(self, **params):
+        try:
+            id_sala_planificada = params["id_sala_planificada"]
+            try:
+
+                planning_products = request.env['planning.product'].search(
+                    [('planning_salas_id', '=', int(id_sala_planificada)),
+                     ('product_id.can_be_mueble', '=', True)])
+                print(planning_products)
+
+                muebles = []
+                for product in planning_products:
+                    products_hijos = []
+                    products_hijos_medidos = request.env['planning.product'].search(
+                        [('planning_salas_id', '=', int(id_sala_planificada)),
+                         ('product_padre_id', '=', product.product_id.id)])
+
+                    for product_hijo in products_hijos_medidos:
+                        tipo_dato = ''
+                        if product_hijo.variable_id.tipo_dato == '1':
+                            tipo_dato = "text"
+                        if product_hijo.variable_id.tipo_dato == '2':
+                            tipo_dato = "int"
+                        if product_hijo.variable_id.tipo_dato == '3':
+                            tipo_dato = "double"
+                        if product_hijo.variable_id.tipo_dato == '4':
+                            tipo_dato = "Boolean"
+                        if product_hijo.variable_id.tipo_dato == '5':
+                            tipo_dato = "select"
+                        if product_hijo.variable_id.tipo_dato == '6':
+                            tipo_dato = "Precio"
+                        vals_product_hijo = {
+                            "id_medicion": product_hijo.id,
+                            'name': product_hijo.product_id.name,
+                            "x": product_hijo.posicion_x,
+                            "y": product_hijo.posicion_y,
+                            "url_product_icon": product_hijo.product_id.url_icon,
+                            "id_variable": product_hijo.variable_id.id,
+                            "name_variable": product_hijo.variable_id.name,
+                            "label_visual": product_hijo.variable_id.label_visual,
+                            "Tipo_Dato": tipo_dato,
+                            'valores_combo': product_hijo.variable_id.valores_combobox.split(
+                                ',') if product_hijo.variable_id.valores_combobox else [],
+                            "ícono": product_hijo.variable_id.url_icon,
+                            "xN1": product_hijo.xN1,
+                            "xN2": product_hijo.xN2,
+                            "Valor_x_Defecto_target": product_hijo.valor_por_defecto or '',
+                            "Porc_Validación": product_hijo.validation_perc or "",
+                            "Disponibilidad": product_hijo.disponibilidad or "",
+                            "Respuesta": product_hijo.respuesta,
+                            "Comentario": product_hijo.comment,
+                            "Momento_medición": "",
+                            "Id_Producto_Planificado_Padre": product_hijo.product_padre_id.id,
+                            "Posicion_X_del_producto": product_hijo.posicion_x,
+                            "Posicion_Y_del_producto": product_hijo.posicion_y,
+                        }
+                        products_hijos.append(vals_product_hijo)
+                    vals = {
+                        "id_medicion": product.id,
+                        'name': product.product_id.name,
+                        "x": product.posicion_x,
+                        "y": product.posicion_y,
+                        "url_icon": product.product_id.url_icon,
+                        "productos": products_hijos
+                    }
+                    muebles.append(vals)
+
+                res = {
+                    "Productos": muebles
+                }
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+        except KeyError as e:
+            msg = "Wrong values"
+        res = error_response(e, msg)
+        return http.Response(
+            json.dumps(res),
+            status=200,
+            mimetype='application/json'
+        )
