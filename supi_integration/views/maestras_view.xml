@@ -448,7 +448,6 @@
                 <tree string="Variables">
                     <field name="name"/>
                     <field name="label_visual"/>
-                    <field name="tipo_dato"/>
                     <field name="tipo_estudio"/>
                     <field name="tipo_dato"/>
                     <field name="study_id" optional="hide"/>
