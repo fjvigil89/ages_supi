@@ -920,7 +920,7 @@
                       decoration-info="state == 'prepared'">
                     <field name="name" string="Visita"/>
                     <field name="place_id"/>
-                    <field name="planning_id"/>
+                    <field name="planning_id" string="Planificacion"/>
                     <field name="auditor_id"/>
                     <field name="coordinator_id"/>
                     <field name="specifications" optional="hide"/>
