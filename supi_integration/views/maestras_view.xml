@@ -215,6 +215,10 @@
                 <tree string="Salas">
                     <field name="name"/>
                     <field name="folio"/>
+                    <field name="comuna_id"/>
+                    <field name="state_id"/>
+                    <field name="lat"/>
+                    <field name="long"/>
                 </tree>
             </field>
         </record>
@@ -899,6 +903,9 @@
                             </page>
 
                         </notebook>
+                        <group>
+                            <field name="image" widget="image"/>
+                        </group>
 
                     </sheet>
                 </form>

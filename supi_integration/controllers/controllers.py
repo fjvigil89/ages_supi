@@ -56,6 +56,25 @@ class AuthRegisterHome(Home):
         else:
             return utc_timestamp.astimezone(context_tz).strftime(format_a).date()
 
+    @staticmethod
+    def get_tipo_dato(tipo_dato):
+        tipo_dato_text = ''
+        if tipo_dato == '1':
+            tipo_dato_text = "text"
+        if tipo_dato == '2':
+            tipo_dato_text = "int"
+        if tipo_dato == '3':
+            tipo_dato_text = "double"
+        if tipo_dato == '4':
+            tipo_dato_text = "Boolean"
+        if tipo_dato == '5':
+            tipo_dato_text = "select"
+        if tipo_dato == '6':
+            tipo_dato_text = "Precio"
+        if tipo_dato == '7':
+            tipo_dato_text = "Radiobutton"
+        return tipo_dato_text
+
     @http.route('/web/restart_password', type='json', auth='public', website=True, sitemap=False)
     def web_reset_password(self, *args, **kw):
         qcontext = self.get_auth_signup_qcontext()
@@ -606,19 +625,8 @@ class AuthRegisterHome(Home):
 
                     if planning_salas.planning_id.planograma_id.study_id.naturaleza == '0':
                         for variable in planning_salas.mapped('planning_products_ids').mapped('variable_id'):
-                            tipo_dato = ''
-                            if variable.tipo_dato == '1':
-                                tipo_dato = "text"
-                            if variable.tipo_dato == '2':
-                                tipo_dato = "int"
-                            if variable.tipo_dato == '3':
-                                tipo_dato = "double"
-                            if variable.tipo_dato == '4':
-                                tipo_dato = "Boolean"
-                            if variable.tipo_dato == '5':
-                                tipo_dato = "select"
-                            if variable.tipo_dato == '6':
-                                tipo_dato = "Precio"
+                            tipo_dato = self.get_tipo_dato(variable.tipo_dato)
+
                             vals_val = {
                                 'id_variable': variable.id,
                                 'name_variable': variable.name or '',
@@ -634,19 +642,7 @@ class AuthRegisterHome(Home):
                             variables.append(vals_val)
                     else:
                         for variable in planning_salas.planning_id.planograma_id.variables_estudios_ids:
-                            tipo_dato = ''
-                            if variable.variable_id.tipo_dato == '1':
-                                tipo_dato = "text"
-                            if variable.variable_id.tipo_dato == '2':
-                                tipo_dato = "int"
-                            if variable.variable_id.tipo_dato == '3':
-                                tipo_dato = "double"
-                            if variable.variable_id.tipo_dato == '4':
-                                tipo_dato = "Boolean"
-                            if variable.variable_id.tipo_dato == '5':
-                                tipo_dato = "select"
-                            if variable.variable_id.tipo_dato == '6':
-                                tipo_dato = "Precio"
+                            tipo_dato = self.get_tipo_dato(variable.variable_id.tipo_dato)
                             vals_val = {
                                 'id_variable': variable.variable_id.id,
                                 'name_variable': variable.variable_id.name or '',
@@ -714,19 +710,7 @@ class AuthRegisterHome(Home):
             sala_planificada = request.env['planning.salas'].search([('id', '=', id_sala_planificada)])
 
             for variable_estudios in sala_planificada.planning_id.planograma_id.variables_estudios_ids:
-                tipo_dato = ''
-                if variable_estudios.variable_id.tipo_dato == '1':
-                    tipo_dato = "text"
-                if variable_estudios.variable_id.tipo_dato == '2':
-                    tipo_dato = "int"
-                if variable_estudios.variable_id.tipo_dato == '3':
-                    tipo_dato = "double"
-                if variable_estudios.variable_id.tipo_dato == '4':
-                    tipo_dato = "Boolean"
-                if variable_estudios.variable_id.tipo_dato == '5':
-                    tipo_dato = "select"
-                if variable_estudios.variable_id.tipo_dato == '6':
-                    tipo_dato = "Precio"
+                tipo_dato = self.get_tipo_dato(variable_estudios.variable_id.tipo_dato)
                 vals = {
                     "id_variable": variable_estudios.variable_id.id,
                     "id_sala_planificada": int(id_sala_planificada),
@@ -818,19 +802,7 @@ class AuthRegisterHome(Home):
                 'variable_id')
             variables_data = []
             for planning_products_variable in planning_products_variables:
-                tipo_dato = ''
-                if planning_products_variable.tipo_dato == '1':
-                    tipo_dato = "text"
-                if planning_products_variable.tipo_dato == '2':
-                    tipo_dato = "int"
-                if planning_products_variable.tipo_dato == '3':
-                    tipo_dato = "double"
-                if planning_products_variable.tipo_dato == '4':
-                    tipo_dato = "Boolean"
-                if planning_products_variable.tipo_dato == '5':
-                    tipo_dato = "select"
-                if planning_products_variable.tipo_dato == '6':
-                    tipo_dato = "Precio"
+                tipo_dato = self.get_tipo_dato(planning_products_variable.tipo_dato)
                 var_vals = {
                     "id_variable": planning_products_variable.id,
                     "name_variable": planning_products_variable.name,
@@ -941,19 +913,7 @@ class AuthRegisterHome(Home):
             sala_planificada = request.env['planning.salas'].search([('id', '=', id_sala_planificada)])
 
             for variable_estudios in sala_planificada.planning_id.planograma_id.variables_estudios_ids:
-                tipo_dato = ''
-                if variable_estudios.variable_id.tipo_dato == '1':
-                    tipo_dato = "text"
-                if variable_estudios.variable_id.tipo_dato == '2':
-                    tipo_dato = "int"
-                if variable_estudios.variable_id.tipo_dato == '3':
-                    tipo_dato = "double"
-                if variable_estudios.variable_id.tipo_dato == '4':
-                    tipo_dato = "Boolean"
-                if variable_estudios.variable_id.tipo_dato == '5':
-                    tipo_dato = "select"
-                if variable_estudios.variable_id.tipo_dato == '6':
-                    tipo_dato = "Precio"
+                tipo_dato = self.get_tipo_dato(variable_estudios.variable_id.tipo_dato)
                 vals = {
                     "id_variable": variable_estudios.variable_id.id,
                     "name_variable": variable_estudios.variable_id.name,
@@ -1300,19 +1260,7 @@ class AuthRegisterHome(Home):
                 products = []
                 for product in planning_products:
                     variables = []
-                    tipo_dato = ''
-                    if product.variable_id.tipo_dato == '1':
-                        tipo_dato = "text"
-                    if product.variable_id.tipo_dato == '2':
-                        tipo_dato = "int"
-                    if product.variable_id.tipo_dato == '3':
-                        tipo_dato = "double"
-                    if product.variable_id.tipo_dato == '4':
-                        tipo_dato = "Boolean"
-                    if product.variable_id.tipo_dato == '5':
-                        tipo_dato = "select"
-                    if product.variable_id.tipo_dato == '6':
-                        tipo_dato = "Precio"
+                    tipo_dato = self.get_tipo_dato(product.variable_id.tipo_dato)
 
                     vals_var = {
                         "id_variable": product.variable_id.id,
@@ -1338,6 +1286,7 @@ class AuthRegisterHome(Home):
                     print(product.product_id.categ_id.name)
                     if product.product_id.categ_id.id == int(categ_id):
                         vals_prod = {
+                            "id_medicion": product.id,
                             "id_producto": product.product_id.id,
                             "EAN": product.product_id.default_code,
                             "visita": product.name,
@@ -1441,19 +1390,7 @@ class AuthRegisterHome(Home):
             products = []
             for variable in sala_planificada.planning_id.planograma_id.variables_estudios_ids:
                 variables = []
-                tipo_dato = ''
-                if variable.variable_id.tipo_dato == '1':
-                    tipo_dato = "text"
-                if variable.variable_id.tipo_dato == '2':
-                    tipo_dato = "int"
-                if variable.variable_id.tipo_dato == '3':
-                    tipo_dato = "double"
-                if variable.variable_id.tipo_dato == '4':
-                    tipo_dato = "Boolean"
-                if variable.variable_id.tipo_dato == '5':
-                    tipo_dato = "select"
-                if variable.variable_id.tipo_dato == '6':
-                    tipo_dato = "Precio"
+                tipo_dato = self.get_tipo_dato(variable.variable_id.tipo_dato)
 
                 vals_var = {
                     "id_variable": variable.variable_id.id,
@@ -1516,6 +1453,42 @@ class AuthRegisterHome(Home):
             )
 
     @http.route(
+        '/api/imagen_inicial',
+        type='json', auth='user', methods=['POST'], csrf=False)
+    def post_imagen_inicial(self, **params):
+        try:
+
+            data = params.get("data")
+            id_sala_planificada = data.get("id_sala_planificada")
+            data_imagen = data.get("data_imagen")
+
+            sala_planificada = request.env['planning.salas'].search([('id', '=', id_sala_planificada)])
+            sala_planificada.write({
+                "image": b'%s' % data_imagen.encode()
+            })
+
+            try:
+                return {
+                    "message": "Imagen actualizada"
+                }
+
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+    @http.route(
         '/api/muebles_de_sala',
         type='http', auth='user', methods=['GET'], csrf=False)
     def muebles_de_sala(self, **params):
@@ -1536,19 +1509,7 @@ class AuthRegisterHome(Home):
                          ('product_padre_id', '=', product.product_id.id)])
 
                     for product_hijo in products_hijos_medidos:
-                        tipo_dato = ''
-                        if product_hijo.variable_id.tipo_dato == '1':
-                            tipo_dato = "text"
-                        if product_hijo.variable_id.tipo_dato == '2':
-                            tipo_dato = "int"
-                        if product_hijo.variable_id.tipo_dato == '3':
-                            tipo_dato = "double"
-                        if product_hijo.variable_id.tipo_dato == '4':
-                            tipo_dato = "Boolean"
-                        if product_hijo.variable_id.tipo_dato == '5':
-                            tipo_dato = "select"
-                        if product_hijo.variable_id.tipo_dato == '6':
-                            tipo_dato = "Precio"
+                        tipo_dato = self.get_tipo_dato(product_hijo.variable_id.tipo_dato)
                         vals_product_hijo = {
                             "id_medicion": product_hijo.id,
                             'name': product_hijo.product_id.name,
