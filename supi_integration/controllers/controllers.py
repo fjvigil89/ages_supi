@@ -73,6 +73,8 @@ class AuthRegisterHome(Home):
             tipo_dato_text = "Precio"
         if tipo_dato == '7':
             tipo_dato_text = "Radiobutton"
+        if tipo_dato == '8':
+            tipo_dato_text = "Date"
         return tipo_dato_text
 
     @http.route('/web/restart_password', type='json', auth='public', website=True, sitemap=False)
