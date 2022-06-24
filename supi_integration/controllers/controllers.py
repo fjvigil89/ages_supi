@@ -768,28 +768,77 @@ class AuthRegisterHome(Home):
 
             data = []
             product = request.env['product.product'].search([('default_code', '=', ean)], limit=1)
-            if not product:
-                res = {
-                    "message": 'El EAN escaneado no existe en el sistema',
+            if product:
+                planning_sala = request.env['planning.salas'].search([('id', '=', int(sala_planificada))], limit=1)
+
+                variables = []
+                for variable in planning_sala.planning_id.planograma_id.variables_estudios_ids:
+                    variables.append(variable.variable_id)
+                for var_product in variables:
+                    medicion = request.env['planning.product'].search(
+                        [('product_id', '=', product.id), ('variable_id', '=', var_product.id),
+                         ('planning_salas_id', '=', int(sala_planificada))])
+                    if medicion:
+                        pass
+                    else:
+                        vals = {
+                            "product_id": product.id,
+                            "variable_id": var_product.id,
+                            "planning_salas_id": int(sala_planificada),
+                            "planogramado": False,
+                            "name": planning_sala.name,
+                        }
+                        request.env['planning.product'].create(vals)
+                planning_products_variables = request.env['planning.product'].search(
+                    [('product_id', '=', product.id), ('planning_salas_id', '=', int(sala_planificada))]).mapped(
+                    'variable_id')
+                variables_data = []
+                for planning_products_variable in planning_products_variables:
+                    tipo_dato = self.get_tipo_dato(planning_products_variable.tipo_dato)
+                    var_vals = {
+                        "id_variable": planning_products_variable.id,
+                        "name_variable": planning_products_variable.name,
+                        "label_visual": planning_products_variable.label_visual,
+                        "Tipo_Dato": tipo_dato,
+                        "valores_combo": planning_products_variable.valores_combobox,
+                        "ícono": planning_products_variable.url_icon,
+                        "xN1": planning_products_variable.xN1,
+                        "xN2": planning_products_variable.xN2,
+                        "Valor_x_Defecto_target": planning_products_variable.valor_x_defecto or '',
+                        "Porc_Validación": "",
+                        "Disponibilidad": "",
+                        "Respuesta": "",
+                        "Comentario": "",
+                        "Momento_medición": "",
+                        "Id_Producto_Planificado_Padre": "",
+                        "Posicion_X_del_producto": "",
+                        "Posicion_Y_del_producto": ""
+                    }
+                    variables_data.append(var_vals)
+                vals_product = {
+                    "id_producto": product.id,
+                    "EAN": product.default_code,
+                    "name_prod": product.name,
+                    "Categoria": product.categ_id.name,
+                    "es_mueble": product.can_be_mueble,
+                    "ícono": product.url_icon,
+                    "planogramado": False,
+                    "Variables": variables_data,
+                    "Fotos medidas": []
+
                 }
-                return http.Response(
-                    json.dumps(res),
-                    status=200,
-                    mimetype='application/json'
-                )
+            else:
+                product = request.env['product.product'].sudo().create({
+                    "name": "Producto creado con ean %s" % ean,
+                    "default_code": ean
+                })
 
-            planning_sala = request.env['planning.salas'].search([('id', '=', int(sala_planificada))], limit=1)
+                planning_sala = request.env['planning.salas'].search([('id', '=', int(sala_planificada))], limit=1)
 
-            variables = []
-            for variable in planning_sala.planning_id.planograma_id.variables_estudios_ids:
-                variables.append(variable.variable_id)
-            for var_product in variables:
-                medicion = request.env['planning.product'].search(
-                    [('product_id', '=', product.id), ('variable_id', '=', var_product.id),
-                     ('planning_salas_id', '=', int(sala_planificada))])
-                if medicion:
-                    pass
-                else:
+                variables = []
+                for variable in planning_sala.planning_id.planograma_id.variables_estudios_ids:
+                    variables.append(variable.variable_id)
+                for var_product in variables:
                     vals = {
                         "product_id": product.id,
                         "variable_id": var_product.id,
@@ -798,45 +847,44 @@ class AuthRegisterHome(Home):
                         "name": planning_sala.name,
                     }
                     request.env['planning.product'].create(vals)
-
-            planning_products_variables = request.env['planning.product'].search(
-                [('product_id', '=', product.id), ('planning_salas_id', '=', int(sala_planificada))]).mapped(
-                'variable_id')
-            variables_data = []
-            for planning_products_variable in planning_products_variables:
-                tipo_dato = self.get_tipo_dato(planning_products_variable.tipo_dato)
-                var_vals = {
-                    "id_variable": planning_products_variable.id,
-                    "name_variable": planning_products_variable.name,
-                    "label_visual": planning_products_variable.label_visual,
-                    "Tipo_Dato": tipo_dato,
-                    "valores_combo": planning_products_variable.valores_combobox,
-                    "ícono": planning_products_variable.url_icon,
-                    "xN1": planning_products_variable.xN1,
-                    "xN2": planning_products_variable.xN2,
-                    "Valor_x_Defecto_target": planning_products_variable.valor_x_defecto or '',
-                    "Porc_Validación": "",
-                    "Disponibilidad": "",
-                    "Respuesta": "",
-                    "Comentario": "",
-                    "Momento_medición": "",
-                    "Id_Producto_Planificado_Padre": "",
-                    "Posicion_X_del_producto": "",
-                    "Posicion_Y_del_producto": ""
+                planning_products_variables = request.env['planning.product'].search(
+                    [('product_id', '=', product.id), ('planning_salas_id', '=', int(sala_planificada))]).mapped(
+                    'variable_id')
+                variables_data = []
+                for planning_products_variable in planning_products_variables:
+                    tipo_dato = self.get_tipo_dato(planning_products_variable.tipo_dato)
+                    var_vals = {
+                        "id_variable": planning_products_variable.id,
+                        "name_variable": planning_products_variable.name,
+                        "label_visual": planning_products_variable.label_visual,
+                        "Tipo_Dato": tipo_dato,
+                        "valores_combo": planning_products_variable.valores_combobox,
+                        "ícono": planning_products_variable.url_icon,
+                        "xN1": planning_products_variable.xN1,
+                        "xN2": planning_products_variable.xN2,
+                        "Valor_x_Defecto_target": planning_products_variable.valor_x_defecto or '',
+                        "Porc_Validación": "",
+                        "Disponibilidad": "",
+                        "Respuesta": "",
+                        "Comentario": "",
+                        "Momento_medición": "",
+                        "Id_Producto_Planificado_Padre": "",
+                        "Posicion_X_del_producto": "",
+                        "Posicion_Y_del_producto": ""
+                    }
+                    variables_data.append(var_vals)
+                vals_product = {
+                    "id_producto": product.id,
+                    "EAN": product.default_code,
+                    "name_prod": product.name,
+                    "Categoria": product.categ_id.name,
+                    "es_mueble": product.can_be_mueble,
+                    "ícono": product.url_icon,
+                    "planogramado": False,
+                    "Variables": variables_data,
+                    "Fotos medidas": []
                 }
-                variables_data.append(var_vals)
-            vals_product = {
-                "id_producto": product.id,
-                "EAN": product.default_code,
-                "name_prod": product.name,
-                "Categoria": product.categ_id.name,
-                "es_mueble": product.can_be_mueble,
-                "ícono": product.url_icon,
-                "planogramado": False,
-                "Variables": variables_data,
-                "Fotos medidas": []
 
-            }
             try:
                 res = {
                     "Product": vals_product,
