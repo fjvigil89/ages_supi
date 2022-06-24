@@ -64,6 +64,13 @@ class Salas(models.Model):
     geo = fields.Many2one('geo', string="Geolocalization ")
     url_image = fields.Char(string="Url imagen", compute='compute_url_image')
 
+    def name_get(self):
+        result = []
+        for salas in self:
+            result.append((salas.id, '[%s] %s' % (
+                salas.folio, salas.name)))
+        return result
+
     @api.depends('image')
     def compute_url_image(self):
         print("url")
