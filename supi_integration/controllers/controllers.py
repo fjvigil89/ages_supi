@@ -1285,52 +1285,57 @@ class AuthRegisterHome(Home):
             try:
 
                 planning_products = request.env['planning.product'].search(
-                    [('planning_salas_id', '=', int(id_sala_planogramada))])
+                    [('planning_salas_id', '=', int(id_sala_planogramada))]).filtered(
+                    lambda planning: planning.product_id.categ_id.id == int(categ_id))
 
                 products = []
-                for product in planning_products:
+                productos_anadidos = []
+                for producto in planning_products:
                     variables = []
-                    tipo_dato = self.get_tipo_dato(product.variable_id.tipo_dato)
+                    for planning_product in planning_products:
+                        if planning_product.product_id.id == producto.product_id.id:
+                            tipo_dato = self.get_tipo_dato(planning_product.variable_id.tipo_dato)
 
-                    vals_var = {
-                        "id_variable": product.variable_id.id,
-                        "name_variable": product.variable_id.name,
-                        "label_visual": product.variable_id.label_visual,
-                        "Tipo_Dato": tipo_dato,
-                        'valores_combo': product.variable_id.valores_combobox.split(
-                            ',') if product.variable_id.valores_combobox else [],
-                        "ícono": product.variable_id.url_icon,
-                        "xN1": product.variable_id.xN1,
-                        "xN2": product.variable_id.xN2,
-                        "Valor_x_Defecto_target": product.variable_id.valor_x_defecto or '',
-                        "Porc_Validación": "",
-                        "Disponibilidad": "",
-                        "Respuesta": "",
-                        "Comentario": "",
-                        "Momento_medición": "",
-                        "Id_Producto_Planificado_Padre": "",
-                        "Posicion_X_del_producto": "",
-                        "Posicion_Y_del_producto": "",
+                            vals_var = {
+                                "id_variable": planning_product.variable_id.id,
+                                "name_variable": planning_product.variable_id.name,
+                                "label_visual": planning_product.variable_id.label_visual,
+                                "Tipo_Dato": tipo_dato,
+                                'valores_combo': planning_product.variable_id.valores_combobox.split(
+                                    ',') if planning_product.variable_id.valores_combobox else [],
+                                "ícono": planning_product.variable_id.url_icon,
+                                "xN1": planning_product.variable_id.xN1,
+                                "xN2": planning_product.variable_id.xN2,
+                                "Valor_x_Defecto_target": planning_product.variable_id.valor_x_defecto or '',
+                                "Porc_Validación": "",
+                                "Disponibilidad": "",
+                                "Respuesta": "",
+                                "Comentario": "",
+                                "Momento_medición": "",
+                                "Id_Producto_Planificado_Padre": "",
+                                "Posicion_X_del_producto": "",
+                                "Posicion_Y_del_producto": "",
+                            }
+                            variables.append(vals_var)
+                    vals_prod = {
+                        "id_medicion": producto.id,
+                        "id_producto": producto.product_id.id,
+                        "EAN": producto.product_id.default_code,
+                        "visita": producto.name,
+                        "name_prod": producto.product_id.name,
+                        "user_id": producto.planning_salas_id.auditor_id.id,
+                        "planning_place": producto.planning_salas_id.id,
+                        "Categoria": producto.product_id.categ_id.name,
+                        "es_mueble": producto.product_id.can_be_mueble,
+                        "ícono": producto.product_id.url_icon,
+                        "id_estudio": producto.planning_salas_id.planning_id.planograma_id.study_id.id,
+                        "Variables": variables,
+                        "Fotos medidas": []
                     }
-                    variables.append(vals_var)
-                    print(product.product_id.categ_id.name)
-                    if product.product_id.categ_id.id == int(categ_id):
-                        vals_prod = {
-                            "id_medicion": product.id,
-                            "id_producto": product.product_id.id,
-                            "EAN": product.product_id.default_code,
-                            "visita": product.name,
-                            "name_prod": product.product_id.name,
-                            "user_id": product.planning_salas_id.auditor_id.id,
-                            "planning_place": product.planning_salas_id.id,
-                            "Categoria": product.product_id.categ_id.name,
-                            "es_mueble": product.product_id.can_be_mueble,
-                            "ícono": product.product_id.url_icon,
-                            "id_estudio": product.planning_salas_id.planning_id.planograma_id.study_id.id,
-                            "Variables": variables,
-                            "Fotos medidas": []
-                        }
+                    if producto.product_id.id not in productos_anadidos:
+                        productos_anadidos.append(producto.product_id.id)
                         products.append(vals_prod)
+
                 res = {
                     "Productos": products
                 }

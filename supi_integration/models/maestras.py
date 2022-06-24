@@ -415,7 +415,7 @@ class Planograma(models.Model):
         vals = {
             "date_start": self.date_start,
             "date_end": self.date_end,
-            "user_id": self.env.user.id,
+            "user_id": self.user_id.id,
             "planograma_id": self.id,
             "name": self.name,
             "description": self.description,
