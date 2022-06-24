@@ -1173,6 +1173,13 @@ class AuthRegisterHome(Home):
                             # "date_start": variable.get("Momento_medición"),
                         }
                         medicion.write(vals)
+                        images = data.get('Fotos medidas')
+                        for image in images:
+                            vals = {
+                                'planning_product_id': medicion.id,
+                                "image": b'%s' % image.encode()
+                            }
+                            request.env['photo.planning.product'].create(vals)
 
                     else:
                         vals = {
@@ -1193,7 +1200,7 @@ class AuthRegisterHome(Home):
                         for image in images:
                             vals = {
                                 'planning_product_id': study_id.id,
-                                "image": image
+                                "image": b'%s' % image.encode()
                             }
                             request.env['photo.planning.product'].create(vals)
 

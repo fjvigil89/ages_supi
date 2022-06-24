@@ -1027,6 +1027,7 @@
             <field name="arch" type="xml">
                 <tree string="Mediciones">
                     <field name="planning_salas_id"/>
+                    <field name="name"/>
                     <field name="product_id"/>
                     <field name="variable_id"/>
                     <field name="date_start"/>
