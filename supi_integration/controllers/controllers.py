@@ -1018,7 +1018,7 @@ class AuthRegisterHome(Home):
                         "comment": variable.get("Comentario"),
                         "disponibilidad": variable.get("Disponibilidad"),
                         "validation_perc": variable.get("Porc_Validación"),
-                        # "date_start": variable.get("Momento_medición"),
+                        "date_start": variable.get("Momento_medición"),
                         "posicion_x": cantx,
                         "xN1": variable.get("xN1"),
                         "xN2": variable.get("xN2"),
@@ -1034,7 +1034,7 @@ class AuthRegisterHome(Home):
                         "comment": variable.get("Comentario"),
                         "disponibilidad": variable.get("Disponibilidad"),
                         "validation_perc": variable.get("Porc_Validación"),
-                        # "date_start": variable.get("Momento_medición"),
+                        "date_start": variable.get("Momento_medición"),
                         "posicion_x": cantx,
                         "xN1": variable.get("xN1"),
                         "xN2": variable.get("xN2"),
@@ -1086,7 +1086,7 @@ class AuthRegisterHome(Home):
                         "validation_perc": variable.get("Porc_Validación"),
                         "xN1": variable.get("xN1"),
                         "xN2": variable.get("xN2"),
-                        # "date_start": variable.get("Momento_medición"),
+                        "date_start": variable.get("Momento_medición"),
                     }
                     medicion.write(vals)
                 else:
@@ -1100,7 +1100,7 @@ class AuthRegisterHome(Home):
                         "validation_perc": variable.get("Porc_Validación"),
                         "xN1": variable.get("xN1"),
                         "xN2": variable.get("xN2"),
-                        # "date_start": variable.get("Momento_medición"),
+                        "date_start": variable.get("Momento_medición"),
                     }
                     request.env['planning.product'].create(vals)
             return True
@@ -1172,7 +1172,7 @@ class AuthRegisterHome(Home):
                             "validation_perc": var.get('Porc_Validación'),
                             "xN1": var.get('xN1'),
                             "xN2": var.get('xN2'),
-                            # "date_start": variable.get("Momento_medición"),
+                            "date_start": var.get("Momento_medición"),
                         }
                         medicion.write(vals)
                         images = data.get('Fotos medidas')
@@ -1194,7 +1194,7 @@ class AuthRegisterHome(Home):
                             "validation_perc": var.get('Porc_Validación'),
                             "xN1": var.get('xN1'),
                             "xN2": var.get('xN2'),
-                            # "date_start": variable.get("Momento_medición"),
+                            "date_start": var.get("Momento_medición"),
                         }
                         study_id = request.env['planning.product'].create(vals)
 
