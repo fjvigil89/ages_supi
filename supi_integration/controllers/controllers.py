@@ -810,7 +810,6 @@ class AuthRegisterHome(Home):
                         "Disponibilidad": "",
                         "Respuesta": "",
                         "Comentario": "",
-                        "is_audited": False,
                         "Momento_medición": "",
                         "Id_Producto_Planificado_Padre": "",
                         "Posicion_X_del_producto": "",
@@ -826,6 +825,7 @@ class AuthRegisterHome(Home):
                     "Categoria": product.categ_id.name,
                     "es_mueble": product.can_be_mueble,
                     "ícono": product.url_icon,
+                    "is_audited": False,
                     "planogramado": False,
                     "Variables": variables_data,
                     "Fotos medidas": []
@@ -1076,6 +1076,7 @@ class AuthRegisterHome(Home):
                         "validation_perc": variable.get("Porc_Validación"),
                         "date_start": variable.get("Momento_medición"),
                         "posicion_x": cantx,
+                        "is_audited": variable.get("is_audited"),
                         "xN1": variable.get("xN1"),
                         "xN2": variable.get("xN2"),
                         "posicion_y": canty,
@@ -1092,6 +1093,7 @@ class AuthRegisterHome(Home):
                         "validation_perc": variable.get("Porc_Validación"),
                         "date_start": variable.get("Momento_medición"),
                         "posicion_x": cantx,
+                        "is_audited": variable.get("is_audited"),
                         "xN1": variable.get("xN1"),
                         "xN2": variable.get("xN2"),
                         "posicion_y": canty,
@@ -1214,6 +1216,7 @@ class AuthRegisterHome(Home):
             for data in productos:
                 product_id = data.get('id_producto')
                 planning_sala = data.get('planning_place')
+                is_audited = data.get('is_audited')
                 auditor = data.get('user_id')
                 for var in data.get('Variables'):
                     medicion = request.env['planning.product'].search(
@@ -1230,7 +1233,7 @@ class AuthRegisterHome(Home):
                             "validation_perc": var.get('Porc_Validación'),
                             "xN1": var.get('xN1'),
                             "xN2": var.get('xN2'),
-                            "is_audited": var.get('is_audited'),
+                            "is_audited": is_audited,
                             "date_start": var.get("Momento_medición"),
                         }
                         medicion.write(vals)
@@ -1253,7 +1256,7 @@ class AuthRegisterHome(Home):
                             "validation_perc": var.get('Porc_Validación'),
                             "xN1": var.get('xN1'),
                             "xN2": var.get('xN2'),
-                            "is_audited": var.get('is_audited'),
+                            "is_audited": is_audited,
                             "date_start": var.get("Momento_medición"),
                         }
                         study_id = request.env['planning.product'].create(vals)
@@ -1375,7 +1378,6 @@ class AuthRegisterHome(Home):
                                 "Id_Producto_Planificado_Padre": "",
                                 "Posicion_X_del_producto": "",
                                 "Posicion_Y_del_producto": "",
-                                "is_audited": planning_product.is_audited,
                             }
                             variables.append(vals_var)
                     vals_prod = {
@@ -1383,6 +1385,7 @@ class AuthRegisterHome(Home):
                         "id_producto": producto.product_id.id,
                         "EAN": producto.product_id.default_code,
                         "visita": producto.name,
+                        "is_audited": producto.is_audited,
                         "name_prod": producto.product_id.name,
                         "user_id": producto.planning_salas_id.auditor_id.id,
                         "planning_place": producto.planning_salas_id.id,
@@ -1438,7 +1441,7 @@ class AuthRegisterHome(Home):
 
             sala_planificada = request.env['planning.salas'].search([('id', '=', id_sala_planificada)])
 
-            vars = False
+            vars = []
 
             if sala_planificada.planning_id.planograma_id.study_id.type == '5':
                 # exhibitions
