@@ -192,7 +192,7 @@ class AuthRegisterHome(Home):
 
             # PARA HOY
             comunas_ids = request.env['planning'].search(
-                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
+                [('date_end', '<=', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
 
             final_data = []
@@ -211,7 +211,7 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
+                    [('date_end', '<=', today), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == comuna.id).filtered(
                     lambda x: x.auditor_id.id == int(user_id)).filtered(lambda x: x.state == 'prepared')
 
@@ -281,7 +281,7 @@ class AuthRegisterHome(Home):
 
             # end_final = end + timedelta(days=7)
             comunas_ids = request.env['planning'].search(
-                [('date_start', '>=', end), ('state', '=', 'ready')]).mapped(
+                [('date_end', '>', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
             data_later = []
             comunas_append_later = []
@@ -298,7 +298,7 @@ class AuthRegisterHome(Home):
                 brown = False
                 count_brown = 0
                 planning_salas_ids = request.env['planning'].search(
-                    [('date_start', '>=', end), ('state', '=', 'ready')]).mapped(
+                    [('date_end', '>', today), ('state', '=', 'ready')]).mapped(
                     'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == comuna.id).filtered(
                     lambda x: x.auditor_id.id == int(user_id)).filtered(lambda x: x.state == 'prepared')
 
@@ -406,7 +406,7 @@ class AuthRegisterHome(Home):
             start = today - timedelta(days=today.weekday())
             end = start + timedelta(days=6)
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '>=', start), ('date_start', '<=', end), ('state', '=', 'ready')]).mapped(
+                [('date_end', '<=', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == int(comuna_id)).filtered(
                 lambda x: x.state == 'prepared').filtered(
                 lambda x: x.auditor_id.id == int(user_id))
@@ -447,7 +447,7 @@ class AuthRegisterHome(Home):
                                 data.append(sala_data)
 
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '>=', end), ('state', '=', 'ready')]).mapped(
+                [('date_end', '>', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').filtered(lambda x: x.place_id.comuna_id.id == int(comuna_id)).filtered(
                 lambda x: x.state == 'prepared').filtered(
                 lambda x: x.auditor_id.id == int(user_id))
@@ -587,7 +587,7 @@ class AuthRegisterHome(Home):
             end = start + timedelta(days=6)
 
             planning_salas_ids = request.env['planning'].search(
-                [('date_start', '<=', today), ('date_end', '>=', today), ('state', '=', 'ready')]).mapped(
+                [('date_end', '<=', today), ('state', '=', 'ready')]).mapped(
                 'planning_salas_ids').filtered(lambda x: x.place_id.id == int(place_id)).filtered(
                 lambda x: x.state == 'prepared').filtered(
                 lambda x: x.auditor_id.id == int(user_id))
@@ -729,6 +729,7 @@ class AuthRegisterHome(Home):
                     "Disponibilidad": "",
                     "Respuesta": "",
                     "Comentario": "",
+                    "is_audited": False,
                     "Momento_medición": ""
                 }
                 data.append(vals)
@@ -809,6 +810,7 @@ class AuthRegisterHome(Home):
                         "Disponibilidad": "",
                         "Respuesta": "",
                         "Comentario": "",
+                        "is_audited": False,
                         "Momento_medición": "",
                         "Id_Producto_Planificado_Padre": "",
                         "Posicion_X_del_producto": "",
@@ -869,6 +871,7 @@ class AuthRegisterHome(Home):
                         "Disponibilidad": "",
                         "Respuesta": "",
                         "Comentario": "",
+                        "is_audited": False,
                         "Momento_medición": "",
                         "Id_Producto_Planificado_Padre": "",
                         "Posicion_X_del_producto": "",
@@ -981,6 +984,7 @@ class AuthRegisterHome(Home):
                     "Valor_x_Defecto_target": variable_estudios.variable_id.valor_x_defecto or '',
                     "Porc_Validación": "",
                     "Disponibilidad": "",
+                    "is_audited": False,
                     "Respuesta": "",
                     "Comentario": "",
                     "Momento_medición": ""
@@ -1138,6 +1142,7 @@ class AuthRegisterHome(Home):
                         "validation_perc": variable.get("Porc_Validación"),
                         "xN1": variable.get("xN1"),
                         "xN2": variable.get("xN2"),
+                        "is_audited": variable.get("is_audited"),
                         "date_start": variable.get("Momento_medición"),
                     }
                     medicion.write(vals)
@@ -1152,6 +1157,7 @@ class AuthRegisterHome(Home):
                         "validation_perc": variable.get("Porc_Validación"),
                         "xN1": variable.get("xN1"),
                         "xN2": variable.get("xN2"),
+                        "is_audited": variable.get("is_audited"),
                         "date_start": variable.get("Momento_medición"),
                     }
                     request.env['planning.product'].create(vals)
@@ -1224,6 +1230,7 @@ class AuthRegisterHome(Home):
                             "validation_perc": var.get('Porc_Validación'),
                             "xN1": var.get('xN1'),
                             "xN2": var.get('xN2'),
+                            "is_audited": var.get('is_audited'),
                             "date_start": var.get("Momento_medición"),
                         }
                         medicion.write(vals)
@@ -1246,6 +1253,7 @@ class AuthRegisterHome(Home):
                             "validation_perc": var.get('Porc_Validación'),
                             "xN1": var.get('xN1'),
                             "xN2": var.get('xN2'),
+                            "is_audited": var.get('is_audited'),
                             "date_start": var.get("Momento_medición"),
                         }
                         study_id = request.env['planning.product'].create(vals)
@@ -1367,6 +1375,7 @@ class AuthRegisterHome(Home):
                                 "Id_Producto_Planificado_Padre": "",
                                 "Posicion_X_del_producto": "",
                                 "Posicion_Y_del_producto": "",
+                                "is_audited": planning_product.is_audited,
                             }
                             variables.append(vals_var)
                     vals_prod = {

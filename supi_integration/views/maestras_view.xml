@@ -1035,6 +1035,7 @@
                     <field name="disponibilidad"/>
                     <field name="respuesta"/>
                     <field name="comment"/>
+                    <field name="is_audited" optional="hide"/>
                     <field name="posicion_x" optional="hide"/>
                     <field name="posicion_y" optional="hide"/>
                     <field name="xN1" string="Multiplicador 1 de variable" optional="hide"/>
@@ -1051,6 +1052,7 @@
                     <field name="planning_salas_id"/>
                     <field name="product_id"/>
                     <field name="variable_id"/>
+                    <field name="is_audited"/>
                 </search>
             </field>
         </record>
