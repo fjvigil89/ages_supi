@@ -123,6 +123,9 @@ class Variables(models.Model):
     xN2 = fields.Integer(string="xN2")
     is_automatic = fields.Boolean(default=False, string="Es automatica?")
     valor_x_defecto = fields.Char(string="Valor por defecto")
+    variable_que_depende_id = fields.Many2one("variables", string="Variable de la cual depende la variable actual")
+    logica_Muestreo = fields.Char("Logica de muestreo",
+                                  help="Un Ejemplo: Para el caso de la variable Valor de Mecánica, * depende_de_variable == ¿Tiene Mecánica promocional gica_Muestreo ==True")
 
     @api.depends('icon')
     def compute_url_icon(self):

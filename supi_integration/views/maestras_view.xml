@@ -409,9 +409,11 @@
                             <group>
                                 <field name="tipo_estudio" required="1"
                                        help="Tipo de estudio utilizado para las peticiones de la app"/>
+                                <field name="variable_que_depende_id"/>
                             </group>
                             <group>
                                 <field name="valores_combobox"/>
+                                <field name="logica_Muestreo"/>
                             </group>
                         </group>
                         <group>
