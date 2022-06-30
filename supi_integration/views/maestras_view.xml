@@ -1214,9 +1214,11 @@
                                 <field name="variables_estudios_ids"
                                 >
                                     <tree editable="bottom">
+                                        <field name="no_order" string="Orden"/>
                                         <field name="variable_id" required="1"
                                                domain="[('tipo_estudio','=',parent.study_id_type)]"/>
                                         <field name="planograma_id" invisible="1"/>
+
                                     </tree>
                                 </field>
                             </page>

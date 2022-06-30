@@ -652,6 +652,7 @@ class AuthRegisterHome(Home):
                                 'Tipo_Dato': tipo_dato or '',
                                 'valores_combo': variable.variable_id.valores_combobox.split(
                                     ',') if variable.variable_id.valores_combobox else [],
+                                "order": variable.no_order,
                                 'icono': variable.variable_id.url_icon,
                                 "xN1": variable.variable_id.xN1,
                                 "xN2": variable.variable_id.xN2,
@@ -727,6 +728,7 @@ class AuthRegisterHome(Home):
                     "Valor_x_Defecto_target": variable_estudios.variable_id.valor_x_defecto or '',
                     "Porc_Validación": "",
                     "Disponibilidad": "",
+                    "order": variable_estudios.no_order,
                     "Respuesta": "",
                     "Comentario": "",
                     "is_audited": False,
@@ -1358,11 +1360,18 @@ class AuthRegisterHome(Home):
                     for planning_product in planning_products:
                         if planning_product.product_id.id == producto.product_id.id:
                             tipo_dato = self.get_tipo_dato(planning_product.variable_id.tipo_dato)
+                            variables_studios = request.env['planning.salas'].search(
+                                [("id", "=",
+                                  int(id_sala_planogramada))]).planning_id.planograma_id.mapped(
+                                'variables_estudios_ids').filtered(
+                                lambda p: p.variable_id.id != planning_product.variable_id.id)
 
                             vals_var = {
                                 "id_variable": planning_product.variable_id.id,
                                 "name_variable": planning_product.variable_id.name,
                                 "label_visual": planning_product.variable_id.label_visual,
+                                "variable_id_depende": planning_product.variable_id.variable_que_depende_id.id,
+                                "is_automatic": planning_product.variable_id.is_automatic,
                                 "Tipo_Dato": tipo_dato,
                                 'valores_combo': planning_product.variable_id.valores_combobox.split(
                                     ',') if planning_product.variable_id.valores_combobox else [],
@@ -1373,6 +1382,7 @@ class AuthRegisterHome(Home):
                                 "Porc_Validación": "",
                                 "Disponibilidad": "",
                                 "Respuesta": "",
+                                "order": variables_studios.no_order,
                                 "Comentario": "",
                                 "Momento_medición": "",
                                 "Id_Producto_Planificado_Padre": "",

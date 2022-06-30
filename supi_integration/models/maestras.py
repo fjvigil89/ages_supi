@@ -484,6 +484,7 @@ class VariablesEstudios(models.Model):
 
     planograma_id = fields.Many2one("planograma", string="Planograma")
     variable_id = fields.Many2one('variables', string="Variable")
+    no_order = fields.Integer(string="Orden de aparición")
 
 
 class SalasPlanograma(models.Model):
