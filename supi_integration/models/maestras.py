@@ -260,7 +260,7 @@ class PlanningSalas(models.Model):
     answer_quiz_2 = fields.Char("Respuesta 2")
     id_quiz_3 = fields.Many2one('quiz', string="Id Quiz 3")
     answer_quiz_3 = fields.Char("Respuesta 3")
-    # quizs_ids = fields.One2many('quiz.result', 'planning_salas_id', string='Quizs', copy=True)
+    mediciones_ids = fields.One2many('planning.product', 'planning_salas_id', string="Mediciones")
     categories_ids = fields.Many2many('product.category')
     state = fields.Selection([
         ('prepared', 'Preparado'),

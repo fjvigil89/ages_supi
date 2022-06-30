@@ -902,7 +902,19 @@
                                     </group>
                                 </group>
                             </page>
-
+                            <page string="Mediciones asociadas">
+                                <field name="mediciones_ids">
+                                    <tree editable="bottom">
+                                        <field name="planning_salas_id" invisible="1"/>
+                                        <field name="product_id"/>
+                                        <field name="variable_id"/>
+                                        <field name="validation_perc"/>
+                                        <field name="valor_por_defecto"/>
+                                        <field name="estado"/>
+                                        <field name="date_start"/>
+                                    </tree>
+                                </field>
+                            </page>
                         </notebook>
                         <group>
                             <field name="image" widget="image"/>
@@ -985,26 +997,23 @@
                                 <field name="name"/>
                                 <field name="product_id"/>
                                 <field name="estado" string="Estado"/>
-                                <field name="product_ids" widget="many2many_tags"/>
-                                <field name="variable_ids" widget="many2many_tags"/>
-                                <field name="validation_perc"/>
-                                <field name="disponibilidad"/>
+                                <field name="variable_id"/>
+                                <field name="validation_perc" string="Regla de validación"/>
+                                <field name="valor_por_defecto"/>
                                 <field name="posicion_x"/>
-                                <field name="date_start"/>
                                 <field name="is_audited"/>
                                 <field name="planogramado"
                                        help="Si es True el producto fue planogramado, sino fue añadido en la auditoría"/>
                             </group>
                             <group>
-                                <field name="variable_id"/>
-                                <field name="valor_por_defecto"/>
+                                <field name="disponibilidad"/>
+                                <field name="date_start"/>
                                 <field name="respuesta"/>
                                 <field name="comment"/>
                                 <field name="posicion_y"/>
                                 <field name="product_padre_id"/>
                                 <field name="xN1" string="Multiplicador 1 de variable"/>
                                 <field name="xN2" string="Multiplicador 2 de variable"/>
-
                             </group>
                         </group>
                         <notebook>
@@ -1032,11 +1041,11 @@
                     <field name="product_id"/>
                     <field name="variable_id"/>
                     <field name="date_start"/>
-                    <field name="valor_por_defecto" optional="hide"/>
-                    <field name="validation_perc" optional="hide"/>
                     <field name="disponibilidad"/>
                     <field name="respuesta"/>
                     <field name="comment"/>
+                    <field name="valor_por_defecto" optional="hide"/>
+                    <field name="validation_perc" optional="hide"/>
                     <field name="is_audited" optional="hide"/>
                     <field name="posicion_x" optional="hide"/>
                     <field name="posicion_y" optional="hide"/>
