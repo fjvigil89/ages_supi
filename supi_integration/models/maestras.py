@@ -417,6 +417,8 @@ class Planograma(models.Model):
         self.salas_planograma_ids = False
 
     def generate_planning(self):
+        if not self.variables_estudios_ids:
+            raise UserError("Defina las variables a medir en el estudio")
         vals = {
             "date_start": self.date_start,
             "date_end": self.date_end,
