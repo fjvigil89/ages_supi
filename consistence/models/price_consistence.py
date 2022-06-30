@@ -58,6 +58,9 @@ class PriceConsistence(models.Model):
         elements_salas_week_actual = self.env['planning'].search(
             [('date_start', '>=', fecha_inicio_semana_actual), ('date_start', '<', fecha_fin_semana_actual)]).mapped(
             'planning_salas_ids').mapped('place_id')
+        elements_productos_week_actual = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual), ('date_start', '<', fecha_fin_semana_actual)]).mapped(
+            'planning_salas_ids').mapped('planning_products_ids').mapped('product_id')
 
         elements_week_actual_1 = self.env['planning'].search(
             [('date_start', '>=', fecha_inicio_semana_actual_1), ('date_start', '<', fecha_fin_semana_actual_1)])
@@ -65,6 +68,10 @@ class PriceConsistence(models.Model):
             [('date_start', '>=', fecha_inicio_semana_actual_1),
              ('date_start', '<', fecha_fin_semana_actual_1)]).mapped(
             'planning_salas_ids').mapped('place_id')
+        elements_productos_week_actual_1 = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual_1),
+             ('date_start', '<', fecha_fin_semana_actual_1)]).mapped(
+            'planning_salas_ids').mapped('planning_products_ids').mapped('product_id')
 
         elements_week_actual_2 = self.env['planning'].search(
             [('date_start', '>=', fecha_inicio_semana_actual_2), ('date_start', '<', fecha_fin_semana_actual_2)])
@@ -72,6 +79,10 @@ class PriceConsistence(models.Model):
             [('date_start', '>=', fecha_inicio_semana_actual_2),
              ('date_start', '<', fecha_fin_semana_actual_2)]).mapped(
             'planning_salas_ids').mapped('place_id')
+        elements_productos_week_actual_2 = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual_2),
+             ('date_start', '<', fecha_fin_semana_actual_2)]).mapped(
+            'planning_salas_ids').mapped('planning_products_ids').mapped('product_id')
 
         elements_week_actual_3 = self.env['planning'].search(
             [('date_start', '>=', fecha_inicio_semana_actual_3), ('date_start', '<', fecha_fin_semana_actual_3)])
@@ -79,6 +90,11 @@ class PriceConsistence(models.Model):
             [('date_start', '>=', fecha_inicio_semana_actual_3),
              ('date_start', '<', fecha_fin_semana_actual_3)]).mapped(
             'planning_salas_ids').mapped('place_id')
+        elements_productos_week_actual_3 = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual_3),
+             ('date_start', '<', fecha_fin_semana_actual_3)]).mapped(
+            'planning_salas_ids').mapped('planning_products_ids').mapped('product_id')
+
         result = {
             'count_elements_week_actual': len(elements_week_actual),
             'count_elements_week_actual_1': len(elements_week_actual_1),
@@ -89,6 +105,11 @@ class PriceConsistence(models.Model):
             'count_elements_salas_week_actual_1': len(elements_salas_week_actual_1),
             'count_elements_salas_week_actual_2': len(elements_salas_week_actual_2),
             'count_elements_salas_week_actual_3': len(elements_salas_week_actual_3),
+
+            'count_elements_productos_week_actual': len(elements_productos_week_actual),
+            'count_elements_productos_week_actual_1': len(elements_productos_week_actual_1),
+            'count_elements_productos_week_actual_2': len(elements_productos_week_actual_2),
+            'count_elements_productos_week_actual_3': len(elements_productos_week_actual_3),
         }
 
         return result

@@ -46,7 +46,9 @@
                                 </div>
                             </td>
                             <td class="o_text" style="background-color:#00BFFF">
-                                <div>0</div>
+                                <div>
+                                    <t t-esc="values['count_elements_productos_week_actual']"/>
+                                </div>
                             </td>
                             <td class="o_text" style="background-color:#00BFFF">
                                 <div>0</div>
@@ -70,7 +72,9 @@
                                 </div>
                             </td>
                             <td class="o_text" style="background-color:#87CEFA">
-                                <div>0</div>
+                                <div>
+                                    <t t-esc="values['count_elements_productos_week_actual_1']"/>
+                                </div>
                             </td>
                             <td class="o_text" style="background-color:#87CEFA">
                                 <div>0</div>
@@ -94,7 +98,9 @@
                                 </div>
                             </td>
                             <td class="o_text" style="background-color:#87CEEB">
-                                <div>0</div>
+                                <div>
+                                    <t t-esc="values['count_elements_productos_week_actual_2']"/>
+                                </div>
                             </td>
                             <td class="o_text" style="background-color:#87CEEB">
                                 <div>0</div>
@@ -118,7 +124,9 @@
                                 </div>
                             </td>
                             <td class="o_text" style="background-color:#ADD8E6">
-                                <div>0</div>
+                                <div>
+                                    <t t-esc="values['count_elements_productos_week_actual_3']"/>
+                                </div>
                             </td>
                             <td class="o_text" style="background-color:#ADD8E6">
                                 <div>0</div>
