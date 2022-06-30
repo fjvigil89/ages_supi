@@ -987,6 +987,9 @@ class AuthRegisterHome(Home):
                     "Porc_Validación": "",
                     "Disponibilidad": "",
                     "is_audited": False,
+                    "order": variable_estudios.no_order,
+                    "variable_id_depende": variable_estudios.variable_id.variable_que_depende_id.id,
+                    "is_automatic": variable_estudios.variable_id.is_automatic,
                     "Respuesta": "",
                     "Comentario": "",
                     "Momento_medición": ""
@@ -1370,8 +1373,7 @@ class AuthRegisterHome(Home):
                                 "id_variable": planning_product.variable_id.id,
                                 "name_variable": planning_product.variable_id.name,
                                 "label_visual": planning_product.variable_id.label_visual,
-                                "variable_id_depende": planning_product.variable_id.variable_que_depende_id.id,
-                                "is_automatic": planning_product.variable_id.is_automatic,
+
                                 "Tipo_Dato": tipo_dato,
                                 'valores_combo': planning_product.variable_id.valores_combobox.split(
                                     ',') if planning_product.variable_id.valores_combobox else [],
@@ -1383,6 +1385,8 @@ class AuthRegisterHome(Home):
                                 "Disponibilidad": "",
                                 "Respuesta": "",
                                 "order": variables_studios.no_order,
+                                "variable_id_depende": planning_product.variable_id.variable_que_depende_id.id,
+                                "is_automatic": planning_product.variable_id.is_automatic,
                                 "Comentario": "",
                                 "Momento_medición": "",
                                 "Id_Producto_Planificado_Padre": "",
