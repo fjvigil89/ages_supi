@@ -4,110 +4,91 @@ import json
 from odoo import models, fields, api
 
 from odoo import tools
+from datetime import datetime, date
+import pytz
+from datetime import date, timedelta
 
 
 class PriceConsistence(models.Model):
     _name = 'price.consistence'
     _auto = False
 
-    name = fields.Char(string="Nombre")
-    study_id = fields.Many2one('study')
+    product_id = fields.Many2one('product.product')
+    planning_sala_id = fields.Many2one('planning.salas')
+    variable_id = fields.Many2one('variables')
 
     def init(self):
         tools.drop_view_if_exists(self._cr, 'price_consistence')
         self._cr.execute(""" 
            CREATE OR REPLACE VIEW price_consistence AS ( 
                SELECT            row_number() OVER () as id,
-                pl.study_id as study_id,  
-                pl.name as name
-                FROM planograma pl             )
+                pl.planning_salas_id as planning_sala_id,  
+                pl.product_id as product_id,
+                pl.variable_id as variable_id
+                FROM planning_product pl             )
     """)
 
-    #
-    # def _query(self, with_clause='', fields={}, groupby='', from_clause=''):
-    #     with_ = ("WITH %s" % with_clause) if with_clause else ""
-    #
-    #     select_ = """study_id"""
-    #     from_ = """ planograma """
-    #     return '%s (SELECT %s FROM %s)' % (with_, select_, from_)
-    #
-    # def init(self):
-    #     # self._table = sale_report
-    #     tools.drop_view_if_exists(self.env.cr, self._table)
-    #     self.env.cr.execute("""CREATE or REPLACE VIEW %s as (%s)""" % (self._table, self._query()))
+    def get_date_by_tz(self, val_date, format_a=None):
+        utc_timestamp = pytz.utc.localize(val_date, is_dst=False)
+        context_tz = pytz.timezone('Chile/Continental')
+        if not format_a:
+            return utc_timestamp.astimezone(context_tz).date()
+        else:
+            return utc_timestamp.astimezone(context_tz).strftime(format_a).date()
 
     @api.model
     def retrieve_dashboard(self):
         print("retrieve data")
-        # """ This function returns the values to populate the custom dashboard in
-        #     the purchase order views.
-        # """
-        # self.check_access_rights('read')
-        elements = self.env['price.consistence'].search([])
+        today = datetime.utcnow()
+        today = self.get_date_by_tz(today)
+        fecha_inicio_semana_actual = today - timedelta(days=today.weekday())
+        fecha_fin_semana_actual = fecha_inicio_semana_actual + timedelta(days=6)
+
+        fecha_inicio_semana_actual_1 = fecha_inicio_semana_actual - timedelta(days=7)
+        fecha_fin_semana_actual_1 = fecha_inicio_semana_actual_1 + timedelta(days=6)
+
+        fecha_inicio_semana_actual_2 = fecha_inicio_semana_actual_1 - timedelta(days=7)
+        fecha_fin_semana_actual_2 = fecha_inicio_semana_actual_2 + timedelta(days=6)
+
+        fecha_inicio_semana_actual_3 = fecha_inicio_semana_actual_2 - timedelta(days=7)
+        fecha_fin_semana_actual_3 = fecha_inicio_semana_actual_3 + timedelta(days=6)
+
+        elements_week_actual = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual), ('date_start', '<', fecha_fin_semana_actual)])
+        elements_salas_week_actual = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual), ('date_start', '<', fecha_fin_semana_actual)]).mapped(
+            'planning_salas_ids').mapped('place_id')
+
+        elements_week_actual_1 = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual_1), ('date_start', '<', fecha_fin_semana_actual_1)])
+        elements_salas_week_actual_1 = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual_1),
+             ('date_start', '<', fecha_fin_semana_actual_1)]).mapped(
+            'planning_salas_ids').mapped('place_id')
+
+        elements_week_actual_2 = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual_2), ('date_start', '<', fecha_fin_semana_actual_2)])
+        elements_salas_week_actual_2 = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual_2),
+             ('date_start', '<', fecha_fin_semana_actual_2)]).mapped(
+            'planning_salas_ids').mapped('place_id')
+
+        elements_week_actual_3 = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual_3), ('date_start', '<', fecha_fin_semana_actual_3)])
+        elements_salas_week_actual_3 = self.env['planning'].search(
+            [('date_start', '>=', fecha_inicio_semana_actual_3),
+             ('date_start', '<', fecha_fin_semana_actual_3)]).mapped(
+            'planning_salas_ids').mapped('place_id')
         result = {
-            'count_elements': len(elements), }
-        #     'all_waiting': 0,
-        #     'all_late': 0,
-        #     'my_to_send': 0,
-        #     'my_waiting': 0,
-        #     'my_late': 0,
-        #     'all_avg_order_value': 0,
-        #     'all_avg_days_to_purchase': 0,
-        #     'all_total_last_7_days': 0,
-        #     'all_sent_rfqs': 0,
-        #     'company_currency_symbol': self.env.company.currency_id.symbol
-        # }
-        #
-        # one_week_ago = fields.Datetime.to_string(fields.Datetime.now() - relativedelta(days=7))
-        # # This query is brittle since it depends on the label values of a selection field
-        # # not changing, but we don't have a direct time tracker of when a state changes
-        # query = """SELECT COUNT(1)
-        #             FROM mail_tracking_value v
-        #             LEFT JOIN mail_message m ON (v.mail_message_id = m.id)
-        #             JOIN purchase_order po ON (po.id = m.res_id)
-        #             WHERE m.create_date >= %s
-        #               AND m.model = 'purchase.order'
-        #               AND m.message_type = 'notification'
-        #               AND v.old_value_char = 'RFQ'
-        #               AND v.new_value_char = 'RFQ Sent'
-        #               AND po.company_id = %s;
-        #          """
-        #
-        # self.env.cr.execute(query, (one_week_ago, self.env.company.id))
-        # res = self.env.cr.fetchone()
-        # result['all_sent_rfqs'] = res[0] or 0
-        #
-        # # easy counts
-        # po = self.env['purchase.order']
-        # result['all_to_send'] = po.search_count([('state', '=', 'draft')])
-        # result['my_to_send'] = po.search_count([('state', '=', 'draft'), ('user_id', '=', self.env.uid)])
-        # result['all_waiting'] = po.search_count([('state', '=', 'sent'), ('date_order', '>=', fields.Datetime.now())])
-        # result['my_waiting'] = po.search_count(
-        #     [('state', '=', 'sent'), ('date_order', '>=', fields.Datetime.now()), ('user_id', '=', self.env.uid)])
-        # result['all_late'] = po.search_count(
-        #     [('state', 'in', ['draft', 'sent', 'to approve']), ('date_order', '<', fields.Datetime.now())])
-        # result['my_late'] = po.search_count(
-        #     [('state', 'in', ['draft', 'sent', 'to approve']), ('date_order', '<', fields.Datetime.now()),
-        #      ('user_id', '=', self.env.uid)])
-        #
-        # # Calculated values ('avg order value', 'avg days to purchase', and 'total last 7 days') note that 'avg order value' and
-        # # 'total last 7 days' takes into account exchange rate and current company's currency's precision. Min of currency precision
-        # # is taken to easily extract it from query.
-        # # This is done via SQL for scalability reasons
-        # query = """SELECT AVG(COALESCE(po.amount_total / NULLIF(po.currency_rate, 0), po.amount_total)),
-        #                    AVG(extract(epoch from age(po.date_approve,po.create_date)/(24*60*60)::decimal(16,2))),
-        #                    SUM(CASE WHEN po.date_approve >= %s THEN COALESCE(po.amount_total / NULLIF(po.currency_rate, 0), po.amount_total) ELSE 0 END),
-        #                    MIN(curr.decimal_places)
-        #             FROM purchase_order po
-        #             JOIN res_company comp ON (po.company_id = comp.id)
-        #             JOIN res_currency curr ON (comp.currency_id = curr.id)
-        #             WHERE po.state in ('purchase', 'done')
-        #               AND po.company_id = %s
-        #          """
-        # self._cr.execute(query, (one_week_ago, self.env.company.id))
-        # res = self.env.cr.fetchone()
-        # result['all_avg_order_value'] = round(res[0] or 0, res[3])
-        # result['all_avg_days_to_purchase'] = round(res[1] or 0, 2)
-        # result['all_total_last_7_days'] = round(res[2] or 0, res[3])
+            'count_elements_week_actual': len(elements_week_actual),
+            'count_elements_week_actual_1': len(elements_week_actual_1),
+            'count_elements_week_actual_2': len(elements_week_actual_2),
+            'count_elements_week_actual_3': len(elements_week_actual_3),
+
+            'count_elements_salas_week_actual': len(elements_salas_week_actual),
+            'count_elements_salas_week_actual_1': len(elements_salas_week_actual_1),
+            'count_elements_salas_week_actual_2': len(elements_salas_week_actual_2),
+            'count_elements_salas_week_actual_3': len(elements_salas_week_actual_3),
+        }
 
         return result

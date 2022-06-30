@@ -4,27 +4,27 @@
     <t t-name="consistence.ConsistenceDashboard">
         <div class="o_consistence_dashboard container">
             <div class="row">
-                <table class="table table-bordered">
+                <table class="table table-bordered" style="background-color:grey">
                     <!-- thead needed to avoid list view rendering error for some reason -->
-                    <thead>
+                    <thead style="background-color:grey">
                         <tr>
                             <!-- can't use th tag due to list rendering error when no values in list... -->
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#D3D3D3">
                                 <div>Valores</div>
                             </td>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#D3D3D3">
                                 <div># Registros</div>
                             </td>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#D3D3D3">
                                 <div># Salas</div>
                             </td>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#D3D3D3">
                                 <div># SKU</div>
                             </td>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#D3D3D3">
                                 <div>Varianza</div>
                             </td>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#D3D3D3">
                                 <div>#Modificados</div>
                             </td>
 
@@ -32,89 +32,99 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#D3D3D3">
                                 <div>Semana actual</div>
                             </td>
-                            <td class="o_text">
-                                <div></div>
+                            <td class="o_text" style="background-color:#00BFFF">
+                                <div>
+                                    <t t-esc="values['count_elements_week_actual']"/>
+                                </div>
                             </td>
-                            <td class="o_text">
-                                <div></div>
+                            <td class="o_text" style="background-color:#00BFFF">
+                                <div>
+                                    <t t-esc="values['count_elements_salas_week_actual']"/>
+                                </div>
                             </td>
-                            <td class="o_text">
-                                <div></div>
+                            <td class="o_text" style="background-color:#00BFFF">
+                                <div>0</div>
                             </td>
-                            <td class="o_text">
-                                <div></div>
+                            <td class="o_text" style="background-color:#00BFFF">
+                                <div>0</div>
                             </td>
-                            <td class="o_text">
-                                <div></div>
+                            <td class="o_text" style="background-color:#00BFFF">
+                                <div>0</div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#D3D3D3">
                                 <div>Semana -1</div>
                             </td>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#87CEFA">
                                 <div>
-                                    <t t-esc="values['count_elements']"/>
+                                    <t t-esc="values['count_elements_week_actual_1']"/>
                                 </div>
                             </td>
-                            <td class="o_text">
-                                <div>32</div>
+                            <td class="o_text" style="background-color:#87CEFA">
+                                <div>
+                                    <t t-esc="values['count_elements_salas_week_actual_1']"/>
+                                </div>
                             </td>
-                            <td class="o_text">
-                                <div>45</div>
+                            <td class="o_text" style="background-color:#87CEFA">
+                                <div>0</div>
                             </td>
-                            <td class="o_text">
-                                <div>0,65</div>
+                            <td class="o_text" style="background-color:#87CEFA">
+                                <div>0</div>
                             </td>
-                            <td class="o_text">
-                                <div>89</div>
+                            <td class="o_text" style="background-color:#87CEFA">
+                                <div>0</div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#D3D3D3">
                                 <div>Semana -2</div>
                             </td>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#87CEEB">
                                 <div>
-                                    234
+                                    <t t-esc="values['count_elements_week_actual_2']"/>
                                 </div>
                             </td>
-                            <td class="o_text">
-                                <div>12</div>
+                            <td class="o_text" style="background-color:#87CEEB">
+                                <div>
+                                    <t t-esc="values['count_elements_salas_week_actual_2']"/>
+                                </div>
                             </td>
-                            <td class="o_text">
-                                <div>65</div>
+                            <td class="o_text" style="background-color:#87CEEB">
+                                <div>0</div>
                             </td>
-                            <td class="o_text">
-                                <div>0,7</div>
+                            <td class="o_text" style="background-color:#87CEEB">
+                                <div>0</div>
                             </td>
-                            <td class="o_text">
-                                <div>23</div>
+                            <td class="o_text" style="background-color:#87CEEB">
+                                <div>0</div>
                             </td>
                         </tr>
                         <tr>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#D3D3D3">
                                 <div>Semana -3</div>
                             </td>
-                            <td class="o_text">
+                            <td class="o_text" style="background-color:#ADD8E6">
                                 <div>
-                                    12
+                                    <t t-esc="values['count_elements_week_actual_3']"/>
                                 </div>
                             </td>
-                            <td class="o_text">
-                                <div>56</div>
+                            <td class="o_text" style="background-color:#ADD8E6">
+                                <div>
+                                    <t t-esc="values['count_elements_salas_week_actual_3']"/>
+                                </div>
                             </td>
-                            <td class="o_text">
-                                <div>54645</div>
+                            <td class="o_text" style="background-color:#ADD8E6">
+                                <div>0</div>
                             </td>
-                            <td class="o_text">
-                                <div>0,3</div>
+                            <td class="o_text" style="background-color:#ADD8E6">
+                                <div>0</div>
                             </td>
-                            <td class="o_text">
-                                <div>456</div>
+                            <td class="o_text" style="background-color:#ADD8E6">
+                                <div>0</div>
                             </td>
                         </tr>
                     </tbody>
