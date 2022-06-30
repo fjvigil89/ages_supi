@@ -113,6 +113,7 @@ class Variables(models.Model):
          ('5', 'Select'),
          ('6', 'Price'),
          ('7', 'Radiobutton'),
+         ('8', 'Date'),
          ],
         string='Tipo de dato')
     image = fields.Binary(string="Image")

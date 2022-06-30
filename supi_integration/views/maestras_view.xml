@@ -409,7 +409,7 @@
                             <group>
                                 <field name="tipo_estudio" required="1"
                                        help="Tipo de estudio utilizado para las peticiones de la app"/>
-                                <field name="variable_que_depende_id"/>
+                                <field name="variable_que_depende_id" domain="[('tipo_estudio','=',tipo_estudio)]"/>
                             </group>
                             <group>
                                 <field name="valores_combobox"/>
