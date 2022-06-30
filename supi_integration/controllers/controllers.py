@@ -1366,8 +1366,11 @@ class AuthRegisterHome(Home):
                             variables_studios = request.env['planning.salas'].search(
                                 [("id", "=",
                                   int(id_sala_planogramada))]).planning_id.planograma_id.mapped(
-                                'variables_estudios_ids').filtered(
-                                lambda p: p.variable_id.id != planning_product.variable_id.id)
+                                'variables_estudios_ids')
+                            order = 0
+                            for var in variables_studios:
+                                if var.variable_id.id == planning_product.variable_id.id:
+                                    order = var.no_order
 
                             vals_var = {
                                 "id_variable": planning_product.variable_id.id,
@@ -1384,7 +1387,7 @@ class AuthRegisterHome(Home):
                                 "Porc_Validación": "",
                                 "Disponibilidad": "",
                                 "Respuesta": "",
-                                "order": variables_studios.no_order,
+                                "order": order,
                                 "variable_id_depende": planning_product.variable_id.variable_que_depende_id.id,
                                 "is_automatic": planning_product.variable_id.is_automatic,
                                 "Comentario": "",
