@@ -114,6 +114,7 @@ class Variables(models.Model):
          ('6', 'Price'),
          ('7', 'Radiobutton'),
          ('8', 'Date'),
+         ('9', 'Mecánica'),
          ],
         string='Tipo de dato')
     image = fields.Binary(string="Image")
@@ -482,6 +483,7 @@ class VariablesEstudios(models.Model):
     _name = "variables.studies"
     _description = "Variables de estudios"
     _rec_name = 'variable_id'
+    _order = 'no_order'
 
     planograma_id = fields.Many2one("planograma", string="Planograma")
     variable_id = fields.Many2one('variables', string="Variable")
