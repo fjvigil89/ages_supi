@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequences for lead mining requests -->
+        <record id="validacion1" model="validacion.variables">
+            <field name="name">Mayor que 18 y menor que 25</field>
+            <field name="expresion">&gt;,18,and,&lt;,25</field>
+            <field name="error_description">Error por exceso del rango entre 18 y 25</field>
+        </record>
+
+        <!-- Sequences for lead mining requests -->
+        <record id="validacion2" model="validacion.variables">
+            <field name="name">Diferente de 0</field>
+            <field name="expresion">!=,0</field>
+            <field name="error_description">No puede ser 0 en ese valor</field>
+        </record>
+    </data>
+</odoo>

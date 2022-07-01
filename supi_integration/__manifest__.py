@@ -18,10 +18,10 @@
 
     # always loaded
     'data': [
-        'security/ir.model.access.csv',
         'views/res_users_view.xml',
         'wizard/wizard_gallery_picture.xml',
         'data/data_secuences.xml',
+        # 'data/expresiones_validacion_variables.xml',
         'data/product_product_data.xml',
         'data/data_variable_present_times.xml',
         'data/product_product_muebles_data.xml',
@@ -29,7 +29,9 @@
         'views/product_product_view.xml',
         'views/training_consult_view.xml',
         'views/supi_operations_view.xml',
+        'views/variable_validations_view.xml',
         'views/maestras_view.xml',
-        'wizard/import_planograma.xml'
+        'wizard/import_planograma.xml',
+        'security/ir.model.access.csv',
     ],
 }

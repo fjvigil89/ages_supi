@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 import json
-
-from odoo import models, fields, api
 import random
-# -*- coding: utf-8 -*-
 
 from odoo import models, fields, api
 from odoo.exceptions import UserError
+
+
+# -*- coding: utf-8 -*-
 
 
 # https://maps.googleapis.com/maps/api/geocode/json?latlng=44.4647452,7.3553838&key=YOUR_API_KEY
@@ -115,6 +115,8 @@ class Variables(models.Model):
          ('7', 'Radiobutton'),
          ('8', 'Date'),
          ('9', 'Mecánica'),
+         ('10', 'Estado'),
+         ('11', 'Promoción'),
          ],
         string='Tipo de dato')
     image = fields.Binary(string="Image")
@@ -126,8 +128,8 @@ class Variables(models.Model):
     is_automatic = fields.Boolean(default=False, string="Es automatica?")
     valor_x_defecto = fields.Char(string="Valor por defecto")
     variable_que_depende_id = fields.Many2one("variables", string="Variable de la cual depende la variable actual")
-    logica_Muestreo = fields.Char("Logica de muestreo",
-                                  help="Un Ejemplo: Para el caso de la variable Valor de Mecánica, * depende_de_variable == ¿Tiene Mecánica promocional gica_Muestreo ==True")
+    logica_muestreo = fields.Many2one('validacion.variables', string="Lógica de validación",
+                                      help="Este campo se usará para validar una variable respecto a otra.")
 
     @api.depends('icon')
     def compute_url_icon(self):
@@ -296,7 +298,7 @@ class PlanningProducts(models.Model):
     variable_id = fields.Many2one('variables', string="Variable")
     variable_ids = fields.Many2many('variables', string="Variables")
     valor_por_defecto = fields.Char("Valor por defecto")
-    validation_perc = fields.Char("% Validación")
+    validation_perc = fields.Many2one('validacion.variables', string="Regla de validación",help="Este campo se usará para validar una variable respecto a otra.")
     disponibilidad = fields.Char("Disponibilidad")
     respuesta = fields.Char("Respuesta")
     comment = fields.Char("Comentario")

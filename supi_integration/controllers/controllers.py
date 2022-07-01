@@ -1,25 +1,17 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-import logging
 import json
+import logging
+from datetime import datetime
+from datetime import timedelta
 
-import requests
-
-from odoo import http, _
 import pytz
 from odoo.addons.auth_signup.models.res_users import SignupError
-from odoo.addons.web.controllers.main import ensure_db, Home
+from odoo.addons.web.controllers.main import Home
+
+from odoo import _, exceptions
 from odoo.exceptions import UserError
-from odoo.http import request
-from datetime import datetime, date
-from odoo import http, _, exceptions
-from datetime import date, timedelta
-
-from .serializers import Serializer
 from .exceptions import QueryFormatError
-from odoo import fields
-
-from odoo.tools.image import image_data_uri
 
 _logger = logging.getLogger(__name__)
 
@@ -77,6 +69,10 @@ class AuthRegisterHome(Home):
             tipo_dato_text = "Date"
         if tipo_dato == '9':
             tipo_dato_text = "Mecánica"
+        if tipo_dato == '10':
+            tipo_dato_text = "Estado"
+        if tipo_dato == '11':
+            tipo_dato_text = "Promoción"
         return tipo_dato_text
 
     @http.route('/web/restart_password', type='json', auth='public', website=True, sitemap=False)
@@ -641,6 +637,7 @@ class AuthRegisterHome(Home):
                                 'icono': variable.url_icon,
                                 "xN1": variable.xN1,
                                 "xN2": variable.xN2,
+                                "logica_Muestreo": variable.logica_Muestreo or '',
                                 "valor_x_defecto": variable.valor_x_defecto or '',
                             }
                             variables.append(vals_val)
@@ -656,6 +653,7 @@ class AuthRegisterHome(Home):
                                     ',') if variable.variable_id.valores_combobox else [],
                                 "order": variable.no_order,
                                 'icono': variable.variable_id.url_icon,
+                                "logica_Muestreo": variable.logica_Muestreo or '',
                                 "xN1": variable.variable_id.xN1,
                                 "xN2": variable.variable_id.xN2,
                                 "valor_x_defecto": variable.variable_id.valor_x_defecto or '',
@@ -727,6 +725,7 @@ class AuthRegisterHome(Home):
                     'icono': variable_estudios.variable_id.url_icon,
                     "xN1": variable_estudios.variable_id.xN1,
                     "xN2": variable_estudios.variable_id.xN2,
+                    "logica_Muestreo": variable_estudios.variable_id.logica_Muestreo or '',
                     "Valor_x_Defecto_target": variable_estudios.variable_id.valor_x_defecto or '',
                     "Porc_Validación": "",
                     "Disponibilidad": "",
@@ -806,6 +805,7 @@ class AuthRegisterHome(Home):
                         "label_visual": planning_products_variable.label_visual,
                         "Tipo_Dato": tipo_dato,
                         "valores_combo": planning_products_variable.valores_combobox,
+                        "logica_Muestreo": planning_products_variable.logica_Muestreo or '',
                         "ícono": planning_products_variable.url_icon,
                         "xN1": planning_products_variable.xN1,
                         "xN2": planning_products_variable.xN2,
@@ -867,6 +867,7 @@ class AuthRegisterHome(Home):
                         "label_visual": planning_products_variable.label_visual,
                         "Tipo_Dato": tipo_dato,
                         "valores_combo": planning_products_variable.valores_combobox,
+                        "logica_Muestreo": planning_products_variable.logica_Muestreo or '',
                         "ícono": planning_products_variable.url_icon,
                         "xN1": planning_products_variable.xN1,
                         "xN2": planning_products_variable.xN2,
@@ -982,6 +983,7 @@ class AuthRegisterHome(Home):
                     "Tipo_Dato": tipo_dato,
                     "valores_combo": variable_estudios.variable_id.valores_combobox.split(
                         ',') if variable_estudios.variable_id.valores_combobox else [],
+                    "logica_Muestreo": variable_estudios.variable_id.logica_Muestreo or '',
                     'icono': variable_estudios.variable_id.url_icon,
                     "xN1": variable_estudios.variable_id.xN1,
                     "xN2": variable_estudios.variable_id.xN2,
@@ -990,7 +992,7 @@ class AuthRegisterHome(Home):
                     "Disponibilidad": "",
                     "is_audited": False,
                     "order": variable_estudios.no_order,
-                    "variable_id_depende": variable_estudios.variable_id.variable_que_depende_id.id,
+                    "variable_id_depende": variable_estudios.variable_id.variable_que_depende_id.id or 0,
                     "is_automatic": variable_estudios.variable_id.is_automatic,
                     "Respuesta": "",
                     "Comentario": "",
@@ -1385,12 +1387,13 @@ class AuthRegisterHome(Home):
                                 "ícono": planning_product.variable_id.url_icon,
                                 "xN1": planning_product.variable_id.xN1,
                                 "xN2": planning_product.variable_id.xN2,
+                                "logica_Muestreo": planning_product.variable_id.logica_Muestreo or '',
                                 "Valor_x_Defecto_target": planning_product.variable_id.valor_x_defecto or '',
                                 "Porc_Validación": "",
                                 "Disponibilidad": "",
                                 "Respuesta": "",
                                 "order": order,
-                                "variable_id_depende": planning_product.variable_id.variable_que_depende_id.id,
+                                "variable_id_depende": planning_product.variable_id.variable_que_depende_id.id or 0,
                                 "is_automatic": planning_product.variable_id.is_automatic,
                                 "Comentario": "",
                                 "Momento_medición": "",
@@ -1518,6 +1521,7 @@ class AuthRegisterHome(Home):
                     'valores_combo': variable.variable_id.valores_combobox.split(
                         ',') if variable.variable_id.valores_combobox else [],
                     "ícono": variable.variable_id.url_icon,
+                    "logica_Muestreo": variable.variable_id.logica_Muestreo or '',
                     "xN1": variable.variable_id.xN1,
                     "xN2": variable.variable_id.xN2,
                     "Valor_x_Defecto_target": variable.variable_id.valor_x_defecto or '',
@@ -1641,6 +1645,7 @@ class AuthRegisterHome(Home):
                             'valores_combo': product_hijo.variable_id.valores_combobox.split(
                                 ',') if product_hijo.variable_id.valores_combobox else [],
                             "ícono": product_hijo.variable_id.url_icon,
+                            "logica_Muestreo": product_hijo.variable_id.logica_Muestreo or '',
                             "xN1": product_hijo.xN1,
                             "xN2": product_hijo.xN2,
                             "Valor_x_Defecto_target": product_hijo.valor_por_defecto or '',

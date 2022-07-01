@@ -409,11 +409,13 @@
                             <group>
                                 <field name="tipo_estudio" required="1"
                                        help="Tipo de estudio utilizado para las peticiones de la app"/>
-                                <field name="variable_que_depende_id" domain="[('tipo_estudio','=',tipo_estudio)]" string="Depende de"/>
+                                <field name="variable_que_depende_id" domain="[('tipo_estudio','=',tipo_estudio)]"
+                                       string="Depende de"/>
                             </group>
                             <group>
                                 <field name="valores_combobox"/>
-                                <field name="logica_Muestreo"/>
+                                <field name="logica_muestreo" string="Lógica de validación"
+                                       help="Este campo se usará para validar una variable respecto a otra."/>
                             </group>
                         </group>
                         <group>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <!--        SECTION-->
+        <record model="ir.ui.view" id="view_validacion_variables_form">
+            <field name="name">validacion.variables.form</field>
+            <field name="model">validacion.variables</field>
+            <field name="arch" type="xml">
+                <form string="Validaciones">
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" required="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="expresion" required="1"/>
+                            </group>
+                            <group>
+                                <field name="error_description" required="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_validacion_variables_tree">
+            <field name="name">validacion.variables.tree</field>
+            <field name="model">validacion.variables</field>
+            <field name="arch" type="xml">
+                <tree string="Validaciones">
+                    <field name="name"/>
+                    <field name="expresion"/>
+                    <field name="error_description"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_validacion_variables_search" model="ir.ui.view">
+            <field name="name">validacion.variables.search</field>
+            <field name="model">validacion.variables</field>
+            <field name="arch" type="xml">
+                <search string="Validaciones">
+                    <field name="name"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_validacion_variables" model="ir.actions.act_window">
+            <field name="name">Validaciones de variables</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">validacion.variables</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="view_validacion_variables_search"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Crear nueva validación
+                </p>
+            </field>
+        </record>
+
+        <menuitem id="validation_vars_menu"
+                  name="Validaciones de variables"
+                  sequence="1"
+                  action="action_validacion_variables"
+                  parent="supi_integration.ajustes_data_supi"/>
+    </data>
+</openerp>
