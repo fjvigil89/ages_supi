@@ -1088,7 +1088,6 @@ class AuthRegisterHome(Home):
                         "respuesta": variable.get("Respuesta"),
                         "comment": variable.get("Comentario"),
                         "disponibilidad": variable.get("Disponibilidad"),
-                        "validation_perc": variable.get("Porc_Validación"),
                         "date_start": variable.get("Momento_medición"),
                         "posicion_x": cantx,
                         "is_audited": variable.get("is_audited"),
@@ -1097,6 +1096,7 @@ class AuthRegisterHome(Home):
                         "posicion_y": canty,
                     }
                     medicion.write(vals)
+                    planning_product = medicion.id
                 else:
                     vals = {
                         'product_id': int(product_id),
@@ -1105,7 +1105,6 @@ class AuthRegisterHome(Home):
                         "respuesta": variable.get("Respuesta"),
                         "comment": variable.get("Comentario"),
                         "disponibilidad": variable.get("Disponibilidad"),
-                        "validation_perc": variable.get("Porc_Validación"),
                         "date_start": variable.get("Momento_medición"),
                         "posicion_x": cantx,
                         "is_audited": variable.get("is_audited"),
@@ -1113,10 +1112,10 @@ class AuthRegisterHome(Home):
                         "xN2": variable.get("xN2"),
                         "posicion_y": canty,
                     }
-                    planning_product = request.env['planning.product'].create(vals)
+                    planning_product = request.env['planning.product'].create(vals).id
 
             try:
-                return True
+                return planning_product
             except (SyntaxError, QueryFormatError) as e:
                 res = error_response(e, e.msg)
                 return http.Response(
