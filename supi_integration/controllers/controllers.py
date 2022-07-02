@@ -1118,7 +1118,90 @@ class AuthRegisterHome(Home):
                     planning_product = request.env['planning.product'].create(vals).id
 
             try:
-                return planning_product
+                planning_products = request.env['planning.product'].search(
+                    [('planning_salas_id', '=', int(id_sala_planificada)),
+                     ('product_id', '=', int(product_id))])
+
+                muebles = []
+                for product in planning_products:
+                    products_hijos = []
+                    products_hijos_medidos = request.env['planning.product'].search(
+                        [('planning_salas_id', '=', int(id_sala_planificada)),
+                         ('product_padre_id', '=', product.product_id.id)])
+
+                    for product_hijo in products_hijos_medidos:
+                        tipo_dato = self.get_tipo_dato(product_hijo.variable_id.tipo_dato)
+                        vals_product_hijo = {
+                            "id_medicion": product_hijo.id,
+                            'name': product_hijo.product_id.name,
+                            "x": product_hijo.posicion_x,
+                            "y": product_hijo.posicion_y,
+                            "url_product_icon": product_hijo.product_id.url_icon,
+                            "id_variable": product_hijo.variable_id.id,
+                            "name_variable": product_hijo.variable_id.name,
+                            "label_visual": product_hijo.variable_id.label_visual,
+                            "Tipo_Dato": tipo_dato,
+                            'valores_combo': product_hijo.variable_id.valores_combobox.split(
+                                ',') if product_hijo.variable_id.valores_combobox else [],
+                            "ícono": product_hijo.variable_id.url_icon,
+                            "logica_muestreo": product_hijo.variable_id.logica_muestreo.expresion or '',
+                            "logica_muestreo_message": product_hijo.variable_id.logica_muestreo.error_description or '',
+                            "xN1": product_hijo.xN1,
+                            "xN2": product_hijo.xN2,
+                            "Valor_x_Defecto_target": product_hijo.valor_por_defecto or '',
+                            "Porc_Validación": product_hijo.validation_perc or "",
+                            "Disponibilidad": product_hijo.disponibilidad or "",
+                            "Respuesta": product_hijo.respuesta,
+                            "Comentario": product_hijo.comment,
+                            "Momento_medición": "",
+                            "Id_Producto_Planificado_Padre": product_hijo.product_padre_id.id,
+                            "Posicion_X_del_producto": product_hijo.posicion_x,
+                            "Posicion_Y_del_producto": product_hijo.posicion_y,
+                        }
+                        products_hijos.append(vals_product_hijo)
+                    valores_x_cuadrado = []
+                    x = y = 0
+                    while x < int(product.posicion_x):
+                        y = 0
+                        while y <= int(product.posicion_y):
+                            # print('%s,%s' % (x, y))
+                            products_hijos_medidos_posicion = request.env['planning.product'].search(
+                                [('planning_salas_id', '=', int(id_sala_planificada)),
+                                 ('product_padre_id', '=', product.product_id.id), ("posicion_x", '=', str(x)),
+                                 ("posicion_y", '=', str(y))])
+
+                            if products_hijos_medidos_posicion:
+                                val = {
+                                    "x": x,
+                                    "y": y,
+                                    "cant": len(products_hijos_medidos_posicion)
+                                }
+                            else:
+                                val = {
+                                    "x": x,
+                                    "y": y,
+                                    "cant": 0
+                                }
+                            valores_x_cuadrado.append(val)
+                            y += 1
+                        x += 1
+                    print(valores_x_cuadrado)
+                    vals = {
+                        "id_medicion": product.id,
+                        'name': product.product_id.name,
+                        "x": product.posicion_x,
+                        "y": product.posicion_y,
+                        "url_icon": product.product_id.url_icon,
+                        "productos": products_hijos,
+                        "valores_por_cuadrado": valores_x_cuadrado
+                    }
+                    muebles.append(vals)
+
+                res = {
+                    "Productos": muebles
+                }
+
+                return res
             except (SyntaxError, QueryFormatError) as e:
                 res = error_response(e, e.msg)
                 return http.Response(
@@ -1643,7 +1726,6 @@ class AuthRegisterHome(Home):
                 planning_products = request.env['planning.product'].search(
                     [('planning_salas_id', '=', int(id_sala_planificada)),
                      ('product_id.can_be_mueble', '=', True)])
-                print(planning_products)
 
                 muebles = []
                 for product in planning_products:
