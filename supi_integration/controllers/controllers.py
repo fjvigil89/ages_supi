@@ -1188,6 +1188,7 @@ class AuthRegisterHome(Home):
                     print(valores_x_cuadrado)
                     vals = {
                         "id_medicion": product.id,
+                        "product_id": product.product_id.id,
                         'name': product.product_id.name,
                         "x": product.posicion_x,
                         "y": product.posicion_y,
@@ -1793,6 +1794,7 @@ class AuthRegisterHome(Home):
                     print(valores_x_cuadrado)
                     vals = {
                         "id_medicion": product.id,
+                        "product_id": product.product_id.id,
                         'name': product.product_id.name,
                         "x": product.posicion_x,
                         "y": product.posicion_y,
