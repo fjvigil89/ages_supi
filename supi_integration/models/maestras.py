@@ -290,6 +290,17 @@ class PlanningProducts(models.Model):
     _name = "planning.product"
     _description = "Productos planificados"
 
+    @api.depends("planning_salas_id")
+    def _compute_studio(self):
+        for medition in self:
+            if medition:
+                if medition.planning_salas_id is not None:
+                    if medition.planning_salas_id.planning_id is not None:
+                        if medition.planning_salas_id.planning_id.planograma_id is not None:
+                            if medition.planning_salas_id.planning_id.planograma_id.study_id is not None:
+                                medition.tipo_estudio = medition.planning_salas_id.planning_id.planograma_id.study_id.name or ''
+
+    tipo_estudio = fields.Char(compute='_compute_studio', string="Tipo de estudio")
     name = fields.Char("Visita", related='planning_salas_id.name')
     auditor = fields.Many2one('res.users', string="Auditor")
     planning_salas_id = fields.Many2one('planning.salas', string="Sala planificada")
@@ -298,7 +309,8 @@ class PlanningProducts(models.Model):
     variable_id = fields.Many2one('variables', string="Variable")
     variable_ids = fields.Many2many('variables', string="Variables")
     valor_por_defecto = fields.Char("Valor por defecto")
-    validation_perc = fields.Many2one('validacion.variables', string="Regla de validación",help="Este campo se usará para validar una variable respecto a otra.")
+    validation_perc = fields.Many2one('validacion.variables', string="Regla de validación",
+                                      help="Este campo se usará para validar una variable respecto a otra.")
     disponibilidad = fields.Char("Disponibilidad")
     respuesta = fields.Char("Respuesta")
     comment = fields.Char("Comentario")

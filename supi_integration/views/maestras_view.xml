@@ -996,16 +996,13 @@
                         <group>
                             <group>
                                 <field name="planning_salas_id" required="1"/>
+                                <field name="tipo_estudio"/>
                                 <field name="name"/>
                                 <field name="product_id"/>
                                 <field name="estado" string="Estado"/>
                                 <field name="variable_id"/>
-                                <field name="validation_perc" string="Regla de validación"/>
                                 <field name="valor_por_defecto"/>
-                                <field name="posicion_x"/>
-                                <field name="is_audited"/>
-                                <field name="planogramado"
-                                       help="Si es True el producto fue planogramado, sino fue añadido en la auditoría"/>
+                                <field name="validation_perc" string="Regla de validación"/>
                             </group>
                             <group>
                                 <field name="disponibilidad"/>
@@ -1013,9 +1010,13 @@
                                 <field name="respuesta"/>
                                 <field name="comment"/>
                                 <field name="posicion_y"/>
+                                <field name="posicion_x"/>
                                 <field name="product_padre_id"/>
-                                <field name="xN1" string="Multiplicador 1 de variable"/>
-                                <field name="xN2" string="Multiplicador 2 de variable"/>
+                                <field name="is_audited"/>
+                                <field name="planogramado"
+                                       help="Si es True el producto fue planogramado, sino fue añadido en la auditoría"/>
+                                <field name="xN1" string="Multiplicador 1 de variable" invisible="1"/>
+                                <field name="xN2" string="Multiplicador 2 de variable" invisible="1"/>
                             </group>
                         </group>
                         <notebook>
@@ -1039,6 +1040,7 @@
             <field name="arch" type="xml">
                 <tree string="Mediciones">
                     <field name="planning_salas_id"/>
+                    <field name="tipo_estudio"/>
                     <field name="name"/>
                     <field name="product_id"/>
                     <field name="variable_id"/>
