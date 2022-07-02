@@ -1076,11 +1076,14 @@ class AuthRegisterHome(Home):
             canty = data.get("Cant_Y")
             variables = data.get("Result_Variables_del_nuevo_mueble")
             planning_product = False
+            today = datetime.utcnow()
+            today = self.get_date_by_tz(today)
             for variable in variables:
                 medicion = request.env['planning.product'].search(
                     [('product_id', '=', int(product_id)), ('variable_id', '=', variable.get("id_variable")),
                      ('planning_salas_id', '=', int(id_sala_planificada))])
                 if medicion:
+
                     vals = {
                         'product_id': int(product_id),
                         "variable_id": variable.get("id_variable"),
@@ -1088,7 +1091,7 @@ class AuthRegisterHome(Home):
                         "respuesta": variable.get("Respuesta"),
                         "comment": variable.get("Comentario"),
                         "disponibilidad": variable.get("Disponibilidad"),
-                        "date_start": variable.get("Momento_medición"),
+                        "date_start": today,
                         "posicion_x": cantx,
                         "is_audited": variable.get("is_audited"),
                         "xN1": variable.get("xN1"),
@@ -1105,7 +1108,7 @@ class AuthRegisterHome(Home):
                         "respuesta": variable.get("Respuesta"),
                         "comment": variable.get("Comentario"),
                         "disponibilidad": variable.get("Disponibilidad"),
-                        "date_start": variable.get("Momento_medición"),
+                        "date_start": today,
                         "posicion_x": cantx,
                         "is_audited": variable.get("is_audited"),
                         "xN1": variable.get("xN1"),
@@ -1146,7 +1149,8 @@ class AuthRegisterHome(Home):
                 medicion = request.env['planning.product'].search(
                     [('product_id', '=', product), ('variable_id', '=', variable.get('id_variable')),
                      ('planning_salas_id', '=', variable.get('id_sala_planificada'))])
-
+                today = datetime.utcnow()
+                today = self.get_date_by_tz(today)
                 if medicion:
                     vals = {
                         'product_id': product,
@@ -1159,10 +1163,12 @@ class AuthRegisterHome(Home):
                         "xN1": variable.get("xN1"),
                         "xN2": variable.get("xN2"),
                         "is_audited": variable.get("is_audited"),
-                        "date_start": variable.get("Momento_medición"),
+                        "date_start": today,
                     }
                     medicion.write(vals)
                 else:
+                    today = datetime.utcnow()
+                    today = self.get_date_by_tz(today)
                     vals = {
                         'product_id': product,
                         "variable_id": variable.get('id_variable'),
@@ -1174,7 +1180,7 @@ class AuthRegisterHome(Home):
                         "xN1": variable.get("xN1"),
                         "xN2": variable.get("xN2"),
                         "is_audited": variable.get("is_audited"),
-                        "date_start": variable.get("Momento_medición"),
+                        "date_start": today,
                     }
                     request.env['planning.product'].create(vals)
             return True
@@ -1237,6 +1243,8 @@ class AuthRegisterHome(Home):
                         [('product_id', '=', int(product_id)), ('variable_id', '=', int(var.get('id_variable'))),
                          ('planning_salas_id', '=', int(planning_sala))])
                     if medicion:
+                        today = datetime.utcnow()
+                        today = self.get_date_by_tz(today)
                         vals = {
                             'product_id': int(product_id),
                             "variable_id": int(var.get('id_variable')),
@@ -1248,7 +1256,7 @@ class AuthRegisterHome(Home):
                             "xN1": var.get('xN1'),
                             "xN2": var.get('xN2'),
                             "is_audited": is_audited,
-                            "date_start": var.get("Momento_medición"),
+                            "date_start": today,
                         }
                         medicion.write(vals)
                         images = data.get('Fotos medidas')
@@ -1260,6 +1268,8 @@ class AuthRegisterHome(Home):
                             request.env['photo.planning.product'].create(vals)
 
                     else:
+                        today = datetime.utcnow()
+                        today = self.get_date_by_tz(today)
                         vals = {
                             'product_id': int(product_id),
                             "variable_id": int(var.get('id_variable')),
@@ -1271,7 +1281,7 @@ class AuthRegisterHome(Home):
                             "xN1": var.get('xN1'),
                             "xN2": var.get('xN2'),
                             "is_audited": is_audited,
-                            "date_start": var.get("Momento_medición"),
+                            "date_start": today,
                         }
                         study_id = request.env['planning.product'].create(vals)
 
@@ -1492,23 +1502,28 @@ class AuthRegisterHome(Home):
                         [('product_id', '=', product_id.id), ('variable_id', '=', var.id),
                          ('planning_salas_id', '=', int(id_sala_planificada))])
                     if medicion:
+                        today = datetime.utcnow()
+                        today = self.get_date_by_tz(today)
                         vals = {
                             'product_id': int(product_id),
                             "variable_id": var.id,
                             "planning_salas_id": int(id_sala_planificada),
                             "respuesta": ean_detected.get("veces"),
-                            # "date_start": variable.get("Momento_medición"),
+                            "date_start": today,
                             "posicion_x": posicion_x,
                             "posicion_y": posicion_y,
                             "product_padre_id": id_mueble,
                         }
                         medicion.write(vals)
                     else:
+                        today = datetime.utcnow()
+                        today = self.get_date_by_tz(today)
                         vals = {
                             'product_id': int(product_id),
                             "variable_id": var.id,
                             "planning_salas_id": int(id_sala_planificada),
                             "respuesta": ean_detected.get("veces"),
+                            "date_start": today,
                             "posicion_x": posicion_x,
                             "posicion_y": posicion_y,
                             "product_padre_id": id_mueble,
