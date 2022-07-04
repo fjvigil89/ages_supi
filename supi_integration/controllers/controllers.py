@@ -1717,6 +1717,46 @@ class AuthRegisterHome(Home):
             )
 
     @http.route(
+        '/api/upload_image_sala',
+        type='json', auth='user', methods=['POST'], csrf=False)
+    def upload_image_sala(self, **params):
+        try:
+
+            data = params.get("data")
+            id_sala_planificada = data.get("id_sala_planificada")
+            data_imagen = data.get("image_64")
+            today = datetime.utcnow()
+            vals = {
+                "planning_sala_id": int(id_sala_planificada),
+                "date": today,
+                "image": b'%s' % data_imagen.encode()
+            }
+
+            imagen = request.env['photo.planning.salas'].create(vals)
+
+            try:
+                return {
+                    "message": "Imagen actualizada",
+                    "id": imagen.id
+                }
+
+            except (SyntaxError, QueryFormatError) as e:
+                res = error_response(e, e.msg)
+                return http.Response(
+                    json.dumps(res),
+                    status=200,
+                    mimetype='application/json'
+                )
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+
+    @http.route(
         '/api/muebles_de_sala',
         type='http', auth='user', methods=['GET'], csrf=False)
     def muebles_de_sala(self, **params):

@@ -270,6 +270,7 @@ class PlanningSalas(models.Model):
         ('done', 'Realizado'),
         ('no_done', 'No realizado'),
     ], string='Estado', help='Estado', default='prepared')
+    images_ids = fields.One2many('photo.planning.salas', 'planning_sala_id')
 
     @api.model
     def create(self, vals):
@@ -376,6 +377,15 @@ class PlanningStudies(models.Model):
             result.append((studies.id,
                            '%s - %s' % (studies.study_id.name, studies.product_id.name)))
         return result
+
+
+class PhotosPlanningProduct(models.Model):
+    _name = "photo.planning.salas"
+    _order = 'date'
+
+    planning_sala_id = fields.Many2one('planning.salas', string="Sala planificada")
+    date = fields.Datetime(string="Fecha de la imagen")
+    image = fields.Binary(string="Imagen")
 
 
 class PhotosPlanningProduct(models.Model):
