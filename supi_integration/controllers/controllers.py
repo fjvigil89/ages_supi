@@ -1160,9 +1160,9 @@ class AuthRegisterHome(Home):
                         }
                         products_hijos.append(vals_product_hijo)
                     valores_x_cuadrado = []
-                    x = y = 0
-                    while x < int(product.posicion_x):
-                        y = 0
+                    x = y = 1
+                    while x <= int(product.posicion_x):
+                        y = 1
                         while y <= int(product.posicion_y):
                             # print('%s,%s' % (x, y))
                             products_hijos_medidos_posicion = request.env['planning.product'].search(
@@ -1806,9 +1806,9 @@ class AuthRegisterHome(Home):
                         }
                         products_hijos.append(vals_product_hijo)
                     valores_x_cuadrado = []
-                    x = y = 0
-                    while x < int(product.posicion_x):
-                        y = 0
+                    x = y = 1
+                    while x <= int(product.posicion_x):
+                        y = 1
                         while y <= int(product.posicion_y):
                             # print('%s,%s' % (x, y))
                             products_hijos_medidos_posicion = request.env['planning.product'].search(

@@ -1018,8 +1018,8 @@
                                 <field name="date_start" readonly="1"/>
                                 <field name="respuesta"/>
                                 <field name="comment"/>
-                                <field name="posicion_y"/>
                                 <field name="posicion_x"/>
+                                <field name="posicion_y"/>
                                 <field name="product_padre_id"/>
                                 <field name="is_audited"/>
                                 <field name="planogramado"
