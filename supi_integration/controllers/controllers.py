@@ -1868,3 +1868,32 @@ class AuthRegisterHome(Home):
             status=200,
             mimetype='application/json'
         )
+
+    @http.route(
+        '/api/delete_mueble',
+        type='json', auth='user', methods=['POST'], csrf=False)
+    def delete_mueble(self, **params):
+        try:
+
+            data = params.get("data")
+            medition_id = data.get("medition_id")
+            mueble = request.env['planning.product'].search([('id', "=", int(medition_id))])
+            products = request.env['planning.product'].search(
+                [("product_padre_id", "=", mueble.product_id.id),
+                 ("planning_salas_id", "=", mueble.planning_salas_id.id)])
+
+            for product in products:
+                product.unlink()
+            mueble.unlink()
+            return {
+                "message": "Eliminación satisfactoria"
+            }
+
+        except KeyError as e:
+            msg = "Wrong values"
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
