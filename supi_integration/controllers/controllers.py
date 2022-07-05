@@ -1561,7 +1561,7 @@ class AuthRegisterHome(Home):
             id_mueble = data.get("id_mueble")
             list_ean_detected = data.get("ean")
 
-            sala_planificada = request.env['planning.salas'].search([('id', '=', id_sala_planificada)])
+            sala_planificada = request.env['planning.salas'].search([('id', '=', int(id_sala_planificada))])
 
             vars = []
 
@@ -1580,6 +1580,11 @@ class AuthRegisterHome(Home):
                 for ean_detected in list_ean_detected:
                     product_id = request.env['product.product'].search([('default_code', '=', ean_detected.get("ean"))],
                                                                        limit=1)
+                    if not product_id:
+                        product_id = request.env['product.product'].sudo().create({
+                            "name": "Producto creado con ean %s" % ean_detected,
+                            "default_code": ean_detected
+                        })
                     productos_detectados.append(product_id)
 
                     medicion = request.env['planning.product'].search(

@@ -14,7 +14,7 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base', 'product', 'web', 'muk_web_theme', 'web_domain_field', 'odoo_rest_api'],
+    'depends': ['base', 'product', 'web', 'web_domain_field', 'odoo_rest_api'],
 
     # always loaded
     'data': [
