@@ -393,6 +393,15 @@ class PhotosPlanningProduct(models.Model):
 
     planning_product_id = fields.Many2one('planning.product', string="Estudio")
     image = fields.Binary(string="Imagen")
+    url_image = fields.Char(string="Url imagen", compute='compute_url_image')
+
+    @api.depends('image')
+    def compute_url_image(self):
+        base_url = self.env['ir.config_parameter'].sudo().get_param('web.base.url')
+        for rec in self:
+            image_url_1920 = base_url + '/web/image?' + 'model=photo.planning.product&id=' + str(
+                rec.id) + '&field=image'
+            rec.url_image = image_url_1920
 
 
 class Planograma(models.Model):

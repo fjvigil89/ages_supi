@@ -1078,6 +1078,9 @@ class AuthRegisterHome(Home):
             planning_product = False
             today = datetime.utcnow()
             today = self.get_date_by_tz(today)
+
+            images = data.get('Fotos medidas')
+
             for variable in variables:
                 medicion = request.env['planning.product'].search(
                     [('product_id', '=', int(product_id)), ('variable_id', '=', variable.get("id_variable")),
@@ -1100,6 +1103,12 @@ class AuthRegisterHome(Home):
                     }
                     medicion.write(vals)
                     planning_product = medicion.id
+                    for image in images:
+                        vals = {
+                            'planning_product_id': medicion.id,
+                            "image": b'%s' % image.encode()
+                        }
+                        request.env['photo.planning.product'].create(vals)
                 else:
                     vals = {
                         'product_id': int(product_id),
@@ -1116,6 +1125,12 @@ class AuthRegisterHome(Home):
                         "posicion_y": canty,
                     }
                     planning_product = request.env['planning.product'].create(vals).id
+                    for image in images:
+                        vals = {
+                            'planning_product_id': planning_product.id,
+                            "image": b'%s' % image.encode()
+                        }
+                        request.env['photo.planning.product'].create(vals)
 
             try:
                 planning_products = request.env['planning.product'].search(
@@ -1186,12 +1201,15 @@ class AuthRegisterHome(Home):
                             y += 1
                         x += 1
                     print(valores_x_cuadrado)
+                    image = request.env['photo.planning.product'].search(
+                        [('planning_product_id', '=', product.id)], limit=1)
                     vals = {
                         "id_medicion": product.id,
                         "product_id": product.product_id.id,
                         'name': product.product_id.name,
                         "x": product.posicion_x,
                         "y": product.posicion_y,
+                        "url_imagen": image.url_image,
                         "url_icon": product.product_id.url_icon,
                         "productos": products_hijos,
                         "valores_por_cuadrado": valores_x_cuadrado
