@@ -1127,7 +1127,7 @@ class AuthRegisterHome(Home):
                     planning_product = request.env['planning.product'].create(vals).id
                     for image in images:
                         vals = {
-                            'planning_product_id': planning_product.id,
+                            'planning_product_id': planning_product,
                             "image": b'%s' % image.encode()
                         }
                         request.env['photo.planning.product'].create(vals)
@@ -1164,7 +1164,7 @@ class AuthRegisterHome(Home):
                             "xN1": product_hijo.xN1,
                             "xN2": product_hijo.xN2,
                             "Valor_x_Defecto_target": product_hijo.valor_por_defecto or '',
-                            "Porc_Validación": product_hijo.validation_perc or "",
+                            # "Porc_Validación": product_hijo.validation_perc.expresion or "",
                             "Disponibilidad": product_hijo.disponibilidad or "",
                             "Respuesta": product_hijo.respuesta,
                             "Comentario": product_hijo.comment,
