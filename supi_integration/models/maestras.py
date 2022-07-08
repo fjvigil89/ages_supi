@@ -425,6 +425,11 @@ class Planograma(models.Model):
                                            copy=True)
     variables_estudios_ids = fields.One2many('variables.studies', 'planograma_id', string='Variables de estudio',
                                              copy=True)
+    selection_vals_domain = fields.Char(
+        compute="_compute_selection_vals_domain",
+        readonly=True,
+        store=False,
+    )
     study_id_naturaleza = fields.Char(string="Naturaleza", default='0')
     study_id_type = fields.Char(string="Type")
     scope_type = fields.Char(string="Alcance", )
@@ -442,6 +447,34 @@ class Planograma(models.Model):
     #      ('3', 'Salas')],
     #     string='Naturaleza del estudio')
 
+    @api.onchange('study_id')
+    def onchange_study_id(self):
+        self.salas_planograma_ids = False
+        self.variables_estudios_ids = False
+
+    #
+    # # [('tipo_estudio', '=', parent.study_id_type), ('scope', '=', parent.scope_type)]
+    # @api.onchange('study_id')
+    # def _compute_selection_vals_domain(self):
+    #     for rec in self:
+    #         print(rec.study_id.naturaleza);
+    #         if rec.study_id.naturaleza == '0':
+    #             rec.selection_vals_domain = json.dumps(
+    #                 [('tipo_estudio', '=', self.study_id.type), ('scope', '=', "0")]
+    #             )
+    #         if rec.study_id.naturaleza == '1':
+    #             rec.selection_vals_domain = json.dumps(
+    #                 [('tipo_estudio', '=', self.study_id.type), ('scope', '=', "1")]
+    #             )
+    #         if rec.study_id.naturaleza == '2':
+    #             rec.selection_vals_domain = json.dumps(
+    #                 [('tipo_estudio', '=', self.study_id.type), ('scope', 'in', ["1", "0"])]
+    #             )
+    #         if rec.study_id.naturaleza == '3':
+    #             rec.selection_vals_domain = json.dumps(
+    #                 [('tipo_estudio', '=', self.study_id.type), ('scope', '=', "1")]
+    #             )
+
     @api.model
     def create(self, vals):
         if not vals.get('name'):
@@ -453,29 +486,6 @@ class Planograma(models.Model):
         for planograma in self:
             result.append((planograma.id, '%s-%s' % (planograma.name, planograma.study_id.name)))
         return result
-
-    @api.onchange('study_id')
-    def onchange_study_id(self):
-        if self.study_id:
-            if self.study_id.naturaleza:
-                if self.study_id.naturaleza == '0':
-                    self.write({'scope_type': "0"})
-                if self.study_id.naturaleza == '1':
-                    self.write({'scope_type': "1"})
-                if self.study_id.naturaleza == '2':
-                    self.write({'scope_type': "1"})
-                if self.study_id.naturaleza == '3':
-                    self.write({'scope_type': "2"})
-                self.study_id_naturaleza = self.study_id.naturaleza
-            else:
-                self.study_id_naturaleza = '0'
-                self.scope_type = '0'
-            if self.study_id.type:
-                self.write({'study_id_type': self.study_id.type})
-            else:
-                self.write({'study_id_type': ''})
-
-        self.salas_planograma_ids = False
 
     def generate_planning(self):
         if not self.variables_estudios_ids:
@@ -551,6 +561,37 @@ class VariablesEstudios(models.Model):
     planograma_id = fields.Many2one("planograma", string="Planograma")
     variable_id = fields.Many2one('variables', string="Variable")
     no_order = fields.Integer(string="Orden de aparición")
+    selection_vals_domain = fields.Char(
+        compute="_compute_selection_vals_domain",
+        readonly=True,
+        store=False,
+    )
+
+    @api.onchange('planograma_id', 'planograma_id.study_id')
+    def _compute_selection_vals_domain(self):
+        for rec in self:
+            print(rec.planograma_id.study_id.naturaleza);
+            if rec.planograma_id.study_id:
+                if rec.planograma_id.study_id.naturaleza == '0':
+                    rec.selection_vals_domain = json.dumps(
+                        [('tipo_estudio', '=', self.planograma_id.study_id.type), ('scope', '=', "0")]
+                    )
+                if rec.planograma_id.study_id.naturaleza == '1':
+                    rec.selection_vals_domain = json.dumps(
+                        [('tipo_estudio', '=', self.planograma_id.study_id.type), ('scope', '=', "1")]
+                    )
+                if rec.planograma_id.study_id.naturaleza == '2':
+                    rec.selection_vals_domain = json.dumps(
+                        [('tipo_estudio', '=', self.planograma_id.study_id.type), ('scope', 'in', ["1", "0"])]
+                    )
+                if rec.planograma_id.study_id.naturaleza == '3':
+                    rec.selection_vals_domain = json.dumps(
+                        [('tipo_estudio', '=', self.planograma_id.study_id.type), ('scope', '=', "1")]
+                    )
+            else:
+                rec.selection_vals_domain = json.dumps(
+                    []
+                )
 
 
 class SalasPlanograma(models.Model):

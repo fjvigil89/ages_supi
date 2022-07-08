@@ -1239,8 +1239,9 @@
                                 >
                                     <tree editable="bottom">
                                         <field name="no_order" string="Orden"/>
+                                        <field name="selection_vals_domain" invisible="1"/>
                                         <field name="variable_id" required="1"
-                                               domain="[('tipo_estudio','=',parent.study_id_type),('scope','=',parent.scope_type)]"/>
+                                               domain="selection_vals_domain"/>
                                         <field name="planograma_id" invisible="1"/>
 
                                     </tree>
