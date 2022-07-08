@@ -414,6 +414,7 @@
                             </group>
                             <group>
                                 <field name="valores_combobox"/>
+                                <field name="scope"/>
                                 <field name="logica_muestreo" string="Lógica de validación"
                                        help="Este campo se usará para validar una variable respecto a otra."/>
                             </group>

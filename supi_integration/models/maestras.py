@@ -97,6 +97,11 @@ class Variables(models.Model):
     name = fields.Char(string="Nombre")
     id_variable = fields.Char(string="ID VARIABLE")
     valores_combobox = fields.Char(string="Valores combobox")
+    scope = fields.Selection(
+        [('1', 'Mueble'),
+         ('0', 'Producto'),
+         ('2', 'Sala')],
+        string='Naturaleza')
     tipo_estudio = fields.Selection(
         [('2', 'Price'),
          ('3', 'Facing'),
