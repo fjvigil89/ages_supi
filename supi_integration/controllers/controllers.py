@@ -1622,8 +1622,8 @@ class AuthRegisterHome(Home):
                             "product_padre_id": id_mueble,
                         }
                         medicion.write(vals)
-                        if ean_detected.get("photos") is not None:
-                            for image in ean_detected.get("photos"):
+                        if ean_detected.get("imagenes") is not None:
+                            for image in ean_detected.get("imagenes"):
                                 vals = {
                                     'planning_product_id': medicion.id,
                                     "image": b'%s' % image.encode()
@@ -1643,8 +1643,8 @@ class AuthRegisterHome(Home):
                             "product_padre_id": id_mueble,
                         }
                         planning_product = request.env['planning.product'].create(vals)
-                        if ean_detected.get("photos") is not None:
-                            for image in ean_detected.get("photos"):
+                        if ean_detected.get("imagenes") is not None:
+                            for image in ean_detected.get("imagenes"):
                                 vals = {
                                     'planning_product_id': planning_product.id,
                                     "image": b'%s' % image.encode()

@@ -6,5 +6,9 @@
             <field name="name">Sala</field>
             <field name="default_code">SALA</field>
         </record>
+        <record id="product_espacio_vacio" model="product.template">
+            <field name="name">ESPACIO VACÍO</field>
+            <field name="default_code">ESPACIO VACÍO</field>
+        </record>
     </data>
 </odoo>

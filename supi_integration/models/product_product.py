@@ -15,6 +15,7 @@ class ProductProduct(models.Model):
                        self.env.ref('supi_integration.Isla').id,
                        self.env.ref('supi_integration.Gondola').id,
                        self.env.ref('supi_integration.EQFRIO').id,
+                       self.env.ref('supi_integration.product_espacio_vacio').id,
                        ]:
             raise UserError("El producto %s no puede ser eliminado porque es una variable del sistema" % self.name)
 
