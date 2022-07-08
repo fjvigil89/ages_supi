@@ -1600,8 +1600,8 @@ class AuthRegisterHome(Home):
                                                                        limit=1)
                     if not product_id:
                         product_id = request.env['product.product'].sudo().create({
-                            "name": "Producto creado con ean %s" % ean_detected,
-                            "default_code": ean_detected
+                            "name": "Producto creado con ean %s" % ean_detected.get("ean"),
+                            "default_code": ean_detected.get("ean")
                         })
                     productos_detectados.append(product_id)
 
@@ -1622,6 +1622,13 @@ class AuthRegisterHome(Home):
                             "product_padre_id": id_mueble,
                         }
                         medicion.write(vals)
+                        if ean_detected.get("photos") is not None:
+                            for image in ean_detected.get("photos"):
+                                vals = {
+                                    'planning_product_id': medicion.id,
+                                    "image": b'%s' % image.encode()
+                                }
+                                request.env['photo.planning.product'].create(vals)
                     else:
                         today = datetime.utcnow()
                         today = self.get_date_by_tz(today)
@@ -1636,6 +1643,13 @@ class AuthRegisterHome(Home):
                             "product_padre_id": id_mueble,
                         }
                         planning_product = request.env['planning.product'].create(vals)
+                        if ean_detected.get("photos") is not None:
+                            for image in ean_detected.get("photos"):
+                                vals = {
+                                    'planning_product_id': planning_product.id,
+                                    "image": b'%s' % image.encode()
+                                }
+                                request.env['photo.planning.product'].create(vals)
             products = []
             for variable in sala_planificada.planning_id.planograma_id.variables_estudios_ids:
                 variables = []
