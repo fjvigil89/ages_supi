@@ -1212,6 +1212,7 @@
                                 <field name="study_id" required="1"/>
                                 <field name="study_id_naturaleza" invisible="1"/>
                                 <field name="study_id_type" invisible="1"/>
+                                <field name="scope_type" invisible="1"/>
                             </group>
                         </group>
                         <notebook>
@@ -1239,7 +1240,7 @@
                                     <tree editable="bottom">
                                         <field name="no_order" string="Orden"/>
                                         <field name="variable_id" required="1"
-                                               domain="[('tipo_estudio','=',parent.study_id_type)]"/>
+                                               domain="[('tipo_estudio','=',parent.study_id_type),('scope','=',parent.scope_type)]"/>
                                         <field name="planograma_id" invisible="1"/>
 
                                     </tree>

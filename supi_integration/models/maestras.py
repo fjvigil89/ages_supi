@@ -427,6 +427,20 @@ class Planograma(models.Model):
                                              copy=True)
     study_id_naturaleza = fields.Char(string="Naturaleza", default='0')
     study_id_type = fields.Char(string="Type")
+    scope_type = fields.Char(string="Alcance", )
+
+    # scope = fields.Selection(
+    #     [('1', 'Mueble'),
+    #      ('0', 'Producto'),
+    #      ('2', 'Sala')],
+    #     string='Naturaleza')
+
+    # naturaleza = fields.Selection(
+    #     [('0', 'Productos'),
+    #      ('1', 'Muebles sin productos'),
+    #      ('2', 'Muebles con productos'),
+    #      ('3', 'Salas')],
+    #     string='Naturaleza del estudio')
 
     @api.model
     def create(self, vals):
@@ -444,9 +458,18 @@ class Planograma(models.Model):
     def onchange_study_id(self):
         if self.study_id:
             if self.study_id.naturaleza:
+                if self.study_id.naturaleza == '0':
+                    self.write({'scope_type': "0"})
+                if self.study_id.naturaleza == '1':
+                    self.write({'scope_type': "1"})
+                if self.study_id.naturaleza == '2':
+                    self.write({'scope_type': "1"})
+                if self.study_id.naturaleza == '3':
+                    self.write({'scope_type': "2"})
                 self.study_id_naturaleza = self.study_id.naturaleza
             else:
                 self.study_id_naturaleza = '0'
+                self.scope_type = '0'
             if self.study_id.type:
                 self.write({'study_id_type': self.study_id.type})
             else:
