@@ -1181,7 +1181,50 @@
                   action="action_planning_studies"
                   parent="supi_integration.planificaciones_supi"
                   sequence="5"/>
+        <!--       PLANOGRAMA-->
+        <record model="ir.ui.view" id="view_salas_planograma_form">
+            <field name="name">salas.planograma.form</field>
+            <field name="model">salas.planograma</field>
+            <field name="arch" type="xml">
+                <form string="Salas del planograma">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="planograma_id"/>
+                                <field name="place_id"/>
+                            </group>
+                            <group>
+                                <field name="muebles_ids"/>
+                                <field name="categories_ids"/>
+                            </group>
+                        </group>
+                    </sheet>
 
+                </form>
+            </field>
+        </record>
+
+        <!--       PLANOGRAMA-->
+        <record model="ir.ui.view" id="view_variables_studies_form">
+            <field name="name">variables.studies.form</field>
+            <field name="model">variables.studies</field>
+            <field name="arch" type="xml">
+                <form string="Variables de estudios">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="planograma_id"/>
+                            </group>
+                            <group>
+                                <field name="variable_id"/>
+                                <field name="no_order"/>
+                            </group>
+                        </group>
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
 
         <!--       PLANOGRAMA-->
         <record model="ir.ui.view" id="view_planograma_form">

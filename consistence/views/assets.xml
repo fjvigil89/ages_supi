@@ -3,7 +3,7 @@
     <template id="assets_backend" name="consistence assets" inherit_id="web.assets_backend">
         <xpath expr="." position="inside">
             <link rel="stylesheet" type="text/scss" href="/consistence/static/src/scss/consistence.scss"/>
-            <script type="text/javascript" src="/consistence/static/src/js/consistence_dashboard.js"></script>
+            <script type="text/javascript" src="/consistence/static/src/js/consistence_dashboard.js"/>
 <!--            <script type="text/javascript" src="/consistence/static/src/js/consistence_toaster_button.js"></script>-->
         </xpath>
         <xpath expr="script[last()]" position="after">

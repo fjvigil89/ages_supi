@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-import json
+
+from datetime import datetime
+from datetime import timedelta
+
+import pytz
 
 from odoo import models, fields, api
-
 from odoo import tools
-from datetime import datetime, date
-import pytz
-from datetime import date, timedelta
 
 
 class PriceConsistence(models.Model):
@@ -16,16 +16,22 @@ class PriceConsistence(models.Model):
     product_id = fields.Many2one('product.product')
     planning_sala_id = fields.Many2one('planning.salas')
     variable_id = fields.Many2one('variables')
+    date = fields.Date("Fecha")
+    place_id = fields.Many2one("salas")
 
     def init(self):
         tools.drop_view_if_exists(self._cr, 'price_consistence')
         self._cr.execute(""" 
            CREATE OR REPLACE VIEW price_consistence AS ( 
-               SELECT            row_number() OVER () as id,
+              SELECT  row_number() OVER () as id,
                 pl.planning_salas_id as planning_sala_id,  
                 pl.product_id as product_id,
-                pl.variable_id as variable_id
-                FROM planning_product pl             )
+                planning_salas.place_id as place_id,
+                pl.variable_id as variable_id,
+				planning.date_start as date
+                FROM planning_product as pl
+				INNER JOIN  planning_salas as planning_salas ON pl.planning_salas_id = planning_salas.id
+				INNER JOIN  planning as planning ON planning_id = planning.id   )
     """)
 
     def get_date_by_tz(self, val_date, format_a=None):
