@@ -1401,6 +1401,47 @@ class AuthRegisterHome(Home):
             return False
 
     @http.route(
+        '/api/add_empty_product/',
+        type='json', auth="user", methods=['POST'], csrf=False)
+    def add_empty_product(self, **post):
+        try:
+            data = post
+        except KeyError:
+            msg = "`data` parameter is not found on POST request body"
+            raise exceptions.ValidationError(msg)
+        try:
+            mediciones = []
+            product_id = request.env['product.product'].search([("default_code", '=', 'ESPACIO VACÍO')], limit=1)
+            vars = request.env['variables'].search([("is_automatic", '=', True), ("scope", 'in', ["0", "1"])])
+            today = datetime.utcnow()
+            today = self.get_date_by_tz(today)
+
+            for var in vars:
+                vals = {
+                    'product_id': product_id.id,
+                    "variable_id": var.id,
+                    "planning_salas_id": int(data.get("id_sala_planificada")),
+                    "respuesta": var.valor_x_defecto,
+                    "comment": var.valor_x_defecto,
+                    "disponibilidad": var.valor_x_defecto,
+                    "date_start": today,
+                    "product_padre_id": data.get("product_padre_id"),
+                    "posicion_x": data.get("posicion_x"),
+                    "planogramado": False,
+                    "is_audited": True,
+                    "posicion_y": data.get("posicion_y"),
+                }
+                planning_product = request.env['planning.product'].create(vals)
+
+                mediciones.append(
+                    {"product_id": planning_product.product_id.name, "variable_id": planning_product.variable_id.name,
+                     "respuesta": planning_product.respuesta, "producto_padre": planning_product.product_padre_id.name})
+
+            return mediciones
+        except Exception as e:
+            return False
+
+    @http.route(
         '/api/update_quizs/',
         type='json', auth="user", methods=['PUT'], csrf=False)
     def update_quizs(self, **post):
