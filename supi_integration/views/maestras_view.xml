@@ -455,7 +455,7 @@
                     <field name="label_visual"/>
                     <field name="tipo_estudio"/>
                     <field name="tipo_dato"/>
-                    <field name="study_id" optional="hide"/>
+                    <field name="scope"/>
                     <field name="xN1" string="Multiplicador 1 de variable" optional="hide"/>
                     <field name="xN2" string="Multiplicador 2 de variable" optional="hide"/>
                     <field name="valor_x_defecto" optional="hide"/>
