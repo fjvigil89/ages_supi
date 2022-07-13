@@ -135,6 +135,9 @@ class Variables(models.Model):
     variable_que_depende_id = fields.Many2one("variables", string="Variable de la cual depende la variable actual")
     logica_muestreo = fields.Many2one('validacion.variables', string="Lógica de validación",
                                       help="Este campo se usará para validar una variable respecto a otra.")
+    detalle1_respuesta = fields.Char("Detalle 1")
+    detalle2_respuesta = fields.Char("Detalle 2")
+    detalle3_respuesta = fields.Char("Detalle 3")
 
     @api.depends('icon')
     def compute_url_icon(self):
@@ -337,6 +340,10 @@ class PlanningProducts(models.Model):
         string='Estado', default='por_evaluar')
     product_padre_id = fields.Many2one('product.product', string="Producto padre")
     images_ids = fields.One2many('photo.planning.product', 'planning_product_id')
+
+    detalle1_respuesta = fields.Char("Detalle 1")
+    detalle2_respuesta = fields.Char("Detalle 2")
+    detalle3_respuesta = fields.Char("Detalle 3")
 
     def name_get(self):
         result = []

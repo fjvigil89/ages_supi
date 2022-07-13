@@ -435,6 +435,9 @@
                         <group>
                             <group>
                                 <field name="tipo_dato" required="1"/>
+                                <field name="detalle1_respuesta"/>
+                                <field name="detalle2_respuesta"/>
+                                <field name="detalle3_respuesta"/>
                             </group>
                             <group>
                                 <field name="icon" widget="image" required="0"/>
@@ -1016,6 +1019,9 @@
                             </group>
                             <group>
                                 <field name="disponibilidad"/>
+                                <field name="detalle1_respuesta"/>
+                                <field name="detalle2_respuesta"/>
+                                <field name="detalle3_respuesta"/>
                                 <field name="date_start" readonly="1"/>
                                 <field name="respuesta"/>
                                 <field name="comment"/>
