@@ -438,6 +438,7 @@
                                 <field name="detalle1_respuesta"/>
                                 <field name="detalle2_respuesta"/>
                                 <field name="detalle3_respuesta"/>
+                                <field name="detalle4_respuesta"/>
                             </group>
                             <group>
                                 <field name="icon" widget="image" required="0"/>
@@ -1022,6 +1023,8 @@
                                 <field name="detalle1_respuesta"/>
                                 <field name="detalle2_respuesta"/>
                                 <field name="detalle3_respuesta"/>
+                                <field name="detalle4_respuesta"/>
+
                                 <field name="date_start" readonly="1"/>
                                 <field name="respuesta"/>
                                 <field name="comment"/>
@@ -1200,7 +1203,7 @@
                                 <field name="place_id"/>
                             </group>
                             <group>
-                                <field name="muebles_ids"/>
+                                <field name="muebles_ids" string="Productos"/>
                                 <field name="categories_ids"/>
                             </group>
                         </group>

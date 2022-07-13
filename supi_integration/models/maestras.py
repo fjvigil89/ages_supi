@@ -138,6 +138,8 @@ class Variables(models.Model):
     detalle1_respuesta = fields.Char("Detalle 1")
     detalle2_respuesta = fields.Char("Detalle 2")
     detalle3_respuesta = fields.Char("Detalle 3")
+    detalle4_respuesta = fields.Char("Detalle 4")
+
 
     @api.depends('icon')
     def compute_url_icon(self):
@@ -344,6 +346,7 @@ class PlanningProducts(models.Model):
     detalle1_respuesta = fields.Char("Detalle 1")
     detalle2_respuesta = fields.Char("Detalle 2")
     detalle3_respuesta = fields.Char("Detalle 3")
+    detalle4_respuesta = fields.Char("Detalle 4")
 
     def name_get(self):
         result = []
