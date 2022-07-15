@@ -2,7 +2,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import json
 import logging
-import random
 from datetime import datetime
 from datetime import timedelta
 
@@ -2044,7 +2043,7 @@ class AuthRegisterHome(Home):
         type='http', auth='user', methods=['GET'], csrf=False)
     def dame_precio(self, **params):
         return http.Response(
-            str(random.randint(1, 1000)),
+            "198",
             status=200,
             mimetype='application/json'
         )
