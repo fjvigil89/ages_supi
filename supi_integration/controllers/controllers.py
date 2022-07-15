@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import json
 import logging
+import random
 from datetime import datetime
 from datetime import timedelta
 
@@ -2037,3 +2038,13 @@ class AuthRegisterHome(Home):
                 status=200,
                 mimetype='application/json'
             )
+
+    @http.route(
+        '/api/dame_precio',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def dame_precio(self, **params):
+        return http.Response(
+            "189",
+            status=200,
+            mimetype='application/json'
+        )

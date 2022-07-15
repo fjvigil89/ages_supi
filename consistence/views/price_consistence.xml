@@ -39,7 +39,7 @@
             <field name="name">price.consistence.pivot</field>
             <field name="model">price.consistence</field>
             <field name="arch" type="xml">
-                <pivot string="Consistencia de precios" js_class="consistence_pivot_dashboard">
+                <pivot string="Consistencia de precios">
                     <field name="planning_sala_id" type="compute_prices"/>
                     <field name="date" type="row"/>
                 </pivot>

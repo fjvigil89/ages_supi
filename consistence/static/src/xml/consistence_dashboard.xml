@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates>
     <!-- This template is for a table at the top of purchase views that shows some KPIs. -->
-    <t t-name="consistence.ConsistenceDashboard">
+        <t t-name="consistence.ConsistenceDashboard">
         <div class="o_consistence_dashboard container">
             <div class="row">
                 <table class="table table-bordered" style="background-color:grey">

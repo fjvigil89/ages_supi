@@ -17,6 +17,7 @@ var PivotRenderer = require('web.PivotRenderer');
 var PivotView = require('web.PivotView');
 var SampleServer = require('web.SampleServer');
 var view_registry = require('web.view_registry');
+const patchMixin = require('web.patchMixin');
 
 var QWeb = core.qweb;
 
@@ -241,125 +242,126 @@ var ConsistenceKanbanDashboardView = KanbanView.extend({
         Controller: ConsistenceKanbanDashboardController,
     }),
 });
-
-
-
-//var ConsistencePivotDashboardRenderer = PivotRenderer.extend({
-//    events:_.extend({}, PivotRenderer.prototype.events, {
-//        'click .o_dashboard_action': '_onDashboardActionClicked',
-//    }),
+//
+//
+//
+//class ConsistencePivotDashboardRenderer extends PivotRenderer{
+////    events:_.extend({}, PivotRenderer.prototype.events, {
+////        'click .o_dashboard_action': '_onDashboardActionClicked',
+////    }),
 //    /**
 //     * @override
 //     * @private
 //     * @returns {Promise}
 //     */
-//    _render: function () {
-//        var self = this;
-//        return this._super.apply(this, arguments).then(function () {
-//            var values = self.state.dashboardValues;
-//            var consistence_dashboard = QWeb.render('consistence.ConsistenceDashboard', {
-//                values: values,
-//            });
-//            self.$el.parent().find(".o_consistence_dashboard").remove();
-//            self.$el.before(consistence_dashboard);
-//        });
-//    },
+////    render () {
+////        var self = this;
+////        return this._super.apply(this, arguments).then(function () {
+////            var values = self.state.dashboardValues;
+////            var consistence_dashboard = QWeb.render('consistence.ConsistenceDashboard', {
+////                values: values,
+////            });
+////            self.$el.parent().find(".o_consistence_dashboard").remove();
+////            self.$el.before(consistence_dashboard);
+////        });
+////    }
 //
 //    /**
 //     * @private
 //     * @param {MouseEvent}
 //     */
-//    _onDashboardActionClicked: function (e) {
+//    _onDashboardActionClicked(e) {
 //        e.preventDefault();
 //        var $action = $(e.currentTarget);
 //        this.trigger_up('dashboard_open_action', {
 //            action_name: $action.attr('name')+"_pivot",
 //            action_context: $action.attr('context'),
 //        });
+//    }
+//};
+//
+//var ConsistencePivotDashboardModel = PivotModel.extend({
+//    /**
+//     * @override
+//     */
+//    init: function () {
+//        this.dashboardValues = {};
+//        this._super.apply(this, arguments);
+//    },
+//
+//    /**
+//     * @override
+//     */
+//    __get: function (localID) {
+//        var result = this._super.apply(this, arguments);
+//        if (_.isObject(result)) {
+//            result.dashboardValues = this.dashboardValues[localID];
+//        }
+//        return result;
+//    },
+//    /**
+//     * @override
+//     * @returns {Promise}
+//     */
+//    __load: function () {
+//        return this._loadDashboard(this._super.apply(this, arguments));
+//    },
+//    /**
+//     * @override
+//     * @returns {Promise}
+//     */
+//    __reload: function () {
+//        return this._loadDashboard(this._super.apply(this, arguments));
+//    },
+//
+//    /**
+//     * @private
+//     * @param {Promise} super_def a promise that resolves with a dataPoint id
+//     * @returns {Promise -> string} resolves to the dataPoint id
+//     */
+//    _loadDashboard: function (super_def) {
+//        var self = this;
+//        var dashboard_def = this._rpc({
+//            model: 'price.consistence',
+//            method: 'retrieve_dashboard',
+//        });
+//        return Promise.all([super_def, dashboard_def]).then(function(results) {
+//            var id = results[0];
+//            dashboardValues = results[1];
+//            self.dashboardValues[id] = dashboardValues;
+//            return id;
+//        });
 //    },
 //});
-
-var ConsistencePivotDashboardModel = PivotModel.extend({
-    /**
-     * @override
-     */
-    init: function () {
-        this.dashboardValues = {};
-        this._super.apply(this, arguments);
-    },
-
-    /**
-     * @override
-     */
-    __get: function (localID) {
-        var result = this._super.apply(this, arguments);
-        if (_.isObject(result)) {
-            result.dashboardValues = this.dashboardValues[localID];
-        }
-        return result;
-    },
-    /**
-     * @override
-     * @returns {Promise}
-     */
-    __load: function () {
-        return this._loadDashboard(this._super.apply(this, arguments));
-    },
-    /**
-     * @override
-     * @returns {Promise}
-     */
-    __reload: function () {
-        return this._loadDashboard(this._super.apply(this, arguments));
-    },
-
-    /**
-     * @private
-     * @param {Promise} super_def a promise that resolves with a dataPoint id
-     * @returns {Promise -> string} resolves to the dataPoint id
-     */
-    _loadDashboard: function (super_def) {
-        var self = this;
-        var dashboard_def = this._rpc({
-            model: 'price.consistence',
-            method: 'retrieve_dashboard',
-        });
-        return Promise.all([super_def, dashboard_def]).then(function(results) {
-            var id = results[0];
-            dashboardValues = results[1];
-            self.dashboardValues[id] = dashboardValues;
-            return id;
-        });
-    },
-});
-
-var ConsistencePivotDashboardController = PivotController.extend({
-    custom_events: _.extend({}, PivotController.prototype.custom_events, {
-        dashboard_open_action: '_onDashboardOpenAction',
-    }),
-
-    /**
-     * @private
-     * @param {OdooEvent} e
-     */
-    _onDashboardOpenAction: function (e) {
-        return this.do_action(e.data.action_name,
-            {additional_context: JSON.parse(e.data.action_context)});
-    },
-});
-
-var ConsistencePivotDashboardView = PivotView.extend({
-    config: _.extend({}, PivotView.prototype.config, {
-        Model: ConsistencePivotDashboardModel,
+//
+//var ConsistencePivotDashboardController = PivotController.extend({
+//    custom_events: _.extend({}, PivotController.prototype.custom_events, {
+//        dashboard_open_action: '_onDashboardOpenAction',
+//    }),
+//
+//    /**
+//     * @private
+//     * @param {OdooEvent} e
+//     */
+//    _onDashboardOpenAction: function (e) {
+//        return this.do_action(e.data.action_name,
+//            {additional_context: JSON.parse(e.data.action_context)});
+//    },
+//});
+//
+//var ConsistencePivotDashboardView = PivotView.extend({
+//    config: _.extend({}, PivotView.prototype.config, {
+//        Model: ConsistencePivotDashboardModel,
 //        Renderer: ConsistencePivotDashboardRenderer,
-        Controller: ConsistencePivotDashboardController,
-    }),
-});
+//        Controller: ConsistencePivotDashboardController,
+//    }),
+//});
+
 
 view_registry.add('consistence_list_dashboard', ConsistenceListDashboardView);
 view_registry.add('consistence_kanban_dashboard', ConsistenceKanbanDashboardView);
-view_registry.add('consistence_pivot_dashboard', ConsistencePivotDashboardView);
-
+//view_registry.add('consistence_pivot_dashboard', ConsistencePivotDashboardView);
+//
 return {
     ConsistenceListDashboardModel: ConsistenceListDashboardModel,
     ConsistenceListDashboardRenderer: ConsistenceListDashboardRenderer,
@@ -368,9 +370,9 @@ return {
     ConsistenceKanbanDashboardRenderer:ConsistenceKanbanDashboardRenderer,
     ConsistenceKanbanDashboardController: ConsistenceKanbanDashboardController,
 
-    ConsistencePivotDashboardModel: ConsistencePivotDashboardModel,
-//    ConsistencePivotDashboardRenderer:ConsistencePivotDashboardRenderer,
-    ConsistencePivotDashboardController: ConsistencePivotDashboardController
+//    ConsistencePivotDashboardModel: ConsistencePivotDashboardModel,
+// ConsistencePivotDashboardRenderer:ConsistencePivotDashboardRenderer,
+//    ConsistencePivotDashboardController: ConsistencePivotDashboardController
 };
 
 });
