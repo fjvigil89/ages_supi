@@ -2044,7 +2044,7 @@ class AuthRegisterHome(Home):
         type='http', auth='user', methods=['GET'], csrf=False)
     def dame_precio(self, **params):
         return http.Response(
-            "189",
+            str(random.randint(1, 1000)),
             status=200,
             mimetype='application/json'
         )
