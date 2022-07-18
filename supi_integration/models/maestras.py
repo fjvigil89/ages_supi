@@ -93,6 +93,7 @@ class Variables(models.Model):
     _name = 'variables'
     _description = "Variables"
 
+    consistencia = fields.Boolean(string="Medir consistencia", default=False)
     label_visual = fields.Char(string="Label visual")
     name = fields.Char(string="Nombre")
     id_variable = fields.Char(string="ID VARIABLE")

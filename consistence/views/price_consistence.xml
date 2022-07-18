@@ -8,11 +8,11 @@
             <field name="arch" type="xml">
                 <tree string="Consistencia de precios" create="false" delete="false" edit="false" duplicate="false"
                       multi_edit="false" js_class="consistence_list_dashboard">
-                    <field name='place_id'/>
-                    <field name='product_id'/>
-                    <field name='planning_sala_id'/>
-                    <field name='variable_id'/>
-                    <field name='date'/>
+                    <field name='place_id' string="Sala"/>
+                    <field name='product_id' string="Producto"/>
+                    <button name="b" string="B" class="btn btn-primary"/>
+                    <button name="s" string="S" class="btn btn-primary"/>
+                    <button name="c" string="C" class="btn btn-primary"/>
                 </tree>
             </field>
         </record>
@@ -30,6 +30,11 @@
                                 <field name="product_id" readonly="1"/>
                             </h1>
                         </div>
+                        <group>
+                            <button name="b" string="B" class="btn btn-primary"/>
+                            <button name="s" string="S" class="btn btn-primary"/>
+                            <button name="c" string="C" class="btn btn-primary"/>
+                        </group>
                     </sheet>
                 </form>
             </field>
@@ -40,7 +45,7 @@
             <field name="model">price.consistence</field>
             <field name="arch" type="xml">
                 <pivot string="Consistencia de precios">
-                    <field name="planning_sala_id" type="compute_prices"/>
+                    <field name="place_id" type="measure"/>
                     <field name="date" type="row"/>
                 </pivot>
             </field>

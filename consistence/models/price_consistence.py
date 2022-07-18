@@ -14,8 +14,8 @@ class PriceConsistence(models.Model):
     _auto = False
 
     product_id = fields.Many2one('product.product')
-    planning_sala_id = fields.Many2one('planning.salas')
-    variable_id = fields.Many2one('variables')
+    # planning_sala_id = fields.Many2one('planning.salas')
+    # variable_id = fields.Many2one('variables')
     date = fields.Date("Fecha")
     place_id = fields.Many2one("salas")
 
@@ -24,15 +24,21 @@ class PriceConsistence(models.Model):
         self._cr.execute(""" 
            CREATE OR REPLACE VIEW price_consistence AS ( 
               SELECT  row_number() OVER () as id,
-                pl.planning_salas_id as planning_sala_id,  
                 pl.product_id as product_id,
                 planning_salas.place_id as place_id,
-                pl.variable_id as variable_id,
-				planning.date_start as date
+				pl.date_start as date
                 FROM planning_product as pl
 				INNER JOIN  planning_salas as planning_salas ON pl.planning_salas_id = planning_salas.id
-				INNER JOIN  planning as planning ON planning_id = planning.id   )
+				INNER JOIN  planning as planning ON planning_id = planning.id  
+				INNER JOIN  variables ON variable_id = variables.id WHERE variables.consistencia = True)
     """)
+
+    def name_get(self):
+        result = []
+        for consistencia in self:
+            result.append((consistencia.id, '[%s] [%s]' % (
+                consistencia.product_id.name, consistencia.place_id.name)))
+        return result
 
     def get_date_by_tz(self, val_date, format_a=None):
         utc_timestamp = pytz.utc.localize(val_date, is_dst=False)
@@ -41,6 +47,15 @@ class PriceConsistence(models.Model):
             return utc_timestamp.astimezone(context_tz).date()
         else:
             return utc_timestamp.astimezone(context_tz).strftime(format_a).date()
+
+    def b(self):
+        pass
+
+    def s(self):
+        pass
+
+    def c(self):
+        pass
 
     @api.model
     def retrieve_dashboard(self):

@@ -15,6 +15,7 @@
     'data': [
         'views/assets.xml',
         'views/price_consistence.xml',
+        # "views/variables_view.xml",
         'security/ir.model.access.csv'
     ],
     'qweb': [
