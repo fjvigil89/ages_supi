@@ -1658,12 +1658,12 @@ class AuthRegisterHome(Home):
 
         except KeyError as e:
             msg = "Wrong values"
-        res = error_response(e, msg)
-        return http.Response(
-            json.dumps(res),
-            status=200,
-            mimetype='application/json'
-        )
+            res = error_response(e, msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
 
     @http.route(
         '/api/process_data_ean',
@@ -2047,3 +2047,40 @@ class AuthRegisterHome(Home):
             status=200,
             mimetype='application/json'
         )
+
+    @http.route(
+        '/api/get_products_by_ean',
+        type='http', auth='user', methods=['GET'], csrf=False)
+    def get_products_by_ean(self, **params):
+        try:
+            ean = params["ean"]
+            products_search = request.env['product.product'].search([("default_code", '=', ean)])
+
+            products = []
+
+            for product in products_search:
+                vals = {
+                    "id": product.id,
+                    "name": product.name,
+                    "ean": product.default_code,
+                    "categoria": product.categ_id.name,
+                    "image": product.url_icon,
+                    "precio": product.lst_price,
+                }
+                products.append(vals)
+
+            res = {
+                "Producto": products
+            }
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
+        except (SyntaxError, QueryFormatError) as e:
+            res = error_response(e, e.msg)
+            return http.Response(
+                json.dumps(res),
+                status=200,
+                mimetype='application/json'
+            )
