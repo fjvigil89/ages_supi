@@ -190,7 +190,7 @@ class AuthRegisterHome(Home):
 
             # PARA HOY
             comunas_ids = request.env['planning'].search(
-                [('date_end', '<=', today), ('state', '=', 'ready')]).mapped(
+                [('date_end', '<=', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
 
             final_data = []
@@ -279,7 +279,7 @@ class AuthRegisterHome(Home):
 
             # end_final = end + timedelta(days=7)
             comunas_ids = request.env['planning'].search(
-                [('date_end', '>', today), ('state', '=', 'ready')]).mapped(
+                [('date_end', '>', today), ('state', '=', 'ready'), ('user_id', '=', int(user_id))]).mapped(
                 'planning_salas_ids').mapped('place_id').mapped('comuna_id')
             data_later = []
             comunas_append_later = []
