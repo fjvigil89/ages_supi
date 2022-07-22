@@ -10,9 +10,7 @@
                       multi_edit="false" js_class="consistence_list_dashboard">
                     <field name='place_id' string="Sala"/>
                     <field name='product_id' string="Producto"/>
-                    <button name="b" string="B" class="btn btn-primary"/>
-                    <button name="s" string="S" class="btn btn-primary"/>
-                    <button name="c" string="C" class="btn btn-primary"/>
+                    <field name='price' string="Precio" avg="Promedio"/>
                 </tree>
             </field>
         </record>
@@ -23,18 +21,21 @@
             <field name="arch" type="xml">
                 <form string="Consitencia de precio" create="false" delete="false" duplicate="false"
                       multi_edit="false">
+                    <header>
+                        <button name="b" string="B" class="btn btn-primary"/>
+                        <button name="s" string="S" class="btn btn-primary"/>
+                        <button name="c" string="C" class="btn btn-primary"/>
+                    </header>
                     <sheet>
-                        <div class="oe_title">
-                            <label for="product_id" class="oe_edit_only"/>
-                            <h1>
-                                <field name="product_id" readonly="1"/>
-                            </h1>
-                        </div>
                         <group>
-                            <button name="b" string="B" class="btn btn-primary"/>
-                            <button name="s" string="S" class="btn btn-primary"/>
-                            <button name="c" string="C" class="btn btn-primary"/>
+                            <group>
+                                <field name="product_id" string="Producto" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="place_id" string="Sala" readonly="1"/>
+                            </group>
                         </group>
+
                     </sheet>
                 </form>
             </field>

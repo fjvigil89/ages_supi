@@ -18,6 +18,7 @@ class PriceConsistence(models.Model):
     # variable_id = fields.Many2one('variables')
     date = fields.Date("Fecha")
     place_id = fields.Many2one("salas")
+    price = fields.Float(string="Precio")
 
     def init(self):
         tools.drop_view_if_exists(self._cr, 'price_consistence')
@@ -26,11 +27,14 @@ class PriceConsistence(models.Model):
               SELECT  row_number() OVER () as id,
                 pl.product_id as product_id,
                 planning_salas.place_id as place_id,
+				AVG(CASE WHEN pl.respuesta<>'' THEN pl.respuesta::real ELSE '0' END)
+                 as price, 
 				pl.date_start as date
                 FROM planning_product as pl
 				INNER JOIN  planning_salas as planning_salas ON pl.planning_salas_id = planning_salas.id
 				INNER JOIN  planning as planning ON planning_id = planning.id  
-				INNER JOIN  variables ON variable_id = variables.id WHERE variables.consistencia = True)
+				INNER JOIN  variables ON variable_id = variables.id WHERE variables.consistencia = True
+				GROUP BY place_id, product_id,date)
     """)
 
     def name_get(self):

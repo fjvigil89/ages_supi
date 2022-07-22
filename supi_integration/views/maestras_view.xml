@@ -785,8 +785,8 @@
                                         <field name="place_id" required="1"/>
                                         <field name="auditor_id" required="1"/>
                                         <field name="coordinator_id" required="1"/>
-                                        <field name="specifications" required="1"/>
-                                        <field name="comment" required="1"/>
+                                        <field name="specifications" required="0"/>
+                                        <field name="comment" required="0"/>
                                         <field name="categories_ids" widget="many2many_tags"/>
                                         <field name="planning_products_ids" widget="many2many_tags" required="1"/>
                                         <!--                                        <field name="quizs_ids" widget="many2many_tags"/>-->
